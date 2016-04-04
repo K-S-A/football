@@ -1,0 +1,28 @@
+{
+  "name": "fooyball-test-app",
+  "version": "0.0.0",
+  "description": "Manage football tournaments.",
+  "main": "index.js",
+  "engines": {
+    "node": "0.10.25",
+    "npm": "3.8.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/K-S-A/football.git"
+  },
+  "author": "K-S-A",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/K-S-A/football/issues"
+  },
+  "dependencies": {
+    "bower": "1.7.7"
+  },
+  "scripts": {
+    "postinstall": "bower install"
+  }
+}
