@@ -35,11 +35,16 @@ gem 'omniauth-vkontakte', '~> 1.3'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'thin', '~> 1.6'
+gem 'faker', '~> 1.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'sqlite3'
+  gem 'capybara', '~> 2.6'
+  gem 'capybara-webkit', '~> 1.8'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'factory_girl_rails', '~> 4.6'
 end
 
 group :development do
@@ -52,4 +57,11 @@ end
 
 group :production do
   gem 'pg', '~> 0.18.4'
+  gem 'rails_12factor', '~> 0.0.3'
+end
+
+group :test do
+  gem 'database_cleaner', '~> 1.5'
+  gem 'fuubar', '~> 2.0'
+  gem 'shoulda-matchers', '~> 3.1'
 end
