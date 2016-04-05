@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404122854) do
+ActiveRecord::Schema.define(version: 20160405130150) do
 
   create_table "matches", force: :cascade do |t|
     t.integer  "round_id"
@@ -49,19 +49,17 @@ ActiveRecord::Schema.define(version: 20160404122854) do
   add_index "teams_users", ["user_id", "team_id"], name: "index_teams_users_on_user_id_and_team_id"
 
   create_table "tournaments", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "name",                               null: false
     t.string   "status",     default: "not started", null: false
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
   end
 
+  add_index "tournaments", ["name"], name: "index_tournaments_on_name", unique: true
+  add_index "tournaments", ["user_id"], name: "index_tournaments_on_user_id"
+
   create_table "users", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "img_link"
-    t.integer  "rank"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -72,6 +70,12 @@ ActiveRecord::Schema.define(version: 20160404122854) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "img_link"
+    t.integer  "rank"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
