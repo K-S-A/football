@@ -1,0 +1,36 @@
+nav.navbar.navbar-default role="navigation"
+  .auth-msg
+    .alert.alert-danger role="alert" data-ng-if='vm.user.alert'
+      p.text-center
+        | {{ vm.user.alert }}
+    .alert.alert-info role="alert" data-ng-if='vm.user.notice'
+      p.text-center
+        | {{ vm.user.notice }}
+
+  .navbar-header
+    button.navbar-toggle type="button" data={ ng_click: "collapsed = !collapsed" }
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand data={ ui_sref: "home" } App Name
+  .collapse.navbar-collapse data={ ng_class: "{ in: collapsed }" }
+    ul.nav.navbar-nav
+      li
+        a data={ ui_sref: "home" }
+          | Home
+    ul.nav.navbar-nav.navbar-right
+      li data={ ng_hide: "vm.signedIn()" }
+        a data={ ui_sref: "login" }
+          | Log in
+      li data={ ng_hide: "vm.signedIn()" }
+        a data={ ui_sref: "register" }
+          | Register
+      li.pointer-hover data={ is_open: "isopen", ng_show: "vm.signedIn()", uib_dropdown: "" }
+        a type="button" data={ uib_dropdown_toggle: "" }
+          | Logged in as: "{{ vm.user.first_name }} {{ vm.user.last_name }}"
+          span.caret
+        ul aria-labelledby="single-button" role="menu" data={ uib_dropdown_menu: "" }
+          li role="menuitem"
+            a data={ ng_click: "vm.logout()", ui_sref: "home" }
+              | Log Out
+

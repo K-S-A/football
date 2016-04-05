@@ -1,0 +1,20 @@
+form#registration_form { name="loginForm"
+                 role="form"
+                 novalidate=""
+                 data={ng_submit: "vm.register()"} }
+  .row
+    .col-md-6 data={ng_include: "'auth/_form.html'"} 
+    .col-md-6
+      .input-group.form-group.col-md-8
+        label for="first_name"  First Name:
+        input#first_name.form-control { type="text"
+                                       placeholder="First Name"
+                                       data={ng_model: "vm.user.first_name"} }/
+      .input-group.form-group.col-md-8
+        label for="last_name"  Last Name:
+        input#last_name.form-control { type="text"
+                                      placeholder="Last Name"
+                                      data={ng_model: "vm.user.last_name"} }/
+  input.btn.btn-default.btn-lg { type="submit"
+                                 value="Register"
+                                 data={ng_disabled: "loginForm.$invalid"} }/

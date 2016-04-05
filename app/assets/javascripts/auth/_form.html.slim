@@ -1,0 +1,17 @@
+.input-group.form-group.col-md-8 auth-validation=""
+  label for="email"  E-mail:
+  input#email.form-control { name="email"
+                             type="email"
+                             placeholder="Email"
+                             required=""
+                             data={ ng_model: "vm.user.email",
+                                    ng_pattern: "vm.email_pattern" } }/
+.input-group.form-group.col-md-8 auth-validation=""
+  label for="password"  Password:
+  input#password.form-control { name="password"
+                                type="password"
+                                placeholder="Password"
+                                required=""
+                                data={ ng_maxlength: "72",
+                                       ng_minlength: "8",
+                                       ng_model: "vm.user.password" } }/
