@@ -1,0 +1,17 @@
+form.form-horizontal editable-form="" name="userProfile" onbeforesave="vm.update($data)"
+  .form-group
+    label.control-label.col-sm-2 for="first_name" First name:
+    .col-sm-10
+      p.form-control-static editable-text="vm.user.first_name" e-name="first_name"
+        | {{ vm.user.first_name || 'empty' }}
+  .form-group
+    label.control-label.col-sm-2 for="last_name" Last name:
+    .col-sm-10
+      p.form-control-static editable-text="vm.user.last_name" e-name="last_name"
+        | {{ vm.user.last_name || 'empty' }}
+
+  div
+    button type="button" class="btn btn-default" ng-click="userProfile.$show()" ng-show="!userProfile.$visible" Edit
+    span ng-show="userProfile.$visible"
+      button type="submit" class="btn btn-primary" ng-disabled="userProfile.$waiting" Save
+      button type="button" class="btn btn-default" ng-disabled="userProfile.$waiting" ng-click="userProfile.$cancel()" Cancel
