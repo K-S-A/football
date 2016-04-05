@@ -1,0 +1,1 @@
+json.array! @tournaments, :id, :name, :status

@@ -1,0 +1,6 @@
+form.form-horizontal name="createTournament" data={ ng_submit: "vm.create()" }
+  .form-group
+    label.control-label.col-sm-1 for="name" Name:
+    .col-sm-10
+      input.form-control name="name" placeholder="Enter name of new tourament..." data={ ng_model: "vm.tournament.name" }
+    button type="submit" class="btn btn-primary" data={ ng_disabled: "createTournament.$invalid" } Create

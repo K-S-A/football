@@ -27,6 +27,13 @@ angular.module('mainApp', [
         url: '/profile'
         templateUrl: 'auth/profile.html'
         controller: 'AuthCtrl as vm'
+      .state 'tournaments',
+        url: '/tournaments'
+        templateUrl: 'tournaments/index.html'
+        controller: 'TournamentsCtrl as vm'
+        resolve: getAll: ['Tournament', (Tournament) ->
+          Tournament.get().then (data) ->
+            Tournament.all = data]
 
     $urlRouterProvider.otherwise '/home'
     return

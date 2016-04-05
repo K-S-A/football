@@ -20,8 +20,10 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :first_name << :last_name << :img_link
-    devise_parameter_sanitizer.for(:account_update) << :first_name << :last_name << :img_link
+    params_list = [:first_name, :last_name, :img_link]
+
+    devise_parameter_sanitizer.for(:sign_up) << params_list
+    devise_parameter_sanitizer.for(:account_update) << params_list
   end
 
   def set_csrf_cookie_for_ng

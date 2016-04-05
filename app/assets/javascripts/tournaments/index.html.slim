@@ -1,0 +1,15 @@
+div data={ ng_include: "'tournaments/_create.html'" }
+
+table.table.table-condensed.table-hover
+  thead
+    th ID
+    th Name
+    th Status
+  tbody
+  tr data={ng_repeat: "tournament in vm.tournaments"}
+    td
+      | {{ tournament.id }}
+    td
+      | {{ tournament.name }}
+    td
+      | {{ tournament.status }}

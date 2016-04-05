@@ -1,0 +1,1 @@
+json.(@tournament, :id, :name, :status)
