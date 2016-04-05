@@ -23,6 +23,10 @@ angular.module('mainApp', [
         url: '/register'
         templateUrl: 'auth/register.html'
         controller: 'AuthCtrl as vm'
+      .state 'profile',
+        url: '/profile'
+        templateUrl: 'auth/profile.html'
+        controller: 'AuthCtrl as vm'
 
     $urlRouterProvider.otherwise '/home'
     return
@@ -32,7 +36,10 @@ angular.module('mainApp', [
   '$state'
   'Auth'
   'auths'
-  ($rootScope, $state, Auth, auths) ->
+  'editableOptions'
+  ($rootScope, $state, Auth, auths, editableOptions) ->
+    editableOptions.theme = 'bs3'
+
     $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
       Auth.currentUser()
       .finally ->

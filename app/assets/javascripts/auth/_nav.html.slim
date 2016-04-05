@@ -27,9 +27,13 @@ nav.navbar.navbar-default role="navigation"
           | Register
       li.pointer-hover data={ is_open: "isopen", ng_show: "vm.signedIn()", uib_dropdown: "" }
         a type="button" data={ uib_dropdown_toggle: "" }
-          | Logged in as: "{{ vm.user.first_name }} {{ vm.user.last_name }}"
+          | Logged in as: "{{ vm.user.first_name || ' unnamed' }} {{ vm.user.last_name }}"
           span.caret
         ul aria-labelledby="single-button" role="menu" data={ uib_dropdown_menu: "" }
+          li role="menuitem"
+            a data={ ui_sref: "profile" }
+              | Profile
+          li.divider
           li role="menuitem"
             a data={ ng_click: "vm.logout()", ui_sref: "home" }
               | Log Out

@@ -29,5 +29,8 @@ angular.module('mainApp').controller 'AuthCtrl', [
         auths.setUser({}, 'You are signed out now.')
       return
 
+    vm.update = (user) ->
+      auths.updateUser(user)
+
     vm
 ]

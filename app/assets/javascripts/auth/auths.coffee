@@ -2,7 +2,8 @@
 
 angular.module('mainApp').factory 'auths', [
   '$timeout'
-  ($timeout) ->
+  '$http'
+  ($timeout, $http) ->
     o =
       user: {}
       email_pattern: '^([a-z0-9_.-]+@[a-z]+\\.[a-z]{2,5})$'
@@ -17,6 +18,9 @@ angular.module('mainApp').factory 'auths', [
       o.user.alert = message
       rmMessage()
       return
+
+    o.updateUser = (user) ->
+      $http.patch('/users.json', user: user)
 
     rmMessage = ->
       $timeout ->
