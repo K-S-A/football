@@ -18,5 +18,6 @@
 //= require angular-ui-router
 //= require angularjs-rails-resource
 //= require angular-bootstrap
+//= require angular-xeditable
 //= require mainApp
 //= require_tree .

@@ -5,6 +5,7 @@ angular.module('mainApp', [
   'ui.bootstrap'
   'templates'
   'Devise'
+  'xeditable'
   'rails'
 ]).config([
   '$stateProvider'
