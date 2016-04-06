@@ -27,11 +27,26 @@ angular.module('mainApp', [
         url: '/profile'
         templateUrl: 'auth/profile.html'
         controller: 'AuthCtrl as vm'
+      .state 'tournament',
+        url: '/tournaments/{id:[0-9]+}'
+        templateUrl: 'tournaments/show.html'
+        controller: 'TournamentsCtrl as vm'
+        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
+          Tournament.get($stateParams.id).then (data) ->
+            Tournament.current = data]
+      .state 'editTournament',
+        url: '/tournaments/{id:[0-9]+}/edit'
+        templateUrl: 'tournaments/edit.html'
+        controller: 'TournamentsCtrl as vm'
+        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
+          Tournament.get($stateParams.id).then (data) ->
+            Tournament.current = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'
         controller: 'TournamentsCtrl as vm'
         resolve: getAll: ['Tournament', (Tournament) ->
+          Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
 
@@ -54,6 +69,8 @@ angular.module('mainApp', [
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1
           $state.go 'home'
+        if not Auth._currentUser.admin && toState.name.indexOf('edit') > -1
+          $state.go fromState
       , (error) ->
         if ['login', 'register', 'home'].indexOf(toState.name) < 0
           $state.go 'login'

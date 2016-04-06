@@ -1,6 +1,12 @@
-form.form-horizontal name="createTournament" data={ ng_submit: "vm.create()" }
+form.form-inline name="createTournament" data={ ng_submit: "vm.create()" }
   .form-group
-    label.control-label.col-sm-1 for="name" Name:
-    .col-sm-10
-      input.form-control name="name" placeholder="Enter name of new tourament..." data={ ng_model: "vm.tournament.name" }
-    button type="submit" class="btn btn-primary" data={ ng_disabled: "createTournament.$invalid" } Create
+    label for="name" Name:
+    input.form-control name="name" placeholder="Enter name of new tourament..." data={ ng_model: "vm.tournament.name" }
+  .form-group
+    label for="game_type" Game type:
+    input.form-control name="name" value="ping-pong" data={ ng_model: "vm.tournament.game_type" }
+  .form-group
+    label for="team_size" Team size:
+    input.form-control name="team_size" data={ ng_model: "vm.tournament.team_size" }
+
+  button type="submit" class="btn btn-primary" data={ ng_disabled: "createTournament.$invalid" } Create

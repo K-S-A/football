@@ -1,10 +1,11 @@
-div data={ ng_include: "'tournaments/_create.html'" }
+div data={ ng_include: "'tournaments/_create.html'", ng_if: "vm.user.admin" }
 
 table.table.table-condensed.table-hover
   thead
     th ID
     th Name
     th Status
+    th Game type
   tbody
   tr data={ng_repeat: "tournament in vm.tournaments"}
     td
@@ -13,3 +14,5 @@ table.table.table-condensed.table-hover
       | {{ tournament.name }}
     td
       | {{ tournament.status }}
+    td
+      | {{ tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.gameType }}
