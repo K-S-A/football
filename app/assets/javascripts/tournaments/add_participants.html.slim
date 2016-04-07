@@ -8,5 +8,5 @@ ul
   li data={ ng_repeat: "participant in vm.participants", ng_click: "vm.moveUser($index, vm.participants, vm.users)" }
     span
       | {{ participant.firstName + ' ' +  participant.lastName }}
-button data={ ng_click: "vm.close()" } Add
-button data={ ng_click: "vm.cancel()" } Dismiss
+button data={ ng_click: "vm.close()" } Save
+button data={ ng_click: "vm.cancel()" } Cancel

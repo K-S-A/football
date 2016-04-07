@@ -1,1 +1,40 @@
-button my-add-participants="" Add participants
+table.table.table-condensed.table-hover
+  thead
+    th Name
+    th Status
+    th Game type
+  tbody
+  tr
+    td
+      | {{ vm.tournament.name }}
+    td
+      | {{ vm.tournament.status }}
+    td
+      | {{ vm.tournament.teamSize + 'x' + vm.tournament.teamSize + ' ' + vm.tournament.gameType }}
+
+button my-add-participants="" Manage participants
+
+h3 Participants
+.col-xs-6
+  table.table.table-condensed.table-hover
+    thead
+      th ID
+      th First name
+      th Last name
+      th Image link
+      th Rank
+    tbody
+    tr.text-center data={ ng_if: "!vm.tournament.users.length" }
+      td colspan="5"
+        button my-add-participants="" Add participants
+    tr data={ ng_repeat: "participant in vm.tournament.users" }
+      td
+        | {{ participant.id }}
+      td
+        | {{ participant.firstName }}
+      td
+        | {{ participant.lastName }}
+      td
+        | {{ participant.imgLink }}
+      td
+        | {{ participant.rank }}

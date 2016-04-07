@@ -6,7 +6,6 @@ angular.module('mainApp').directive 'myAddParticipants', [
   ($uibModal, Tournament) ->
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
-      console.log(ctrl)
       element.on 'click', ->
         modalInstance = $uibModal.open(
           templateUrl: 'tournaments/add_participants.html'

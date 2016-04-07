@@ -1,1 +1,1 @@
-json.array!(@users, :id, :first_name, :last_name, :img_link, :admin)
+json.array! @users, partial: 'users/user', as: :user
