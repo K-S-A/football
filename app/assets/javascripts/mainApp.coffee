@@ -37,6 +37,7 @@ angular.module('mainApp', [
       .state 'editTournament.teams',
         url: '/teams'
         templateUrl: 'teams/edit.html'
+        controller: 'TeamsCtrl as vm'
         resolve: getTeams: ['$stateParams', 'getCurrent', 'Team', ($stateParams, getCurrent, Team) ->
           Team.query(tournament_id: $stateParams.id).then (data) ->
             getCurrent.teams = data]

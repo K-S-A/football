@@ -9,8 +9,21 @@ angular.module('mainApp').controller 'AddParticipantsCtrl', [
 
     vm.participants = angular.copy(Tournament.current.users)
     vm.users = users
+    vm.teams = Tournament.current.teams
 
-    vm.moveUser = (index, from, to) ->
+    # TODO - ...
+    vm.moveUser = (index, add) ->
+      if add
+        [from, to] = [vm.users, vm.participants]
+      else
+        [to, from] = [vm.users, vm.participants]
+        user = from[index]
+        vm.teams.forEach (t, i) ->
+          t.users.forEach (u) ->
+            if u.id is user.id
+              t.delete().then ->
+                vm.teams.splice(i, 1)
+
       to.push(from.splice(index, 1)[0])
 
     vm.close = ->

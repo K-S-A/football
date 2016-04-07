@@ -6,4 +6,11 @@ class TeamsController < ApplicationController
       Team.all
     end
   end
+
+  def destroy
+    @team = Team.find(params[:id])
+    @team.destroy
+
+    render nothing: true
+  end
 end
