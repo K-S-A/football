@@ -6,6 +6,7 @@ table.table.table-condensed.table-hover
     th Name
     th Status
     th Game type
+    th
   tbody
   tr data={ng_repeat: "tournament in vm.tournaments"}
     td
@@ -16,3 +17,5 @@ table.table.table-condensed.table-hover
       | {{ tournament.status }}
     td
       | {{ tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.gameType }}
+    td
+      button my-participate="" Join

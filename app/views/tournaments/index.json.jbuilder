@@ -1,1 +1,1 @@
-json.array! @tournaments, :id, :name, :status, :game_type, :team_size
+json.array! @tournaments, partial: 'tournaments/tournament', as: :tournament

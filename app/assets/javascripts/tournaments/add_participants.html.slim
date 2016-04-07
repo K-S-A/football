@@ -1,12 +1,14 @@
 h3 Available users
 ul
-  li data={ ng_repeat: "user in vm.users", ng_click: "vm.moveUser($index, vm.users, vm.participants)" }
+  li data={ ng_repeat: "user in vm.users" }
     span
       | {{ user.firstName + ' ' +  user.lastName }}
+    button data={ ng_click: "vm.moveUser($index, vm.users, vm.participants)" } Add
 h3 Selected participants
 ul
-  li data={ ng_repeat: "participant in vm.participants", ng_click: "vm.moveUser($index, vm.participants, vm.users)" }
+  li data={ ng_repeat: "participant in vm.participants" }
     span
       | {{ participant.firstName + ' ' +  participant.lastName }}
+    button data={ ng_click: "vm.moveUser($index, vm.participants, vm.users)" } Remove
 button data={ ng_click: "vm.close()" } Save
 button data={ ng_click: "vm.cancel()" } Cancel

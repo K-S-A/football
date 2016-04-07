@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('mainApp').factory 'Tournament', [
   'railsResourceFactory'
   'railsSerializer'
