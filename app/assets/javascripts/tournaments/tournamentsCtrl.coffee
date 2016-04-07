@@ -13,8 +13,6 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
 
     vm.create = ->
       new Tournament(vm.tournament).create().then (data) ->
-        vm.tournaments.push(data)
-        vm.tournament = {}
         $state.go 'editTournament', id: data.id
 
     vm

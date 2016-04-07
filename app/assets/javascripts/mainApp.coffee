@@ -34,6 +34,12 @@ angular.module('mainApp', [
         resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
           Tournament.get($stateParams.id).then (data) ->
             Tournament.current = data]
+      .state 'editTournament.teams',
+        url: '/teams'
+        templateUrl: 'teams/edit.html'
+        resolve: getTeams: ['$stateParams', 'getCurrent', 'Team', ($stateParams, getCurrent, Team) ->
+          Team.query(tournament_id: $stateParams.id).then (data) ->
+            getCurrent.teams = data]
       .state 'editTournament',
         url: '/tournaments/{id:[0-9]+}/edit'
         templateUrl: 'tournaments/edit.html'

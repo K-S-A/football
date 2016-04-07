@@ -14,6 +14,7 @@ angular.module('mainApp').directive 'myAddParticipants', [
           size: 'lg'
           resolve: users: ['User', 'Tournament', (User, Tournament) ->
             User.get().then (data) ->
+              # TODO - ...
               users = []
               indexes = Tournament.current.users.map (obj) ->
                 obj.id

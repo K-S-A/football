@@ -11,8 +11,7 @@ angular.module('mainApp').controller 'AddParticipantsCtrl', [
     vm.users = users
 
     vm.moveUser = (index, from, to) ->
-      to.push(from[index])
-      from.splice(index, 1)
+      to.push(from.splice(index, 1)[0])
 
     vm.close = ->
       $uibModalInstance.close(vm.participants)
