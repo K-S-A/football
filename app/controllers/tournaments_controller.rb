@@ -14,6 +14,7 @@ class TournamentsController < ApplicationController
   end
 
   def update
+    params[:tournament][:user_ids] ||= []
     @tournament.update_attributes(tournament_params)
 
     render 'show'
