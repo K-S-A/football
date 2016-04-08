@@ -17,14 +17,14 @@ ActiveRecord::Base.transaction do
       status: %w(not\ started completed in\ progress).sample,
       sports_kind: Faker::Team.sport,
       team_size: Faker::Number.between(1, 3),
-      user_ids: User.pluck(:id))
+      user_ids: User.pluck(:id).sample(User.count - seed_count))
   end
 
   p "Seeding teams/rounds/matches/assessments."
   Tournament.all.each do |t|
     # seeding teams
     seed_count.times do
-      player_ids = User.pluck(:id).sample(t.team_size)
+      player_ids = t.users.pluck(:id).sample(t.team_size)
       players = User.where(id: player_ids)
       team_name = players.map{ |u| "#{u.first_name} #{u.last_name.first}." }.join(' + ')
 
