@@ -7,6 +7,10 @@ class TeamsController < ApplicationController
     end
   end
 
+  def show
+    @team = Team.find(params[:id])
+  end
+
   def destroy
     @team = Team.find(params[:id])
     @team.destroy
