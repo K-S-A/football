@@ -9,12 +9,12 @@ angular.module('mainApp').directive 'myAddParticipants', [
       element.on 'click', ->
         modalInstance = $uibModal.open(
           templateUrl: 'tournaments/add_participants.html'
-          controller: 'AddParticipantsCtrl as vm'
+          controller: 'ParticipantsCtrl as vm'
           scope: scope
           size: 'lg'
           resolve: users: ['User', 'Tournament', (User, Tournament) ->
             User.get().then (data) ->
-              # TODO - ...
+              # TODO - move to filter...
               users = []
               indexes = Tournament.current.users.map (obj) ->
                 obj.id
@@ -22,7 +22,7 @@ angular.module('mainApp').directive 'myAddParticipants', [
               data.forEach (u) ->
                 if indexes.indexOf(u.id) is -1
                   users.push(u)
-              users]
+              User.unsubscribed = users]
         )
 
         modalInstance.result.then (data) ->

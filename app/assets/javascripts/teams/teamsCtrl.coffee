@@ -7,6 +7,7 @@ angular.module('mainApp').controller 'TeamsCtrl', [
     vm = this
 
     vm.tournament = Tournament.current
+    vm.team = Team.current
 
     vm
 ]

@@ -8,7 +8,7 @@ angular.module('mainApp').factory 'Tournament', [
       url: '/tournaments'
       name: 'tournament'
       serializer: railsSerializer ->
-        @only 'id', 'name', 'status', 'gameType', 'teamSize', 'users')
+        @only 'id', 'name', 'status', 'sportsKind', 'teamSize', 'users')
 
     Tournament.beforeRequest (data) ->
       if data && data['users']

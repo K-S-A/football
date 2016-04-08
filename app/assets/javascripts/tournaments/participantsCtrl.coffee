@@ -1,14 +1,14 @@
 'use strict'
 
-angular.module('mainApp').controller 'AddParticipantsCtrl', [
+angular.module('mainApp').controller 'ParticipantsCtrl', [
   '$uibModalInstance'
   'Tournament'
-  'users'
-  ($uibModalInstance, Tournament, users) ->
+  'User'
+  ($uibModalInstance, Tournament, User) ->
     vm = this
 
     vm.participants = angular.copy(Tournament.current.users)
-    vm.users = users
+    vm.users = User.unsubscribed
     vm.teams = Tournament.current.teams
 
     # TODO - ...

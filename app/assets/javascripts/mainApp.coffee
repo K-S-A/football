@@ -56,6 +56,13 @@ angular.module('mainApp', [
           Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
+      .state 'team',
+        url: '/teams/{id:[0-9]+}'
+        templateUrl: 'teams/show.html'
+        controller: 'TeamsCtrl as vm'
+        resolve: getCurrent: ['$stateParams', 'Team', ($stateParams, Team) ->
+          Team.get($stateParams.id).then (data) ->
+            Team.current = data]
 
     $urlRouterProvider.otherwise '/home'
     return

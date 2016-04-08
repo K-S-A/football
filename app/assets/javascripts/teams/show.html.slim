@@ -1,0 +1,15 @@
+table.table.table-condensed.table-hover
+  thead
+    th ID
+    th Name
+    th Players
+  tbody
+  tr
+    td
+      | {{ vm.team.id }}
+    td
+      | {{ vm.team.name }}
+    td
+      ul
+        li data={ ng_repeat: "player in vm.team.users" }
+          | {{ player.firstName + ' ' + player.lastName }}
