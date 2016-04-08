@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root 'application#main'
 
   resources :tournaments, only: [:index, :create, :show, :update]
-  resources :teams, only: [:index, :destroy]
+  resources :teams, only: [:index, :show, :destroy]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406083851) do
+ActiveRecord::Schema.define(version: 20160408092653) do
+
+  create_table "assessments", force: :cascade do |t|
+    t.integer  "score"
+    t.integer  "user_id"
+    t.integer  "rated_user_id", null: false
+    t.integer  "tournament_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "assessments", ["rated_user_id"], name: "index_assessments_on_rated_user_id"
+  add_index "assessments", ["tournament_id"], name: "index_assessments_on_tournament_id"
+  add_index "assessments", ["user_id"], name: "index_assessments_on_user_id"
 
   create_table "matches", force: :cascade do |t|
     t.integer  "round_id"
@@ -23,11 +36,13 @@ ActiveRecord::Schema.define(version: 20160406083851) do
     t.datetime "updated_at",    null: false
   end
 
+  add_index "matches", ["guest_team_id"], name: "index_matches_on_guest_team_id"
+  add_index "matches", ["host_team_id"], name: "index_matches_on_host_team_id"
   add_index "matches", ["round_id"], name: "index_matches_on_round_id"
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "tournament_id"
-    t.string   "type",          default: "regular", null: false
+    t.string   "mode",          default: "regular", null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
@@ -52,19 +67,19 @@ ActiveRecord::Schema.define(version: 20160406083851) do
   add_index "teams_users", ["user_id", "team_id"], name: "index_teams_users_on_user_id_and_team_id"
 
   create_table "tournaments", force: :cascade do |t|
-    t.string   "name",                               null: false
-    t.string   "status",     default: "not started", null: false
-    t.string   "game_type",                          null: false
-    t.integer  "team_size",  default: 1,             null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.string   "name",                                null: false
+    t.string   "status",      default: "not started", null: false
+    t.string   "sports_kind",                         null: false
+    t.integer  "team_size",   default: 1,             null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "tournaments", ["name"], name: "index_tournaments_on_name", unique: true
 
   create_table "tournaments_users", id: false, force: :cascade do |t|
-    t.integer "tournament_id", null: false
     t.integer "user_id",       null: false
+    t.integer "tournament_id", null: false
   end
 
   add_index "tournaments_users", ["tournament_id", "user_id"], name: "index_tournaments_users_on_tournament_id_and_user_id"

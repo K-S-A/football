@@ -3,7 +3,7 @@ class CreateTournaments < ActiveRecord::Migration
     create_table :tournaments do |t|
       t.string :name,   null: false
       t.string :status, null: false, default: 'not started'
-      t.string :game_type, null: false
+      t.string :sports_kind, null: false
       t.integer :team_size, null: false, default: 1
 
       t.timestamps null: false
