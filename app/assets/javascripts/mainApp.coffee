@@ -12,9 +12,6 @@ angular.module('mainApp', [
   '$urlRouterProvider'
   ($stateProvider, $urlRouterProvider) ->
     $stateProvider
-      #.state 'home',
-      #  url: '/home'
-      #  templateUrl: 'home/home.html'
       .state 'login',
         url: '/login'
         templateUrl: 'auth/login.html'
@@ -43,20 +40,6 @@ angular.module('mainApp', [
       .state 'tournament.rounds',
         url: '/rounds'
         templateUrl: 'tournaments/rounds.html'
-      #.state 'tournament.teams',
-      #  url: '/teams'
-      #  templateUrl: 'teams/edit.html'
-      #  controller: 'TeamsCtrl as vm'
-      #  resolve: getTeams: ['$stateParams', 'getCurrent', 'Team', ($stateParams, getCurrent, Team) ->
-      #    Team.query(tournament_id: $stateParams.id).then (data) ->
-      #      getCurrent.teams = data]
-#      .state 'editTournament',
-#        url: '/tournaments/{id:[0-9]+}/edit'
-#        templateUrl: 'tournaments/edit.html'
-#        controller: 'TournamentsCtrl as vm'
-#        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
-#          Tournament.get($stateParams.id).then (data) ->
-#            Tournament.current = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'
