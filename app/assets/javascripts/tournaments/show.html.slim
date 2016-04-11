@@ -1,2 +1,12 @@
-h1 Show
-| {{ vm.tournament }}
+h1
+  | Tournament: {{ vm.tournament.name }}
+
+ul.nav.nav-tabs.nav-justified
+  li ui-sref="tournament.participants" ui-sref-active="active"
+    a Participants
+  li ui-sref="tournament.teams" ui-sref-active="active"
+    a Teams
+  li ui-sref="tournament.rounds" ui-sref-active="active"
+    a Rounds
+
+ui-view

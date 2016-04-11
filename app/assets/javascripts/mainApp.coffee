@@ -12,9 +12,9 @@ angular.module('mainApp', [
   '$urlRouterProvider'
   ($stateProvider, $urlRouterProvider) ->
     $stateProvider
-      .state 'home',
-        url: '/home'
-        templateUrl: 'home/home.html'
+      #.state 'home',
+      #  url: '/home'
+      #  templateUrl: 'home/home.html'
       .state 'login',
         url: '/login'
         templateUrl: 'auth/login.html'
@@ -34,20 +34,29 @@ angular.module('mainApp', [
         resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
           Tournament.get($stateParams.id).then (data) ->
             Tournament.current = data]
-      .state 'editTournament.teams',
+      .state 'tournament.participants',
+        url: '/participants'
+        templateUrl: 'tournaments/participants.html'
+      .state 'tournament.teams',
         url: '/teams'
-        templateUrl: 'teams/edit.html'
-        controller: 'TeamsCtrl as vm'
-        resolve: getTeams: ['$stateParams', 'getCurrent', 'Team', ($stateParams, getCurrent, Team) ->
-          Team.query(tournament_id: $stateParams.id).then (data) ->
-            getCurrent.teams = data]
-      .state 'editTournament',
-        url: '/tournaments/{id:[0-9]+}/edit'
-        templateUrl: 'tournaments/edit.html'
-        controller: 'TournamentsCtrl as vm'
-        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
-          Tournament.get($stateParams.id).then (data) ->
-            Tournament.current = data]
+        templateUrl: 'tournaments/teams.html'
+      .state 'tournament.rounds',
+        url: '/rounds'
+        templateUrl: 'tournaments/rounds.html'
+      #.state 'tournament.teams',
+      #  url: '/teams'
+      #  templateUrl: 'teams/edit.html'
+      #  controller: 'TeamsCtrl as vm'
+      #  resolve: getTeams: ['$stateParams', 'getCurrent', 'Team', ($stateParams, getCurrent, Team) ->
+      #    Team.query(tournament_id: $stateParams.id).then (data) ->
+      #      getCurrent.teams = data]
+#      .state 'editTournament',
+#        url: '/tournaments/{id:[0-9]+}/edit'
+#        templateUrl: 'tournaments/edit.html'
+#        controller: 'TournamentsCtrl as vm'
+#        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
+#          Tournament.get($stateParams.id).then (data) ->
+#            Tournament.current = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'
@@ -64,7 +73,7 @@ angular.module('mainApp', [
           Team.get($stateParams.id).then (data) ->
             Team.current = data]
 
-    $urlRouterProvider.otherwise '/home'
+    $urlRouterProvider.otherwise '/tournaments'
     return
 
 ]).run([
@@ -82,11 +91,9 @@ angular.module('mainApp', [
         event.preventDefault()
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1
-          $state.go 'home'
-        if not Auth._currentUser.admin && toState.name.indexOf('edit') > -1
-          $state.go fromState
+          $state.go 'tournaments'
       , (error) ->
-        if ['login', 'register', 'home'].indexOf(toState.name) < 0
+        if ['login', 'register', 'tournaments'].indexOf(toState.name) < 0
           $state.go 'login'
       return
 

@@ -8,7 +8,7 @@ table.table.table-condensed.table-hover
     th Game type
     th
   tbody
-  tr data={ng_repeat: "tournament in vm.tournaments"}
+  tr ui-sref="tournament.participants({ id: tournament.id })" data={ng_repeat: "tournament in vm.tournaments"}
     td
       | {{ tournament.id }}
     td
