@@ -10,14 +10,15 @@ table.table.table-condensed.table-hover
     th Game type
     th
   tbody
-  tr ui-sref="tournament.participants({ id: tournament.id })" data={ng_repeat: "tournament in vm.tournaments"}
+  tr data={ng_repeat: "tournament in vm.tournaments"}
     td
       | {{ tournament.id }}
-    td
+    td ui-sref="tournament.participants({ id: tournament.id })"
       | {{ tournament.name }}
     td
       | {{ tournament.status }}
     td
       | {{ tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.sportsKind }}
     td
+      button data={ ng_click: "vm.delete($index)" } Remove tournament
       button my-participate="" Join

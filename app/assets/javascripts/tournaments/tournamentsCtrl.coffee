@@ -13,7 +13,11 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
 
     vm.create = ->
       new Tournament(vm.tournament).create().then (data) ->
-        $state.go 'editTournament', id: data.id
+        $state.go 'tournament.participants', id: data.id
+
+    vm.delete = (index) ->
+      vm.tournaments[index].delete().then ->
+        vm.tournaments.splice(index, 1)
 
     vm
 ]
