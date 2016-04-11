@@ -2,6 +2,14 @@ ActiveRecord::Base.transaction do
   seed_count = ENV['seed_count'] || 5
 
   p "Seeding users."
+  User.create(
+    email: 'admin@admin.com',
+    password: '321321321',
+    img_link: Faker::Avatar.image,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    admin: true)
+
   (seed_count ** 2).times do
     User.create(
       email: Faker::Internet.email,
@@ -17,7 +25,7 @@ ActiveRecord::Base.transaction do
       name: "#{Faker::App.name}-#{i}",
       status: %w(not\ started completed in\ progress).sample,
       sports_kind: Faker::Team.sport,
-      team_size: Faker::Number.between(1, 3),
+      team_size: [i, 4].min + 1,
       user_ids: User.pluck(:id).sample(User.count - seed_count))
   end
 
