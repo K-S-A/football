@@ -17,5 +17,8 @@ angular.module('mainApp').factory 'Tournament', [
         delete data['users']
         data
 
+    Tournament.toTitle = (tournament) ->
+      '"' + tournament.name + '" (' + tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.sportsKind + ')'
+
     Tournament
 ]

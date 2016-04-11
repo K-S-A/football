@@ -72,15 +72,22 @@ ActiveRecord::Base.transaction do
     end
 
     # seeding assessments
+    assessment_params = []
+
     t.users.each do |u1|
       t.users.each.with_index do |u2, i|
         if u1 != u2
-          t.assessments.create(
-            score: i,
-            user_id: u1.id,
-            rated_user_id: u2.id)
+          assessment_params.push("(#{i}, #{u1.id}, #{u2.id}, #{t.id}, '#{ Time.now }', '#{ Time.now }')")
         end
       end
     end
+
+    sql = <<END_SQL
+    INSERT INTO assessments
+      ('score', 'user_id', 'rated_user_id', 'tournament_id', 'created_at', 'updated_at')
+    VALUES #{assessment_params.join(', ')}
+END_SQL
+
+    ActiveRecord::Base.connection.execute(sql)
   end
 end

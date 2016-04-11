@@ -1,5 +1,5 @@
 h1
-  | Tournament: {{ vm.tournament.name }}
+  | {{ vm.toTitle(vm.tournament) }}
 
 ul.nav.nav-tabs.nav-justified
   li ui-sref="tournament.participants" ui-sref-active="active"

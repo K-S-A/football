@@ -1,26 +1,20 @@
 h3 Participants
-| {{ vm.user }}
+
 button my-add-participants="" data={ ng_if: 'vm.user && vm.user.admin' } Manage participants
 
 table.table.table-condensed.table-hover
   thead
-    th ID
-    th First name
-    th Last name
-    th Image link
-    th Rank
+    th Image
+    th Name
+    th
   tbody
   tr.text-center data={ ng_if: "vm.user && vm.user.admin && !vm.tournament.users.length" }
     td colspan="5"
       button my-add-participants="" Add participants
   tr data={ ng_repeat: "participant in vm.tournament.users" }
     td
-      | {{ participant.id }}
+      img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ participant.imgLink }}" }
     td
-      | {{ participant.firstName }}
+      | {{ participant.firstName + ' ' + participant.lastName }}
     td
-      | {{ participant.lastName }}
-    td
-      | {{ participant.imgLink }}
-    td
-      | {{ participant.rank }}
+      / button data={ ng_click: "vm.moveUser($index, false)" } Remove
