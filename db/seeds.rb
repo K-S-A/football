@@ -8,7 +8,8 @@ ActiveRecord::Base.transaction do
     img_link: Faker::Avatar.image,
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    admin: true)
+    admin: true,
+    rank: 0)
 
   (seed_count ** 2).times do
     User.create(
@@ -16,7 +17,8 @@ ActiveRecord::Base.transaction do
       password: Faker::Internet.password(10, 20),
       img_link: Faker::Avatar.image,
       first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name)
+      last_name: Faker::Name.last_name,
+      rank: 0)
   end
 
   p "Seeding tournaments."
