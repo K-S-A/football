@@ -13,7 +13,7 @@ angular.module('mainApp').controller 'AuthCtrl', [
 
     vm.login = ->
       Auth.login(vm.user).then (user) ->
-        $state.go 'home'
+        $state.go 'tournaments'
       , (error) ->
         auths.showAlert('Wrong user credentials. Check e-mail/password and try again.')
       return
@@ -21,12 +21,13 @@ angular.module('mainApp').controller 'AuthCtrl', [
     vm.register = ->
       Auth.register(vm.user).then (user) ->
         auths.setUser(user, 'You are registered successfully.')
-        $state.go 'home'
+        $state.go 'tournaments'
       return
 
     vm.logout = ->
       Auth.logout().then ->
         auths.setUser({}, 'You are signed out now.')
+        $state.reload()
       return
 
     vm.update = (user) ->

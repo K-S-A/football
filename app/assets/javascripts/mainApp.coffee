@@ -48,13 +48,13 @@ angular.module('mainApp', [
           Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
-      .state 'team',
-        url: '/teams/{id:[0-9]+}'
-        templateUrl: 'teams/show.html'
-        controller: 'TeamsCtrl as vm'
-        resolve: getCurrent: ['$stateParams', 'Team', ($stateParams, Team) ->
-          Team.get($stateParams.id).then (data) ->
-            Team.current = data]
+#      .state 'team',
+#        url: '/teams/{id:[0-9]+}'
+#        templateUrl: 'teams/show.html'
+#        controller: 'TeamsCtrl as vm'
+#        resolve: getCurrent: ['$stateParams', 'Team', ($stateParams, Team) ->
+#          Team.get($stateParams.id).then (data) ->
+#            Team.current = data]
 
     $urlRouterProvider.otherwise '/tournaments'
     return
@@ -75,9 +75,6 @@ angular.module('mainApp', [
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1
           $state.go 'tournaments'
-      , (error) ->
-        if ['login', 'register', 'tournaments'].indexOf(toState.name) < 0
-          $state.go 'login'
       return
 
     $rootScope.$on 'devise:login', (e, user) ->
