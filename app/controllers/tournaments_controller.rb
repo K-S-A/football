@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :find_tournament, only: [:show, :update]
+  before_action :find_tournament, only: [:show, :update, :destroy]
 
   def index
     @tournaments = Tournament.includes(:users).all
@@ -17,6 +17,12 @@ class TournamentsController < ApplicationController
     @tournament.update_attributes(tournament_params)
 
     render 'show'
+  end
+
+  def destroy
+    @tournament.destroy
+
+    render nothing: true
   end
 
   private

@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#main'
 
-  resources :tournaments, only: [:index, :create, :show, :update]
-  resources :teams, only: [:index, :show, :destroy]
+  resources :tournaments, except: [:new, :edit], shallow: true do
+    resources :teams, except: [:new, :edit]
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

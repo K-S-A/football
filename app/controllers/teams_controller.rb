@@ -1,10 +1,6 @@
 class TeamsController < ApplicationController
   def index
-    @teams = if params[:tournament_id]
-      Team.where('tournament_id = ?', params[:tournament_id])
-    else
-      Team.all
-    end
+    @teams = Team.includes(:users).where('tournament_id = ?', params[:tournament_id])
   end
 
   def show
