@@ -6,14 +6,13 @@ class TournamentsController < ApplicationController
   end
 
   def create
-    @tournament = Tournament.create(tournament_params)
+    @tournament = Tournament.create!(tournament_params)
   end
 
   def show
   end
 
   def update
-    params[:tournament][:user_ids] ||= []
     @tournament.update_attributes(tournament_params)
 
     render 'show'
