@@ -20,5 +20,5 @@ table.table.table-condensed.table-hover
     td
       | {{ tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.sportsKind }}
     td
-      button data={ ng_click: "vm.delete($index)" } Remove tournament
+      button data={ ng_if: "vm.user && vm.user.admin", ng_click: "vm.delete($index)" } Remove tournament
       button my-participate="" data={ ng_if: "vm.user" } Join
