@@ -1,9 +1,8 @@
 class TournamentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
   before_action :find_tournament, only: [:show, :update]
 
   def index
-    @tournaments = Tournament.all
+    @tournaments = Tournament.includes(:users).all
   end
 
   def create
@@ -27,6 +26,7 @@ class TournamentsController < ApplicationController
   end
 
   def find_tournament
-    @tournament = Tournament.find(params[:id])
+    #TODO - n+1 query
+    @tournament = Tournament.includes(teams: :users).find(params[:id])
   end
 end

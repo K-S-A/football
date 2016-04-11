@@ -12,11 +12,11 @@ nav.navbar.navbar-default role="navigation"
       span.icon-bar
       span.icon-bar
       span.icon-bar
-    a.navbar-brand data={ ui_sref: "home" } App Name
+    a.navbar-brand data={ ui_sref: "tournaments" } App Name
   .collapse.navbar-collapse data={ ng_class: "{ in: collapsed }" }
     ul.nav.navbar-nav
       li
-        a data={ ui_sref: "home" }
+        a data={ ui_sref: "tournaments" }
           | Home
     ul.nav.navbar-nav.navbar-right
       li data={ ng_hide: "vm.signedIn()" }
@@ -35,6 +35,6 @@ nav.navbar.navbar-default role="navigation"
               | Profile
           li.divider
           li role="menuitem"
-            a data={ ng_click: "vm.logout()", ui_sref: "home" }
+            a data={ ng_click: "vm.logout()" }
               | Log Out
 
