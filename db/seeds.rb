@@ -1,4 +1,4 @@
-ActiveRecord::Base.transaction do 
+ActiveRecord::Base.transaction do
   seed_count = ENV['seed_count'] || 5
 
   p "Seeding users."
@@ -6,6 +6,7 @@ ActiveRecord::Base.transaction do
     User.create(
       email: Faker::Internet.email,
       password: Faker::Internet.password(10, 20),
+      img_link: Faker::Avatar.image,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name)
   end

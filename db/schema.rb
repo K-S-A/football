@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408092653) do
+ActiveRecord::Schema.define(version: 20160411124751) do
 
   create_table "assessments", force: :cascade do |t|
     t.integer  "score"
@@ -30,24 +30,36 @@ ActiveRecord::Schema.define(version: 20160408092653) do
     t.integer  "round_id"
     t.integer  "host_score"
     t.integer  "guest_score"
-    t.integer  "host_team_id",  null: false
-    t.integer  "guest_team_id", null: false
+    t.integer  "host_team_id"
+    t.integer  "guest_team_id"
+    t.integer  "next_id"
+    t.integer  "grid"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
   add_index "matches", ["guest_team_id"], name: "index_matches_on_guest_team_id"
   add_index "matches", ["host_team_id"], name: "index_matches_on_host_team_id"
+  add_index "matches", ["next_id"], name: "index_matches_on_next_id"
   add_index "matches", ["round_id"], name: "index_matches_on_round_id"
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "tournament_id"
     t.string   "mode",          default: "regular", null: false
+    t.integer  "position",      default: 0,         null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
 
   add_index "rounds", ["tournament_id"], name: "index_rounds_on_tournament_id"
+
+  create_table "rounds_teams", id: false, force: :cascade do |t|
+    t.integer "team_id",  null: false
+    t.integer "round_id", null: false
+  end
+
+  add_index "rounds_teams", ["round_id", "team_id"], name: "index_rounds_teams_on_round_id_and_team_id"
+  add_index "rounds_teams", ["team_id", "round_id"], name: "index_rounds_teams_on_team_id_and_round_id"
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",          null: false
