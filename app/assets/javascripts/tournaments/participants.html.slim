@@ -10,7 +10,7 @@ table.table.table-condensed.table-hover
     th Image link
     th Rank
   tbody
-  tr.text-center data={ ng_if: "vm.user.admin and !vm.tournament.users.length" }
+  tr.text-center data={ ng_if: "vm.user.admin && !vm.tournament.users.length" }
     td colspan="5"
       button my-add-participants="" Add participants
   tr data={ ng_repeat: "participant in vm.tournament.users" }
