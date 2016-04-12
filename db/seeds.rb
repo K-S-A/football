@@ -84,7 +84,7 @@ ActiveRecord::Base.transaction do
 
     sql = <<END_SQL
     INSERT INTO assessments
-      ('score', 'user_id', 'rated_user_id', 'tournament_id', 'created_at', 'updated_at')
+      ("score", "user_id", "rated_user_id", "tournament_id", "created_at", "updated_at")
     VALUES #{assessment_params.join(', ')}
 END_SQL
 

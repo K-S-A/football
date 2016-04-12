@@ -49,7 +49,7 @@ RSpec.feature 'Authorization', :js do
     visit root_path
 
     find('a', text: 'Logged in').click
-    click_on 'Log Out'
+    find('a', text: 'Log Out').click
 
     expect(page).not_to have_content 'Logged in'
     expect(page).to have_content 'signed out'
