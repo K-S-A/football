@@ -8,5 +8,5 @@ angular.module('mainApp').factory 'Team', [
       url: '/teams'
       name: 'team'
       serializer: railsSerializer ->
-        @only 'id', 'name')
+        @only 'id', 'name', 'team_size')
 ]
