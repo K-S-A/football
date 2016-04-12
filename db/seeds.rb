@@ -40,8 +40,10 @@ ActiveRecord::Base.transaction do
       team_name = players.map{ |u| "#{u.first_name} #{u.last_name.first}." }.join(' + ')
 
       players.each do |u|
-        u.tournaments << t
-        u.save
+        unless u.tournaments.include?(t)
+          u.tournaments << t
+          u.save
+        end
       end
 
       t.teams.create(

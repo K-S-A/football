@@ -75,6 +75,10 @@ angular.module('mainApp', [
         if ['login', 'register'].indexOf(toState.name) > -1
           event.preventDefault()
           $state.go 'tournaments'
+      , (error) ->
+        if ['profile'].indexOf(toState.name) > -1
+          event.preventDefault()
+          $state.go 'tournaments'
       return
 
     $rootScope.$on 'devise:login', (e, user) ->
