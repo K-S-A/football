@@ -1,4 +1,4 @@
-div data={ ng_include: "'tournaments/_create.html'", ng_if: "vm.user && vm.user.admin" }
+div data={ ng_include: "'tournaments/_create.html'", my_authorized: "" }
 
 h3 Tournaments
 
@@ -14,5 +14,5 @@ table.table.table-condensed.table-hover
     td
       | {{ tournament.status }}
     td
-      button data={ ng_if: "vm.user && vm.user.admin", ng_click: "vm.delete($index)" } Remove tournament
+      button data={ my_authorized: "", ng_click: "vm.delete($index)" } Remove tournament
       button my-participate="" data={ ng_if: "vm.user" } Join
