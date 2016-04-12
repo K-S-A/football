@@ -9,10 +9,10 @@ class TeamsController < ApplicationController
   end
 
   def create
-    if params[:batch_create]
-      # TODO - ...
+    if params[:team][:team_size]
+      @teams = Team.batch_generate(params[:tournament_id], params[:team][:team_size])
     else
-      Team.create!(team_params)
+      @team = Team.create!(team_params)
     end
   end
 

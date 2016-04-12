@@ -31,7 +31,7 @@ class TournamentsController < ApplicationController
   end
 
   def find_tournament
-    #TODO - n+1 query
+    # TODO: n+1 query
     @tournament = Tournament.includes(teams: :users).find(params[:id])
   end
 end
