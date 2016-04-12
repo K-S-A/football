@@ -71,10 +71,9 @@ angular.module('mainApp', [
 
     $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
       Auth.currentUser()
-      .finally ->
-        event.preventDefault()
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1
+          event.preventDefault()
           $state.go 'tournaments'
       return
 
