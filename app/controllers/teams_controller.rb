@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :find_team, only: [:show, :destroy]
+  before_action :find_team, only: [:show]
 
   def index
     @teams = Team.includes(:users).where('tournament_id = ?', params[:tournament_id])
@@ -17,7 +17,12 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    @team.destroy
+    if params[:tournament_id]
+      Team.where('tournament_id = ?', params[:tournament_id]).destroy_all
+    else
+      find_team
+      @team.destroy
+    end
 
     render nothing: true
   end

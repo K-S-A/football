@@ -3,15 +3,13 @@ class Team < ActiveRecord::Base
   has_and_belongs_to_many :users
 
   def matches
-    Match.where('host_team_id = :team_id OR guest_team_id = :team_id', team_id: id)
+    Match.where('host_team_id = :id OR guest_team_id = :id', id: id)
   end
 
   class << self
     def batch_generate(tournament_id, team_size)
-      # get tournament participants
-      tournament = Tournament.includes(:users).find(tournament_id)
-
       # generate teams
+      tournament = Tournament.includes(:users).find(tournament_id)
       teams = generate_teams(tournament, team_size)
 
       # generate teams_params
