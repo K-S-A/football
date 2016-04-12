@@ -25,6 +25,7 @@ angular.module('mainApp', [
         templateUrl: 'auth/profile.html'
         controller: 'AuthCtrl as vm'
       .state 'tournament',
+        abstract: true
         url: '/tournaments/{id:[0-9]+}'
         templateUrl: 'tournaments/show.html'
         controller: 'TournamentsCtrl as vm'
