@@ -27,7 +27,7 @@ ActiveRecord::Base.transaction do
       name: "#{Faker::App.name}-#{i}",
       status: %w(not\ started completed in\ progress).sample,
       sports_kind: Faker::Team.sport,
-      team_size: [i, 4].min + 1,
+      team_size: i + 1,
       user_ids: User.pluck(:id).sample(User.count - seed_count))
   end
 
@@ -38,13 +38,6 @@ ActiveRecord::Base.transaction do
       player_ids = t.users.pluck(:id).sample(t.team_size)
       players = User.where(id: player_ids)
       team_name = players.map{ |u| "#{u.first_name} #{u.last_name.first}." }.join(' + ')
-
-      players.each do |u|
-        unless u.tournaments.include?(t)
-          u.tournaments << t
-          u.save
-        end
-      end
 
       t.teams.create(
         name: team_name,
