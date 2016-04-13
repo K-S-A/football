@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
   resources :tournaments, except: [:new, :edit], shallow: true do
     resources :teams, except: [:new, :edit]
+    resources :rounds, except: [:new, :edit]
   end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

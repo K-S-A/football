@@ -44,7 +44,9 @@ ActiveRecord::Base.transaction do
         user_ids: player_ids)
 
       # seeding rounds
-      t.rounds.create()
+      round = t.rounds.new
+      round.teams = t.teams
+      round.save
     end
 
     # seeding matches
