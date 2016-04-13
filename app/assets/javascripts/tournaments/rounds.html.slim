@@ -1,3 +1,40 @@
 h3 Rounds
 
-button data={ my_authorized: "", my_add_participants: "" } Add participants
+/ button data={ my_authorized: "", my_add_participants: "" } Add participants
+
+table.table.table-condensed.table-hover data={ ng_repeat: "round in vm.rounds" }
+  caption
+    | {{ round.id + ' ' + round.mode }}
+  thead
+    th Place
+    th ID
+    th Team name
+    th Total games
+    th Win
+    th Lose
+    th Draw
+    th Goals scored/against
+    th Goals diff
+    th Points
+  tbody
+    tr data={ ng_repeat: "team in round.teams" }
+      td
+        | {{ team }}
+      td
+        | {{ $index }}
+      td
+        | {{ team.id }}
+      td
+        | {{ team.name }}
+      td
+        | {{ team.games_total }}
+      td
+        | {{ team.games_won }}
+      td
+        | {{ team.games_lose }}
+      td
+        | {{ team.games_draw }}
+      td
+        | {{ team.games_draw }}
+      td
+        | {{ team.games_draw }}
