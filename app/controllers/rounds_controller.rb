@@ -1,6 +1,7 @@
 class RoundsController < ApplicationController
-  before_action :find_tournament, only: [:index, :create]
+  before_action :find_tournament, only: [:index, :create, :show]
 
+  load_resource only: [:destroy]
   authorize_resource only: [:create, :update, :destroy]
 
   def index
@@ -8,7 +9,7 @@ class RoundsController < ApplicationController
   end
 
   def show
-    @round = Round.where('tournament_id = ?', params[:tournament_id]).find(params[:id])
+    @round = @tournament.rounds.find(params[:id])
     @teams = Team.round_stats(params[:id])
   end
 
@@ -16,6 +17,12 @@ class RoundsController < ApplicationController
     @round = @tournament.rounds.create(round_params)
 
     render @round
+  end
+
+  def destroy
+    @round.destroy
+
+    render nothing: true
   end
 
   private
