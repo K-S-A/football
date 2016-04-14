@@ -1,6 +1,8 @@
 class TeamsController < ApplicationController
   before_action :find_team, only: [:show]
 
+  authorize_resource only: [:create, :update, :destroy]
+
   def index
     @teams = Team.includes(:users).where('tournament_id = ?', params[:tournament_id])
   end

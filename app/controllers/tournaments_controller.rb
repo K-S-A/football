@@ -1,6 +1,8 @@
 class TournamentsController < ApplicationController
   before_action :find_tournament, only: [:show, :update, :destroy]
 
+  authorize_resource only: [:create, :update, :destroy]
+
   def index
     @tournaments = Tournament.includes(:users, :rounds).all
   end
