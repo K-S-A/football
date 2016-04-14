@@ -17,6 +17,18 @@
 @import "bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 
+/* Import the fonts */
+@font-face {
+// Workaround to avoid using rails serve static files setting.
+  <% path = 'bootstrap-sass/assets/fonts/bootstrap/' %>
+  font-family: 'Glyphicons Halflings';
+  src: url(<%= asset_path("#{path}glyphicons-halflings-regular.eot") %>);
+  src: url(<%= asset_path("#{path}glyphicons-halflings-regular.eot?#iefix") %>) format('embedded-opentype'),
+       url(<%= asset_path("#{path}glyphicons-halflings-regular.woff") %>) format('woff'),
+       url(<%= asset_path("#{path}glyphicons-halflings-regular.ttf") %>) format('truetype'),
+       url(<%= asset_path("#{path}glyphicons-halflings-regular.svg#glyphicons_halflingsregular") %>) format('svg');
+}
+
 .editable-hide {
   display: none;
 }
