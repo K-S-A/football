@@ -41,9 +41,12 @@ angular.module('mainApp', [
       .state 'tournament.rounds',
         url: '/rounds'
         templateUrl: 'tournaments/rounds.html'
+      .state 'tournament.rounds.show',
+        url: '/{round_id:[0-9]+}'
+        templateUrl: 'rounds/show.html'
         controller: 'RoundsCtrl as vm'
-        resolve: getRounds: ['$stateParams', 'Round', ($stateParams, Round) ->
-          Round.findByTournament($stateParams.id).then (data) ->
+        resolve: getRound: ['$stateParams', 'Round', ($stateParams, Round) ->
+          Round.findByTournament($stateParams.id, $stateParams.round_id).then (data) ->
             Round.current = data]
       .state 'tournaments',
         url: '/tournaments'
@@ -70,10 +73,15 @@ angular.module('mainApp', [
   'Auth'
   'auths'
   'editableOptions'
-  ($rootScope, $state, Auth, auths, editableOptions) ->
+  'Tournament'
+  ($rootScope, $state, Auth, auths, editableOptions, Tournament) ->
     editableOptions.theme = 'bs3'
 
     $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
+      if toState.name is 'tournament.rounds'
+        event.preventDefault()
+        $state.go('tournament.rounds.show', {round_id: Tournament.current.rounds[0].id})
+
       Auth.currentUser()
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1
