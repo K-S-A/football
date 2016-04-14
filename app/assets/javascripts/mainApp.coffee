@@ -41,12 +41,16 @@ angular.module('mainApp', [
       .state 'tournament.rounds',
         url: '/rounds'
         templateUrl: 'tournaments/rounds.html'
+        resolve: getRounds: ['$stateParams', 'Round', 'Tournament', 'getCurrent',
+          ($stateParams, Round, Tournament, getCurrent) ->
+            Round.get(tournamentId: $stateParams.id).then (data) ->
+              getCurrent.rounds = data]
       .state 'tournament.rounds.show',
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
         controller: 'RoundsCtrl as vm'
         resolve: getRound: ['$stateParams', 'Round', ($stateParams, Round) ->
-          Round.findByTournament($stateParams.id, $stateParams.round_id).then (data) ->
+          Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
             Round.current = data]
       .state 'tournaments',
         url: '/tournaments'

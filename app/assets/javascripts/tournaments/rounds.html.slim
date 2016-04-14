@@ -1,4 +1,9 @@
 br/
+
+div data={ my_authorized: "" }
+  button data={ my_add_round: "regular" } Add regular round
+  button data={ my_add_round: "play-off" } Add play-off round
+
 ul.nav.nav-tabs.nav-justified
   li ui-sref="tournament.rounds.show({round_id: round.id})" ui-sref-active="active" data={ ng_repeat: "round in vm.tournament.rounds" }
     a
