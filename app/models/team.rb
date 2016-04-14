@@ -46,7 +46,10 @@ class Team < ActiveRecord::Base
         SELECT
           teams.id AS id,
           teams.name AS name,
-          COUNT(*) AS games_total,
+          SUM(CASE
+            WHEN matches.host_score IS NULL OR matches.guest_score IS NULL THEN 0
+            ELSE 1
+            END) AS games_total,
           SUM(CASE
             WHEN teams.id = matches.host_team_id AND matches.host_score > matches.guest_score OR
               teams.id = matches.guest_team_id AND matches.host_score < matches.guest_score THEN 1
@@ -57,10 +60,12 @@ class Team < ActiveRecord::Base
             ELSE 0
             END) AS games_draw,
           SUM(CASE
+            WHEN matches.host_score IS NULL OR matches.guest_score IS NULL THEN 0
             WHEN teams.id = matches.host_team_id THEN matches.host_score
             ELSE matches.guest_score
             END) AS goals_scored,
           SUM(CASE
+            WHEN matches.host_score IS NULL OR matches.guest_score IS NULL THEN 0
             WHEN teams.id = matches.host_team_id THEN matches.guest_score
             ELSE matches.host_score
             END) AS goals_against
