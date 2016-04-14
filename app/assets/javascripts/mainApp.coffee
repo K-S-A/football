@@ -49,9 +49,10 @@ angular.module('mainApp', [
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
         controller: 'RoundsCtrl as vm'
-        resolve: getRound: ['$stateParams', 'Round', ($stateParams, Round) ->
-          Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
-            Round.current = data]
+        resolve: getRound: ['$stateParams', 'Round', 'getCurrent',
+          ($stateParams, Round, getCurrent) ->
+            Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
+              Round.current = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'
@@ -78,14 +79,26 @@ angular.module('mainApp', [
   'auths'
   'editableOptions'
   'Tournament'
-  ($rootScope, $state, Auth, auths, editableOptions, Tournament) ->
+  'Round'
+  ($rootScope, $state, Auth, auths, editableOptions, Tournament, Round) ->
     editableOptions.theme = 'bs3'
 
-    $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
+    $rootScope.$on("$stateChangeError", console.log.bind(console))
+
+    $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams, options) ->
       if toState.name is 'tournament.rounds'
         event.preventDefault()
         $state.go('tournament.rounds.show', {round_id: Tournament.current.rounds[0].id})
 
+    $rootScope.$on '$stateChangeError', (event, toState, toParams, fromState, fromParams, options) ->
+      if toState.name is 'tournament.rounds.show'
+        event.preventDefault()
+        Round.get(tournamentId: toParams.id).then (data) ->
+          Tournament.current.rounds = data
+          toParams.round_id = Tournament.current.rounds[0].id
+          $state.go('tournament.rounds.show', toParams)
+
+    $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
       Auth.currentUser()
       .then ->
         if ['login', 'register'].indexOf(toState.name) > -1

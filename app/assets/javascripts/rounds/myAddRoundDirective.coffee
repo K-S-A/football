@@ -7,7 +7,6 @@ angular.module('mainApp').directive 'myAddRound', [
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
-        Round.createByTournament(Tournament.current.id,
-          mode: attrs.myAddRound).then (data) ->
+        new Round(mode: attrs.myAddRound, tournamentId: Tournament.current.id).create().then (data) ->
             Tournament.current.rounds.push(data)
 ]
