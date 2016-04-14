@@ -5,8 +5,7 @@ angular.module('mainApp').controller 'RoundsCtrl', [
   (Round) ->
     vm = this
 
-    vm.rounds = Round.current
-
+    vm.round = Round.current
 #    vm.create = ->
 #      new Tournament(vm.tournament).create().then (data) ->
 #        $state.go 'tournament.participants', id: data.id

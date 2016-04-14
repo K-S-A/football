@@ -10,8 +10,8 @@ angular.module('mainApp').factory 'Round', [
       serializer: railsSerializer ->
         @only 'id', 'mode', 'position')
 
-    Round.findByTournament = (tournament_id) ->
-      Round.$get('/tournaments/' + tournament_id + '/rounds')
+    Round.findByTournament = (tournamentId, id) ->
+      Round.$get('/tournaments/' + tournamentId + '/rounds/' + id)
 
     Round
 ]
