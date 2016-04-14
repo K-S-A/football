@@ -45,9 +45,11 @@ ActiveRecord::Base.transaction do
     end
 
     # seeding rounds
-    round = t.rounds.new
-    round.teams = t.teams
-    round.save
+    2.times do
+      round = t.rounds.new
+      round.teams = t.teams
+      round.save
+    end
 
     # seeding matches
     games_count = [1, 2].sample

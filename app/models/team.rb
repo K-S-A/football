@@ -22,6 +22,10 @@ class Team < ActiveRecord::Base
       tournament.teams.create(teams_params)
     end
 
+    def round_stats(round_id)
+      Team.find_by_sql(round_stats_query(round_id))
+    end
+
     private
 
     def generate_teams(tournament, team_size)
@@ -31,6 +35,40 @@ class Team < ActiveRecord::Base
         .in_groups_of(participants.length / team_size)[0..team_size - 1]
         .map(&:shuffle)
         .transpose
+    end
+
+    def round_stats_query(round_id)
+      %{SELECT *,
+        (games_won * 3 + games_draw) AS points,
+        (goals_scored - goals_against) AS goals_diff
+      FROM(
+        SELECT
+          teams.id AS id,
+          teams.name AS name,
+          COUNT(*) AS games_total,
+          SUM(CASE
+            WHEN teams.id = matches.host_team_id AND matches.host_score > matches.guest_score OR
+              teams.id = matches.guest_team_id AND matches.host_score < matches.guest_score THEN 1
+            ELSE 0
+            END) AS games_won,
+          SUM(CASE
+            WHEN matches.host_score = matches.guest_score THEN 1
+            ELSE 0
+            END) AS games_draw,
+          SUM(CASE
+            WHEN teams.id = matches.host_team_id THEN matches.host_score
+            ELSE matches.guest_score
+            END) AS goals_scored,
+          SUM(CASE
+            WHEN teams.id = matches.host_team_id THEN matches.guest_score
+            ELSE matches.host_score
+            END) AS goals_against
+        FROM teams
+          JOIN matches
+          ON teams.id = matches.guest_team_id OR teams.id = matches.host_team_id
+        WHERE matches.round_id = #{round_id}
+        GROUP BY teams.id) AS data
+      ORDER BY points DESC, goals_diff DESC}
     end
   end
 end
