@@ -1,0 +1,8 @@
+h3 Available teams
+ul
+  li data={ ng_repeat: "team in vm.teams" }
+    span
+      | {{ team }}
+    button data={ ng_click: "vm.addTeam($index)" } Add
+button data={ ng_click: "vm.close()" } Save
+button data={ ng_click: "vm.cancel()" } Cancel

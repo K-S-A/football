@@ -8,13 +8,15 @@ angular.module('mainApp').factory 'Round', [
       url: 'tournaments/{{tournamentId}}/rounds/{{id}}'
       name: 'round'
       serializer: railsSerializer ->
-        @only 'id', 'mode', 'position')
+        @only 'id', 'mode', 'position', 'teams', 'teamIds')
 
-#    Round.findByTournament = (tournamentId, id) ->
-#      Round.$get('/tournaments/' + tournamentId + '/rounds/' + id)
+    Round.beforeRequest (data) ->
+      if data && data['teams']
+        data['team_ids'] = data['teams'].map (team) ->
+          team.id
+        delete data['teams']
 
-#    Round.createByTournament = (tournamentId, params) ->
-#      Round.$post('/tournaments/' + tournamentId + '/rounds', params)
+      data
 
     Round
 ]
