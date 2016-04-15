@@ -6,6 +6,6 @@ angular.module('mainApp').directive 'myDeleteRoundTeam', [
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
-        Round.$delete('/rounds/' + scope.vm.round.id, teamId: scope.team.id).then ->
-          scope.vm.round.teams.splice(scope.$index, 1)
+        Round.$delete('/rounds/' + scope.vm.round.id, teamId: scope.team.id).then (data) ->
+          Round.current.teams = data.teams
 ]
