@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :rounds, only: [:update, :destroy] do
     resources :teams, only: [:index, :create]
+    resources :matches, only: [:index]
   end
 
   resources :teams, only: [:show, :update, :destroy]
