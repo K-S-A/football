@@ -3,6 +3,8 @@ class Team < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :rounds
 
+  after_destroy :remove_matches
+
   def matches
     Match.where('host_team_id = :id OR guest_team_id = :id', id: id)
   end
@@ -78,5 +80,11 @@ class Team < ActiveRecord::Base
         GROUP BY teams.id) AS data
       ORDER BY points DESC, goals_diff DESC}
     end
+  end
+
+  private
+
+  def remove_matches
+    matches.destroy_all
   end
 end
