@@ -73,32 +73,9 @@ class Team < ActiveRecord::Base
         FROM teams
           JOIN rounds_teams
           ON rounds_teams.team_id = teams.id AND rounds_teams.round_id = #{round_id}
-          JOIN matches
-          ON teams.id = matches.guest_team_id OR teams.id = matches.host_team_id
-        WHERE matches.round_id = #{round_id}
+          LEFT JOIN matches
+          ON (teams.id = matches.guest_team_id OR teams.id = matches.host_team_id) AND matches.round_id = #{round_id}
         GROUP BY teams.id) AS data
-      UNION
-      SELECT
-        teams.id AS id,
-        teams.name AS name,
-        0 AS games_total,
-        0 AS games_won,
-        0 AS games_draw,
-        0 AS goals_scored,
-        0 AS goals_against,
-        0 AS points,
-        0 AS goals_diff
-      FROM rounds_teams
-        JOIN teams
-        ON rounds_teams.team_id = teams.id AND rounds_teams.round_id = #{round_id}
-      WHERE teams.id NOT IN(
-        SELECT matches.host_team_id AS id
-        FROM matches
-        WHERE matches.round_id = #{round_id}
-        UNION
-        SELECT matches.guest_team_id AS id
-        FROM matches
-        WHERE matches.round_id = #{round_id})
       ORDER BY points DESC, goals_diff DESC}
     end
   end
