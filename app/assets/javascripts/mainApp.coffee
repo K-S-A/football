@@ -49,10 +49,22 @@ angular.module('mainApp', [
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
         controller: 'RoundsCtrl as vm'
+      .state 'tournament.rounds.show.teams',
+        url: '/teams'
+        templateUrl: 'rounds/teams.html'
+        controller: 'RoundsCtrl as vm'
         resolve: getRound: ['$stateParams', 'Round', 'getCurrent',
           ($stateParams, Round, getCurrent) ->
             Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
               Round.current = data]
+      .state 'tournament.rounds.show.matches',
+        url: '/matches'
+        templateUrl: 'rounds/matches.html'
+        controller: 'MatchesCtrl as vm'
+        resolve: getMatches: ['$stateParams', 'Match',
+          ($stateParams, Match) ->
+            Match.get(roundId: $stateParams.round_id).then (data) ->
+              Match.all = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'
@@ -86,9 +98,13 @@ angular.module('mainApp', [
     $rootScope.$on("$stateChangeError", console.log.bind(console))
 
     $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams, options) ->
-      if toState.name is 'tournament.rounds'
-        event.preventDefault()
-        $state.go('tournament.rounds.show', {round_id: Tournament.current.rounds[0].id})
+      event.preventDefault()
+
+      switch toState.name
+        when 'tournament.rounds'
+          $state.go('tournament.rounds.show', {round_id: Tournament.current.rounds[0].id})
+        when 'tournament.rounds.show'
+          $state.go('tournament.rounds.show.teams')
 
     $rootScope.$on '$stateChangeError', (event, toState, toParams, fromState, fromParams, options) ->
       if toState.name is 'tournament.rounds.show'

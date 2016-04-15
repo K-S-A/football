@@ -5,5 +5,5 @@ json.host_team do
 end
 
 json.guest_team do
-  json.partial! 'teams/team', team: match.host_team
+  json.partial! 'teams/team', team: match.guest_team
 end

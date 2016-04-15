@@ -1,39 +1,9 @@
-table.table.table-condensed.table-hover
-  thead
-    th Place
-    th ID
-    th Team name
-    th Total games
-    th Win
-    th Lose
-    th Draw
-    th Goals scored/against
-    th Goals diff
-    th Points
-  tbody
-    tr data={ ng_repeat: "team in vm.round.teams" }
-      td
-        | {{ $index + 1 }}
-      td
-        | {{ team.id }}
-      td
-        | {{ team.name }}
-      td
-        | {{ team.gamesTotal }}
-      td
-        | {{ team.gamesWon }}
-      td
-        | {{ team.gamesTotal - team.gamesWon - team.gamesDraw }}
-      td
-        | {{ team.gamesDraw }}
-      td
-        | {{ team.goalsScored + '/' + team.goalsAgainst }}
-      td
-        | {{ team.goalsDiff }}
-      td
-        | {{ team.points }}
-      td
-        span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
-    tr
-      td
-        button data={ my_add_round_teams: "", my_authorized: "" } Add team
+br/
+
+ul.nav.nav-tabs.nav-justified
+  li ui-sref="tournament.rounds.show.teams" ui-sref-active="active"
+    a Teams
+  li ui-sref="tournament.rounds.show.matches" ui-sref-active="active"
+    a Matches
+
+ui-view

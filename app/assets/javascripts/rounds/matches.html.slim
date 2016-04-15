@@ -1,0 +1,26 @@
+h3 Matches
+table.table.table-condensed.table-hover
+  thead
+    th ID
+    th Host team
+    th Host score
+    th Guest team
+    th Guest score
+    th
+  tbody
+    tr data={ ng_repeat: "match in vm.matches" }
+      td
+        | {{ match.id }}
+      td
+        | {{ match.hostTeam.name }}
+      td
+        | {{ match.hostScore }}
+      td
+        | {{ match.guestScore }}
+      td
+        | {{ match.guestTeam.name }}
+      td
+        / span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
+    / tr
+    /   td
+    /     button data={ my_add_round_teams: "", my_authorized: "" } Add team
