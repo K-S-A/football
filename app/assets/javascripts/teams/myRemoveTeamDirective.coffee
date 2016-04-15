@@ -3,12 +3,14 @@
 angular.module('mainApp').directive 'myRemoveTeam', [
   'Tournament'
   'Team'
-  (Tournament, Team) ->
+  '$window'
+  (Tournament, Team, $window) ->
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
-        index = scope.$index
+        if $window.confirm('Remove team?')
+          index = scope.$index
 
-        scope.team.delete().then (data) ->
-            Tournament.current.teams.splice(index, 1)
+          scope.team.delete().then (data) ->
+              Tournament.current.teams.splice(index, 1)
 ]
