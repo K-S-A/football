@@ -30,11 +30,14 @@ class RoundsController < ApplicationController
     if params[:team_id]
       team = @round.teams.find(params[:team_id])
       @round.teams.delete(team)
+      find_teams
+
+      render 'show'
     else
       @round.destroy
-    end
 
-    render nothing: true
+      render nothing: true
+    end
   end
 
   private
