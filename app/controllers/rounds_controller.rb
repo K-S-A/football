@@ -20,7 +20,12 @@ class RoundsController < ApplicationController
   end
 
   def destroy
-    @round.destroy
+    if params[:team_id]
+      team = @round.teams.find(params[:team_id])
+      @round.teams.delete(team)
+    else
+      @round.destroy
+    end
 
     render nothing: true
   end

@@ -70,9 +70,11 @@ class Team < ActiveRecord::Base
             ELSE matches.host_score
             END) AS goals_against
         FROM teams
-          JOIN matches
+          JOIN rounds_teams
+          ON rounds_teams.team_id = teams.id
+          LEFT JOIN matches
           ON teams.id = matches.guest_team_id OR teams.id = matches.host_team_id
-        WHERE matches.round_id = #{round_id}
+        WHERE rounds_teams.round_id = #{round_id}
         GROUP BY teams.id) AS data
       ORDER BY points DESC, goals_diff DESC}
     end
