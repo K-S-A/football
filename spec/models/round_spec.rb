@@ -12,6 +12,6 @@ RSpec.describe Round, type: :model do
       FactoryGirl.create(:match, round: round, host_team: host, guest_team: guest)
     end
 
-    expect{ round.teams = [] }.to change(Match, :count).by(-2)
+    expect { round.teams = [] }.to change(Match, :count).by(-2)
   end
 end
