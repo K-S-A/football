@@ -1,4 +1,7 @@
 h3 Matches
+
+my-add-match-form
+
 table.table.table-condensed.table-hover
   thead
     th ID
@@ -20,7 +23,4 @@ table.table.table-condensed.table-hover
       td
         | {{ match.guestTeam.name }}
       td
-        / span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
-    / tr
-    /   td
-    /     button data={ my_add_round_teams: "", my_authorized: "" } Add team
+        span.glyphicon.glyphicon-remove data={ my_delete_match: "", my_authorized: "" }

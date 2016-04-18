@@ -48,15 +48,15 @@ angular.module('mainApp', [
       .state 'tournament.rounds.show',
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
-        controller: 'RoundsCtrl as vm'
-      .state 'tournament.rounds.show.teams',
-        url: '/teams'
-        templateUrl: 'rounds/teams.html'
-        controller: 'RoundsCtrl as vm'
+        #controller: 'RoundsCtrl as vm'
         resolve: getRound: ['$stateParams', 'Round', 'getCurrent',
           ($stateParams, Round, getCurrent) ->
             Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
               Round.current = data]
+      .state 'tournament.rounds.show.teams',
+        url: '/teams'
+        templateUrl: 'rounds/teams.html'
+        controller: 'RoundsCtrl as vm'
       .state 'tournament.rounds.show.matches',
         url: '/matches'
         templateUrl: 'rounds/matches.html'

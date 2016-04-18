@@ -13,8 +13,8 @@ angular.module('mainApp').factory 'Match', [
 
     Match.beforeRequest (data) ->
       if data
-        data['host_team_id'] = data.hostTeam.id
-        data['guest_team_id'] = data.guestTeam.id
+        data['host_team_id'] ||= data.hostTeam.id
+        data['guest_team_id'] ||= data.guestTeam.id
 
       data
 

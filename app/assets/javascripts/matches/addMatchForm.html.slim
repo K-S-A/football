@@ -1,0 +1,14 @@
+br/
+
+form name="addMatchForm" data={ ng_submit: "vm.create()" }
+  select { name="host_team"
+           id="host_team"
+           data={ ng_model: "vm.match.hostTeamId",
+                  ng_options: "team.id as team.name for team in vm.teams" } }
+  input data={ ng_model: "vm.match.hostScore" } /
+  input data={ ng_model: "vm.match.guestScore" } /
+  select { name="guest_team"
+           id="guest_team"
+           data={ ng_model: "vm.match.guestTeamId",
+                  ng_options: "team.id as team.name for team in vm.teams" } }
+  button type="submit" Add match
