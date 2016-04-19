@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160411124751) do
 
   add_index "assessments", ["rated_user_id"], name: "index_assessments_on_rated_user_id", using: :btree
   add_index "assessments", ["tournament_id"], name: "index_assessments_on_tournament_id", using: :btree
+  add_index "assessments", ["user_id", "rated_user_id", "tournament_id"], name: "index_assessments_on_user_and_tournament", unique: true, using: :btree
   add_index "assessments", ["user_id"], name: "index_assessments_on_user_id", using: :btree
 
   create_table "matches", force: :cascade do |t|

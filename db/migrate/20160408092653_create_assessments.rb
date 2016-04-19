@@ -8,5 +8,7 @@ class CreateAssessments < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    add_index :assessments, [:user_id, :rated_user_id, :tournament_id], unique: true, name: 'index_assessments_on_user_and_tournament'
   end
 end
