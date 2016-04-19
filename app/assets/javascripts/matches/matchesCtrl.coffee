@@ -22,6 +22,10 @@ angular.module('mainApp').controller 'MatchesCtrl', [
       new Match(vm.match).create().then (data) ->
         vm.matches.unshift(data)
 
+    vm.update = ->
+      vm.editedMatch.roundId ||= Round.current.id
+      vm.editedMatch.update()
+
     vm
 
 ]

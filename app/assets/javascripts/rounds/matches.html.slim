@@ -6,16 +6,16 @@ div data={ my_authorized: "" }
       select data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
       button my-generate-matches="" Generate matches
     my-add-match-form
-  div data={ ng_if: "!vm.teams.length" }
-    a ui-sref="^.teams" Add teams
+    my-edit-match-form
+  a ui-sref="^.teams" data={ ng_if: "!vm.teams.length" } Add teams
 
 table.table.table-condensed.table-hover
   thead
     th ID
     th Host team
     th Host score
-    th Guest team
     th Guest score
+    th Guest team
     th
   tbody
     tr data={ ng_repeat: "match in vm.matches" }
@@ -30,5 +30,6 @@ table.table.table-condensed.table-hover
       td
         | {{ match.guestTeam.name }}
       td data={ my_authorized: "" }
-          span.glyphicon.glyphicon-retweet data={ my_swap_teams: "" }
-          span.glyphicon.glyphicon-remove data={ my_delete_match: "" }
+        span.glyphicon.glyphicon-edit data={ my_edit_match: "" }
+        span.glyphicon.glyphicon-retweet data={ my_swap_teams: "" }
+        span.glyphicon.glyphicon-remove data={ my_delete_match: "" }

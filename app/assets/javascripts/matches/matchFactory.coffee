@@ -9,12 +9,15 @@ angular.module('mainApp').factory 'Match', [
       name: 'match'
       serializer: railsSerializer ->
         # TODO: possible issues
-        @only 'id', 'hostTeamId', 'guestTeamId', 'hostScore', 'guestScore', 'teams', 'teamIds', 'count')
+        @only 'id', 'hostTeamId', 'guestTeamId', 'hostTeam', 'guestTeam', 'hostScore', 'guestScore', 'teams', 'teamIds', 'count')
 
     Match.beforeRequest (data) ->
       if data
-        data['host_team_id'] ||= data.hostTeam && data.hostTeam.id
-        data['guest_team_id'] ||= data.guestTeam && data.guestTeam.id
+        data['host_team_id'] ||= data.host_team && data.host_team.id
+        data['guest_team_id'] ||= data.guest_team && data.guest_team.id
+
+        delete data.host_team
+        delete data.guest_team
 
       data
 

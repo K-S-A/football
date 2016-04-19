@@ -5,7 +5,7 @@ angular.module('mainApp').factory 'Assessment', [
   'railsSerializer'
   (railsResourceFactory, railsSerializer) ->
     railsResourceFactory(
-      url: 'tournaments/{{tournamentId}}/assessments/{{id}}'
+      url: 'users/{{userId}}/assessments/{{id}}'
       name: 'assesment'
       serializer: railsSerializer ->
         # TODO: possible issues

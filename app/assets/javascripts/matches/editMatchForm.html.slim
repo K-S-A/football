@@ -1,0 +1,15 @@
+br/
+
+form#edit_match_form.hidden name="editMatchForm"
+  select { name="host_team"
+           id="host_team"
+           data={ ng_model: "vm.editedMatch.hostTeam.id",
+                  ng_options: "team.id as team.name for team in vm.teams" } }
+  input data={ ng_model: "vm.editedMatch.hostScore" } /
+  input data={ ng_model: "vm.editedMatch.guestScore" } /
+  select { name="guest_team"
+           id="guest_team"
+           data={ ng_model: "vm.editedMatch.guestTeam.id",
+                  ng_options: "team.id as team.name for team in vm.teams" } }
+  button type="submit" Update match
+  button type="cancel" Cancel

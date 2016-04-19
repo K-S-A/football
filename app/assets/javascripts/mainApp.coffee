@@ -24,6 +24,10 @@ angular.module('mainApp', [
         url: '/profile'
         templateUrl: 'auth/profile.html'
         controller: 'AuthCtrl as vm'
+        resolve: completedTournaments: ['Auth', 'Tournament', (Auth, Tournament) ->
+          Auth.currentUser().then (user) ->
+            Tournament.query(userId: user.id, status: 'completed').then (data) ->
+              Tournament.completed = data]
       .state 'tournament',
         abstract: true
         url: '/tournaments/{id:[0-9]+}'
@@ -32,6 +36,15 @@ angular.module('mainApp', [
         resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
           Tournament.get($stateParams.id).then (data) ->
             Tournament.current = data]
+      .state 'tournament.assessments',
+        url: '/assessments'
+        templateUrl: 'assessments/index.html'
+        controller: 'AssessmentsCtrl as vm'
+        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'Assessment', ($stateParams, Auth, Assessment) ->
+          Auth.currentUser().then (user) ->
+            Assessment.query({tournamentId: $stateParams.id}, {userId: user.id}).then (data) ->
+              console.log(data)
+              Assessment.current = data]
       .state 'tournament.participants',
         url: '/participants'
         templateUrl: 'tournaments/participants.html'
