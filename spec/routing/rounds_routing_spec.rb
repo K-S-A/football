@@ -7,11 +7,11 @@ RSpec.describe RoundsController, type: :routing do
     end
 
     it 'doesn\'t route to #new' do
-      expect(get: 'tournament_id/1/rounds/new').not_to be_routable
+      expect(get: '/tournaments/1/rounds/new').not_to be_routable
     end
 
     it 'routes to #show' do
-      expect(get: 'tournaments/1/rounds/2').to route_to('rounds#show', tournament_id: '1', id: '2')
+      expect(get: '/tournaments/1/rounds/2').to route_to('rounds#show', tournament_id: '1', id: '2')
     end
 
     it 'doesn\'t route to #edit' do
@@ -19,7 +19,7 @@ RSpec.describe RoundsController, type: :routing do
     end
 
     it 'routes to #create' do
-      expect(post: 'tournaments/1/rounds').to route_to('rounds#create', tournament_id: '1')
+      expect(post: '/tournaments/1/rounds').to route_to('rounds#create', tournament_id: '1')
     end
 
     it 'routes to #update via PUT' do

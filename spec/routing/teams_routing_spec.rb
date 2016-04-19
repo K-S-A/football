@@ -8,7 +8,7 @@ RSpec.describe TeamsController, type: :routing do
     end
 
     it 'doesn\'t route to #new' do
-      expect(get: 'tournament_id/1/teams/new').not_to be_routable
+      expect(get: '/tournaments/1/teams/new').not_to be_routable
     end
 
     it 'routes to #show' do
@@ -20,8 +20,8 @@ RSpec.describe TeamsController, type: :routing do
     end
 
     it 'routes to #create' do
-      expect(post: 'tournaments/1/teams').to route_to('teams#create', tournament_id: '1')
-      expect(post: 'rounds/1/teams').to route_to('teams#create', round_id: '1')
+      expect(post: '/tournaments/1/teams').to route_to('teams#create', tournament_id: '1')
+      expect(post: '/rounds/1/teams').to route_to('teams#create', round_id: '1')
     end
 
     it 'routes to #update via PUT' do
