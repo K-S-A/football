@@ -9,12 +9,17 @@ class MatchesController < ApplicationController
   end
 
   def create
-    if params[:match][:team_ids]
-      @matches = Match.batch_generate(params[:match][:team_ids],
-                                      params[:round_id],
-                                      params[:match][:count])
-    else
+    match = params[:match]
+
+    case
+    when !match.key?(:team_ids)
       @match = @round.matches.create(match_params)
+    when match[:team_ids]
+      @matches = Match.batch_generate(match[:team_ids],
+                                      params[:round_id],
+                                      match[:count])
+    else
+      render nothing: true, status: 400
     end
   end
 

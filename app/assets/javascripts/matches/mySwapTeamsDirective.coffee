@@ -13,4 +13,5 @@ angular.module('mainApp').directive 'mySwapTeams', [
 
         match.update().then (data) ->
           scope.match = data
+
 ]

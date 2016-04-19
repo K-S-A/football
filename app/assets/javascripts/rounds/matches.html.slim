@@ -1,9 +1,13 @@
 h3 Matches
-| {{ vm.match }}
-form
-  select data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
-  button my-generate-matches="" Generate matches
-my-add-match-form
+
+div data={ my_authorized: "" }
+  div data={ ng_if: "vm.teams.length" }
+    form
+      select data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
+      button my-generate-matches="" Generate matches
+    my-add-match-form
+  div data={ ng_if: "!vm.teams.length" }
+    a ui-sref="^.teams" Add teams
 
 table.table.table-condensed.table-hover
   thead
@@ -25,6 +29,6 @@ table.table.table-condensed.table-hover
         | {{ match.guestScore }}
       td
         | {{ match.guestTeam.name }}
-      td
-        span.glyphicon.glyphicon-retweet data={ my_swap_teams: "", my_authorized: "" }
-        span.glyphicon.glyphicon-remove data={ my_delete_match: "", my_authorized: "" }
+      td data={ my_authorized: "" }
+          span.glyphicon.glyphicon-retweet data={ my_swap_teams: "" }
+          span.glyphicon.glyphicon-remove data={ my_delete_match: "" }
