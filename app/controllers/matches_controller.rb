@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
-  before_action :find_round, only: [:index, :create]
+  before_action :find_round, only: [:index, :create, :update]
 
-  authorize_resource only: [:create]
+  authorize_resource only: [:create, :update]
   load_and_authorize_resource only: [:destroy]
 
   def index
@@ -9,7 +9,20 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @match = @round.matches.create(match_params)
+    if params[:match][:team_ids]
+      @matches = Match.batch_generate(params[:match][:team_ids],
+                                      params[:round_id],
+                                      params[:match][:count])
+    else
+      @match = @round.matches.create(match_params)
+    end
+  end
+
+  def update
+    @match = @round.matches.find(params[:id])
+    @match.update_attributes(match_params)
+
+    render 'create'
   end
 
   def destroy
