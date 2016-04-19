@@ -10,14 +10,14 @@ class Match < ActiveRecord::Base
       ActiveRecord::Base.transaction do
         team_ids.each do |t1|
           team_ids.each do |t2|
-            unless t1 == t2
-              games_count.times do |i|
-                host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
+            next if t1 == t2
 
-                matches << create(round_id: round_id,
-                                  host_team_id: host_team_id,
-                                  guest_team_id: guest_team_id)
-              end
+            games_count.times do |i|
+              host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
+
+              matches << create(round_id: round_id,
+                                host_team_id: host_team_id,
+                                guest_team_id: guest_team_id)
             end
           end
         end

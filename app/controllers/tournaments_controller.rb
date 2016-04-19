@@ -4,7 +4,12 @@ class TournamentsController < ApplicationController
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @tournaments = Tournament.includes(:users, :rounds).all
+    @tournaments =
+      if params[:user_id] && params[:status]
+        find_user.tournaments.where(status: params[:status])
+      else
+        Tournament.includes(:users, :rounds).all
+      end
   end
 
   def create
@@ -35,5 +40,9 @@ class TournamentsController < ApplicationController
   def find_tournament
     # TODO: n+1 query
     @tournament = Tournament.includes(:rounds, teams: :users).find(params[:id])
+  end
+
+  def find_user
+    User.find(params[:user_id])
   end
 end

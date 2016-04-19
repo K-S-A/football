@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :tournaments
+  has_many :assessments
 
   def short_name
     "#{first_name} #{last_name.first}."
