@@ -5,7 +5,7 @@ class Match < ActiveRecord::Base
 
   class << self
     def batch_generate(team_ids, round_id, games_count = 1)
-      ActiveRecord::Base.transaction do
+      transaction do
         team_ids.each.with_index(1).with_object([]) do |(t1, index), arr|
           team_ids[index..-1].each do |t2|
             games_count.times do |i|

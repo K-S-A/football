@@ -19,7 +19,11 @@ class TournamentsController < ApplicationController
   end
 
   def update
-    @tournament.update_attributes(tournament_params)
+    if current_user.admin?
+      @tournament.update_attributes(tournament_params)
+    else
+      @tournament.users << current_user
+    end
 
     render 'show'
   end

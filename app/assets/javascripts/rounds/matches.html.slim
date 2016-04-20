@@ -1,13 +1,13 @@
 h3 Matches
 
 div data={ my_authorized: "" }
-  div data={ ng_if: "vm.teams.length" }
+  div data={ ng_if: "vm.teams.length > 1" }
     form
       select data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
       button my-generate-matches="" Generate matches
     my-add-match-form
     my-edit-match-form
-  a ui-sref="^.teams" data={ ng_if: "!vm.teams.length" } Add teams
+  a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
 
 table.table.table-condensed.table-hover
   thead
