@@ -10,9 +10,9 @@ table.table.table-condensed.table-hover
   tbody
   tr data={ng_repeat: "tournament in vm.tournaments"}
     td ui-sref="tournament.participants({ id: tournament.id })"
-      | {{ vm.toTitle(tournament) }}
+      | {{ tournament.toTitle() }}
     td
       | {{ tournament.status }}
     td
       button data={ my_authorized: "", my_delete_tournament: "" } Remove tournament
-      button data={ my_participate: "", my_allow_participate: "" } Join
+      button data={ my_participate: "" } Join

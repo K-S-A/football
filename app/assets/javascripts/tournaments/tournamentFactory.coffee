@@ -18,8 +18,8 @@ angular.module('mainApp').factory 'Tournament', [
         delete data['users']
         data
 
-    Tournament.toTitle = (tournament) ->
-      '"' + tournament.name + '" (' + tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.sportsKind + ')'
+    Tournament.prototype.toTitle = ->
+      '"' + @name + '" (' + @teamSize + 'x' + @teamSize + ' ' + @sportsKind + ')'
 
     Tournament.prototype.isOpen = ->
       ['not started', 'in progress'].indexOf(@status) > -1

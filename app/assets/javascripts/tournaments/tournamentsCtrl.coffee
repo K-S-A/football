@@ -19,8 +19,5 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
       vm.tournaments[index].delete().then ->
         vm.tournaments.splice(index, 1)
 
-    vm.toTitle = (tournament) ->
-      Tournament.toTitle(tournament)
-
     vm
 ]
