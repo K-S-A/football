@@ -5,7 +5,7 @@ class TournamentsController < ApplicationController
 
   def index
     @tournaments = if params[:user_id] && params[:status]
-                     find_user.tournaments.where(status: params[:status])
+                     Tournament.unrated_tournaments(params[:user_id])
                    else
                      Tournament.includes(:users, :rounds).all
                    end
@@ -43,9 +43,5 @@ class TournamentsController < ApplicationController
   def find_tournament
     # TODO: n+1 query
     @tournament = Tournament.includes(:rounds, teams: :users).find(params[:id])
-  end
-
-  def find_user
-    User.find(params[:user_id])
   end
 end

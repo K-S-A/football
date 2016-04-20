@@ -26,7 +26,7 @@ class Team < ActiveRecord::Base
     end
 
     def round_stats(round_id)
-      Team.find_by_sql(round_stats_query(round_id))
+      find_by_sql(round_stats_query(round_id))
     end
 
     private
