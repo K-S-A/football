@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AssessmentsController, type: :routing do
   context 'routing' do
-    it 'routes to #index' do
-      expect(get: '/users/1/assessments').to route_to('assessments#index', user_id: '1')
-    end
+    # it 'routes to #index' do
+    #   expect(get: '/tournaments/1/assessments').to route_to('assessments#index', tournament_id: '1')
+    # end
 
     # it 'doesn\'t route to #new' do
     #   expect(get: '/assessments/new').not_to be_routable
