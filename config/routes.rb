@@ -6,13 +6,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#main'
 
-  resources :users, only: [:index] do
-    resources :assessments, only: [:index]
-  end
+  resources :users, only: [:index]
 
   resources :tournaments, except: [:new, :edit], id: /\d+/ do
     resources :teams, only: [:index, :create]
     resources :rounds, only: [:index, :create, :show]
+    resources :users, only: [:index]
   end
 
   resources :rounds, only: [:update, :destroy] do

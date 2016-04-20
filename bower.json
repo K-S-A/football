@@ -25,7 +25,8 @@
     "angular-ui-router": "^0.2.18",
     "angularjs-rails-resource": "^2.0.0",
     "angular-bootstrap": "^1.2.5",
-    "angular-xeditable": "^0.1.11"
+    "angular-xeditable": "^0.1.11",
+    "angular-ui-sortable": "^0.14.0"
   },
   "resolutions": {
     "angular": "^1.5.3"
