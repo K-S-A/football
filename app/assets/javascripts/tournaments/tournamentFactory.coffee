@@ -21,5 +21,12 @@ angular.module('mainApp').factory 'Tournament', [
     Tournament.toTitle = (tournament) ->
       '"' + tournament.name + '" (' + tournament.teamSize + 'x' + tournament.teamSize + ' ' + tournament.sportsKind + ')'
 
+    Tournament.prototype.isOpen = ->
+      ['not started', 'in progress'].indexOf(@status) > -1
+
+    Tournament.prototype.includeUser = (user) ->
+      @users.some (u) ->
+        u.id is user.id
+
     Tournament
 ]

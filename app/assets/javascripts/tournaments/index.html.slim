@@ -14,5 +14,5 @@ table.table.table-condensed.table-hover
     td
       | {{ tournament.status }}
     td
-      button data={ my_authorized: "", ng_click: "vm.delete($index)" } Remove tournament
-      button data={ my_participate: "", ng_if: "vm.user" } Join
+      button data={ my_authorized: "", my_delete_tournament: "" } Remove tournament
+      button data={ my_participate: "", my_allow_participate: "" } Join
