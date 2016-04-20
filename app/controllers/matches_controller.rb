@@ -18,8 +18,7 @@ class MatchesController < ApplicationController
       @matches = Match.batch_generate(match[:team_ids],
                                       params[:round_id],
                                       match[:count])
-    else
-      render nothing: true, status: 400
+    else render nothing: true, status: 400
     end
   end
 
