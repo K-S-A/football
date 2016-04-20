@@ -3,6 +3,7 @@
 angular.module('mainApp', [
   'ui.router'
   'ui.bootstrap'
+  'ui.sortable'
   'templates'
   'Devise'
   'xeditable'
@@ -27,7 +28,7 @@ angular.module('mainApp', [
         resolve: completedTournaments: ['Auth', 'Tournament', (Auth, Tournament) ->
           Auth.currentUser().then (user) ->
             Tournament.query(userId: user.id, status: 'completed').then (data) ->
-              Tournament.completed = data]
+              Tournament.unrated = data]
       .state 'tournament',
         abstract: true
         url: '/tournaments/{id:[0-9]+}'
@@ -40,11 +41,12 @@ angular.module('mainApp', [
         url: '/assessments'
         templateUrl: 'assessments/index.html'
         controller: 'AssessmentsCtrl as vm'
-        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'Assessment', ($stateParams, Auth, Assessment) ->
+        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'User', ($stateParams, Auth, User) ->
           Auth.currentUser().then (user) ->
-            Assessment.query({tournamentId: $stateParams.id}, {userId: user.id}).then (data) ->
-              console.log(data)
-              Assessment.current = data]
+            User.$get('/tournaments/' + $stateParams.id + '/users').then (data) ->
+              data = data.filter (u) ->
+                u.id != Auth._currentUser.id
+              User.participants = data]
       .state 'tournament.participants',
         url: '/participants'
         templateUrl: 'tournaments/participants.html'
@@ -61,7 +63,6 @@ angular.module('mainApp', [
       .state 'tournament.rounds.show',
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
-        #controller: 'RoundsCtrl as vm'
         resolve: getRound: ['$stateParams', 'Round', 'getCurrent',
           ($stateParams, Round, getCurrent) ->
             Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
@@ -86,13 +87,6 @@ angular.module('mainApp', [
           Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
-#      .state 'team',
-#        url: '/teams/{id:[0-9]+}'
-#        templateUrl: 'teams/show.html'
-#        controller: 'TeamsCtrl as vm'
-#        resolve: getCurrent: ['$stateParams', 'Team', ($stateParams, Team) ->
-#          Team.get($stateParams.id).then (data) ->
-#            Team.current = data]
 
     $urlRouterProvider.otherwise '/tournaments'
     return

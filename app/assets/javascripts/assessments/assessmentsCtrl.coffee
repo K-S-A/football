@@ -1,9 +1,11 @@
 'use strict'
 
 angular.module('mainApp').controller 'AssessmentsCtrl', [
-  'Tournament'
-  (Tournament) ->
+  'User'
+  (User) ->
     vm = this
+
+    vm.participants = User.participants
 
     vm
 

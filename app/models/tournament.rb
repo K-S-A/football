@@ -16,8 +16,7 @@ class Tournament < ActiveRecord::Base
       FROM tournaments
         LEFT JOIN assessments
         ON tournaments.id = assessments.tournament_id AND assessments.user_id = #{user_id}
-      WHERE assessments.id IS NULL
-      }
+      WHERE assessments.id IS NULL}
     end
   end
 end
