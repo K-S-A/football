@@ -27,26 +27,22 @@ angular.module('mainApp', [
         controller: 'AuthCtrl as vm'
         resolve: completedTournaments: ['Auth', 'Tournament', (Auth, Tournament) ->
           Auth.currentUser().then (user) ->
-            Tournament.query(userId: user.id, status: 'completed').then (data) ->
-              Tournament.unrated = data]
+            Tournament.getUnrated(user.id)]
+      .state 'assessment',
+        url: '/assessments/{id:[0-9]+}'
+        templateUrl: 'assessments/index.html'
+        controller: 'AssessmentsCtrl as vm'
+        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'User', ($stateParams, Auth, User) ->
+          Auth.currentUser().then (user) ->
+            User.getParticipants($stateParams.id, user.id)]
       .state 'tournament',
         abstract: true
         url: '/tournaments/{id:[0-9]+}'
         templateUrl: 'tournaments/show.html'
         controller: 'TournamentsCtrl as vm'
-        resolve: getCurrent: ['$stateParams', 'Tournament', ($stateParams, Tournament) ->
+        resolve: getCurrent: ['$stateParams', 'Tournament', 'Auth', ($stateParams, Tournament, Auth) ->
           Tournament.get($stateParams.id).then (data) ->
             Tournament.current = data]
-      .state 'tournament.assessments',
-        url: '/assessments'
-        templateUrl: 'assessments/index.html'
-        controller: 'AssessmentsCtrl as vm'
-        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'User', ($stateParams, Auth, User) ->
-          Auth.currentUser().then (user) ->
-            User.$get('/tournaments/' + $stateParams.id + '/users').then (data) ->
-              data = data.filter (u) ->
-                u.id != Auth._currentUser.id
-              User.participants = data]
       .state 'tournament.participants',
         url: '/participants'
         templateUrl: 'tournaments/participants.html'
@@ -114,12 +110,16 @@ angular.module('mainApp', [
           $state.go('tournament.rounds.show.teams')
 
     $rootScope.$on '$stateChangeError', (event, toState, toParams, fromState, fromParams, options) ->
-      if toState.name is 'tournament.rounds.show'
-        event.preventDefault()
-        Round.get(tournamentId: toParams.id).then (data) ->
-          Tournament.current.rounds = data
-          toParams.round_id = Tournament.current.rounds[0].id
-          $state.go('tournament.rounds.show', toParams)
+      switch toState.name
+        when'tournament.rounds.show'
+          event.preventDefault()
+          Round.get(tournamentId: toParams.id).then (data) ->
+            Tournament.current.rounds = data
+            toParams.round_id = Tournament.current.rounds[0].id
+            $state.go('tournament.rounds.show', toParams)
+        when 'assessment'
+          event.preventDefault()
+          $state.go('profile')
 
     $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
       Auth.currentUser()

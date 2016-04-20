@@ -18,6 +18,10 @@ angular.module('mainApp').factory 'Tournament', [
         delete data['users']
         data
 
+    Tournament.getUnrated = (user_id) ->
+      Tournament.query(userId: user_id, status: 'completed').then (data) ->
+        Tournament.unrated = data
+
     Tournament.prototype.toTitle = ->
       '"' + @name + '" (' + @teamSize + 'x' + @teamSize + ' ' + @sportsKind + ')'
 
