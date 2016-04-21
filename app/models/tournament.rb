@@ -4,6 +4,8 @@ class Tournament < ActiveRecord::Base
   has_many :assessments
   has_and_belongs_to_many :users
 
+  default_scope { order(id: :desc) }
+
   # TODO: refactor
   def rated_by?(user_id)
     assessments.where(user_id: user_id).count > 0

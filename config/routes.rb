@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :teams, only: [:index, :create]
     resources :rounds, only: [:index, :create, :show]
     resources :users, only: [:index]
+    resources :assessments, only: [:create]
   end
 
   resources :rounds, only: [:update, :destroy] do

@@ -29,7 +29,7 @@ angular.module('mainApp', [
           Auth.currentUser().then (user) ->
             Tournament.getUnrated(user.id)]
       .state 'assessment',
-        url: '/assessments/{id:[0-9]+}'
+        url: '/tournaments/{id:[0-9]+}/assessments'
         templateUrl: 'assessments/index.html'
         controller: 'AssessmentsCtrl as vm'
         resolve: tournamentAssessments: ['$stateParams', 'Auth', 'User', ($stateParams, Auth, User) ->
@@ -105,7 +105,9 @@ angular.module('mainApp', [
 
       switch toState.name
         when 'tournament.rounds'
-          $state.go('tournament.rounds.show', {round_id: Tournament.current.rounds[0].id})
+          round = Tournament.current.rounds[0]
+          if round
+            $state.go('tournament.rounds.show', {round_id: round.id})
         when 'tournament.rounds.show'
           $state.go('tournament.rounds.show.teams')
 
@@ -120,6 +122,8 @@ angular.module('mainApp', [
         when 'assessment'
           event.preventDefault()
           $state.go('profile')
+        else
+          $state.go('tournaments')
 
     $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) ->
       Auth.currentUser()

@@ -8,6 +8,7 @@ class Ability
       can :manage, :all
     when user.persisted?
       can :update, Tournament
+      can :create, Assessment
       can :read, :all
     else
       can :read, :all

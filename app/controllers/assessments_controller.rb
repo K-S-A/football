@@ -1,15 +1,22 @@
 class AssessmentsController < ApplicationController
-  before_action :find_user
+  authorize_resource only: [:create]
 
-  authorize_resource only: [:index]
+  def create
+    @assessments = Assessment.create!(assessments_params)
 
-  def index
-    @assessments = @user.assessments.where(tournament_id: params[:tournament_id])
+    render nothing: true
   end
 
   private
 
-  def find_user
-    @user = User.find(params[:user_id])
+  def assessments_params
+    params[:assessments] = params[:assessments].map.with_index do |a, i|
+      a[:score] = i
+      a[:user_id] = current_user.id
+      a[:tournament_id] = params[:tournament_id]
+      a
+    end
+
+    params.permit(assessments: [:rated_user_id, :score, :user_id, :tournament_id]).require(:assessments)
   end
 end

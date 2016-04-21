@@ -11,7 +11,7 @@ RSpec.describe MatchesController, type: :routing do
     end
 
     it 'doesn\'t route to #show' do
-      expect(get: '/matches/2').not_to route_to('matches#show', id: '2')
+      expect(get: '/matches/2').not_to be_routable
     end
 
     it 'doesn\'t route to #edit' do
