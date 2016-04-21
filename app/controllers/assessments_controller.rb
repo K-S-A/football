@@ -2,7 +2,12 @@ class AssessmentsController < ApplicationController
   authorize_resource only: [:create]
 
   def create
-    @assessments = Assessment.create!(assessments_params)
+    assessments_params.each.with_index do |param, i|
+      param[:score] = i
+      param[:user_id] = current_user.id
+      param[:tournament_id] = params[:tournament_id]
+      Assessment.create!(param)
+    end
 
     render nothing: true
   end
@@ -10,13 +15,6 @@ class AssessmentsController < ApplicationController
   private
 
   def assessments_params
-    params[:assessments] = params[:assessments].map.with_index do |a, i|
-      a[:score] = i
-      a[:user_id] = current_user.id
-      a[:tournament_id] = params[:tournament_id]
-      a
-    end
-
     params.permit(assessments: [:rated_user_id, :score, :user_id, :tournament_id]).require(:assessments)
   end
 end

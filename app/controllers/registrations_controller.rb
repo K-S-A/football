@@ -1,10 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
-    # if Users.count == 0 then @user.rank == 0
-    # else => average users rank * 1.5
-    #
-    # higher rank - lower player skill
-    params[:user][:rank] = (User.average(:rank) || 0) * 1.5
+    params[:user][:rank] = (User.average(:rank) || 0) * 0.7
     super
   end
 
