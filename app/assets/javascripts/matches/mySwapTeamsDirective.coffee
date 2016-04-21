@@ -9,7 +9,7 @@ angular.module('mainApp').directive 'mySwapTeams', [
       element.on 'click', ->
         match = angular.copy(scope.match)
         match.roundId = Round.current.id
-        [match.hostTeam, match.guestTeam] = [match.guestTeam, match.hostTeam]
+        [match.hostTeamId, match.guestTeamId] = [match.guestTeam.id, match.hostTeam.id]
 
         match.update().then (data) ->
           scope.match = data
