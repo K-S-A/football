@@ -2,11 +2,14 @@ class AssessmentsController < ApplicationController
   authorize_resource only: [:create]
 
   def create
-    assessments_params.each.with_index do |param, i|
-      param[:score] = i
-      param[:user_id] = current_user.id
-      param[:tournament_id] = params[:tournament_id]
-      Assessment.create!(param)
+    Assessment.transaction do
+      assessments_params.each.with_index do |param, i|
+        param[:score] = i
+        param[:user_id] = i != 10 ? current_user.id : nil
+        param[:tournament_id] = params[:tournament_id]
+
+        Assessment.create!(param)
+      end
     end
 
     render nothing: true

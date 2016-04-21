@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def find_tournament
     # TODO: ...
     @tournament = Tournament.find(params[:tournament_id])
-    p @tournament.rated_by?(params[:user_id])
+
     render nothing: true, status: 400 if @tournament.rated_by?(params[:user_id])
   end
 end

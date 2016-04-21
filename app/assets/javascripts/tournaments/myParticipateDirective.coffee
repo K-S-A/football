@@ -6,13 +6,16 @@ angular.module('mainApp').directive 'myParticipate', [
   (Tournament, Auth) ->
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
-      if Auth._currentUser && scope.tournament.isOpen() && !scope.tournament.includeUser(Auth._currentUser)
-        element.show()
-      else
-        element.hide()
+      scope.$watch('tournament.status', (newVal, oldVal) ->
+        if !scope.tournament.isOpen() || !Auth.isAuthenticated() || scope.tournament.includeUser(Auth._currentUser)
+          element.hide()
+        else
+          element.show())
 
       element.on 'click', ->
-        scope.tournament.users.push(Auth._currentUser)
-        scope.tournament.update().then ->
+        tournament = angular.copy(scope.tournament)
+        tournament.users.push(Auth._currentUser)
+        tournament.update().then (data) ->
+          scope.tournament = data
           element.hide()
 ]

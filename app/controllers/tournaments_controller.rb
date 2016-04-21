@@ -20,6 +20,7 @@ class TournamentsController < ApplicationController
 
   def update
     if current_user.admin?
+      @tournament.rank_users if tournament_closing?
       @tournament.update_attributes(tournament_params)
     else
       @tournament.users << current_user
@@ -43,5 +44,9 @@ class TournamentsController < ApplicationController
   def find_tournament
     # TODO: n+1 query
     @tournament = Tournament.includes(:rounds, teams: :users).find(params[:id])
+  end
+
+  def tournament_closing?
+    tournament_params[:status] != @tournament.status && tournament_params[:status] == 'closed'
   end
 end

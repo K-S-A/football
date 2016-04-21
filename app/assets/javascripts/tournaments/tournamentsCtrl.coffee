@@ -10,6 +10,7 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
     vm.user = Auth._currentUser
     vm.tournaments = Tournament.all
     vm.tournament = Tournament.current
+    vm.statuses = ['not started', 'in progress', 'completed']
 
     vm.create = ->
       new Tournament(vm.tournament).create().then (data) ->
