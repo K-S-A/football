@@ -7,6 +7,8 @@ RSpec.describe Tournament, type: :model do
     @uncompleted_tournaments = FactoryGirl.create_list(:inprogress_tournament, 3)
   end
 
+  let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
+
   it { expect(subject).to have_many(:rounds) }
   it { expect(subject).to have_many(:teams) }
   it { expect(subject).to have_many(:assessments) }
@@ -29,7 +31,6 @@ RSpec.describe Tournament, type: :model do
   end
 
   context '#rank_users' do
-    let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
     let(:rank_users) { tournament.rank_users }
 
     let(:create_assessments) do
@@ -44,7 +45,7 @@ RSpec.describe Tournament, type: :model do
     it 'should change ranks of all tournament participants' do
       create_assessments
 
-      expect{ rank_users }.to change{ tournament.users.pluck(:rank) }.from([nil]*5).to([1000, 800, 600, 400, 200])
+      expect{ rank_users }.to change{ tournament.users.pluck(:rank).sort }.from([nil]*5).to([200, 400, 600, 800, 1000])
     end
 
     it 'should not change ranks if there is no assessments' do
@@ -75,6 +76,59 @@ RSpec.describe Tournament, type: :model do
       FactoryGirl.create(:assessment, rated_user_id: @user.id, tournament: rated_tournament)
 
       expect(@completed_tournaments - subject).to eq([rated_tournament])
+    end
+  end
+
+  context '#generate_teams' do
+    let(:generate_teams) { tournament.generate_teams(1) }
+    let(:top_players) { tournament.users.order(rank: :desc)[0..1] }
+
+    let(:rank_players) do
+      tournament.users.each.with_index { |u, i| u.rank = i; u.save }
+    end
+
+    it 'should accept team_size as argument' do
+      expect{ tournament.generate_teams }.to raise_error(ArgumentError, /expected 1/)
+    end
+
+    it 'should return Array' do
+      expect(generate_teams).to be_kind_of(Array)
+    end
+
+    it 'should create teams of specified size' do
+      expect(tournament.teams.count).to be_zero
+      team_size = 3
+      tournament.generate_teams(team_size)
+
+      expect(tournament.teams.last.users.count).to eq(team_size)
+    end
+
+    it 'should generate div(participants.count / team_size) teams' do
+      expect{ tournament.generate_teams(2) }.to change{ tournament.teams.count }.by(2)
+      expect{ generate_teams }.to change { tournament.teams.count }.by(5)
+    end
+
+    it 'should not generate teams if participants.count < team_size' do
+      expect{ tournament.generate_teams(tournament.users.count + 1) }.not_to change{ tournament.teams.count }
+    end
+
+    it 'should separate top rated users in different teams' do
+      rank_players
+      top_players
+      tournament.generate_teams(2)
+
+      expect(tournament.teams.any? { |t| (t.users - top_players).empty? }).to be_falsey
+    end
+
+    it 'should return different result on each call' do
+      rank_players
+      expect(tournament.generate_teams(2)).not_to eq(tournament.generate_teams(2))
+    end
+
+    it 'should assign player to only one team' do
+      teams_player_ids = tournament.generate_teams(2).flat_map { |t| t.users.pluck(:id) }
+
+      expect(teams_player_ids.size).to eq(teams_player_ids.uniq.size)
     end
   end
 end

@@ -3,42 +3,18 @@ class Team < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :rounds
 
-  after_destroy :remove_matches
+  after_destroy { matches.destroy_all }
 
   def matches
     Match.where('host_team_id = :id OR guest_team_id = :id', id: id)
   end
 
   class << self
-    def batch_generate(tournament_id, team_size)
-      # generate teams
-      tournament = Tournament.includes(:users).find(tournament_id)
-      teams = generate_teams(tournament, team_size)
-
-      # generate teams_params
-      teams_params = teams.each.with_object([]) do |team, obj|
-        obj.push(name: team.map(&:short_name).join(' + '),
-                 user_ids: team.map(&:id))
-      end
-
-      # insert teams/users
-      tournament.teams.create(teams_params)
-    end
-
     def round_stats(round_id)
       find_by_sql(round_stats_query(round_id))
     end
 
     private
-
-    def generate_teams(tournament, team_size)
-      participants = tournament.users
-
-      participants
-        .in_groups_of(participants.length / team_size)[0..team_size - 1]
-        .map(&:shuffle)
-        .transpose
-    end
 
     def round_stats_query(round_id)
       # TODO: refactor nested subqueries
@@ -80,11 +56,5 @@ class Team < ActiveRecord::Base
         GROUP BY teams.id) AS data
       ORDER BY points DESC, goals_diff DESC}
     end
-  end
-
-  private
-
-  def remove_matches
-    matches.destroy_all
   end
 end

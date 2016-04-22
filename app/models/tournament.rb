@@ -28,6 +28,25 @@ class Tournament < ActiveRecord::Base
     assessments.destroy_all
   end
 
+  def generate_teams(team_size)
+    # shuffle tournament participants
+    return if users.count < team_size
+    new_teams = users.
+      order(rank: :desc).
+      in_groups_of(users.count / team_size)[0..team_size - 1].
+      map(&:shuffle).
+      transpose
+
+    # generate teams_params
+    teams_params = new_teams.each.with_object([]) do |team, obj|
+      obj.push(name: team.map(&:short_name).join(' + '),
+               user_ids: team.map(&:id))
+    end
+
+    # insert teams/users
+    teams.create(teams_params)
+  end
+
   class << self
     def unrated_tournaments(user_id)
       find_by_sql(unrated_tournaments_query(user_id))
