@@ -4,8 +4,8 @@ class TournamentsController < ApplicationController
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @tournaments = if params[:user_id] && params[:status]
-                     Tournament.unrated_tournaments(params[:user_id])
+    @tournaments = if params[:status]
+                     current_user.unrated_tournaments
                    else
                      Tournament.includes(:users, :rounds).all
                    end

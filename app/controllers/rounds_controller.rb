@@ -51,6 +51,6 @@ class RoundsController < ApplicationController
   end
 
   def find_teams
-    @teams = Team.round_stats(params[:id])
+    @teams = @round.stats
   end
 end

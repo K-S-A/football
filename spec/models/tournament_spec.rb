@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tournament, type: :model do
-  before(:all) do
-    @user = FactoryGirl.create(:user)
-    @completed_tournaments = FactoryGirl.create_list(:completed_tournament, 3)
-    @uncompleted_tournaments = FactoryGirl.create_list(:inprogress_tournament, 3)
-  end
+  before(:all) { @user = FactoryGirl.create(:user) }
 
   let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
 
@@ -61,26 +57,6 @@ RSpec.describe Tournament, type: :model do
     end
   end
 
-  context '.unrated_tournaments' do
-    subject { Tournament.unrated_tournaments(@user.id) }
-
-    it 'should return Array' do
-      expect(Tournament.unrated_tournaments(@user.id)).to be_kind_of(Array)
-    end
-
-    it 'should return tournaments with status "completed"' do
-      expect(@completed_tournaments & subject).to eq(@completed_tournaments)
-    end
-
-    it 'should return tournaments that have no assessments by user' do
-      rated_tournament = @completed_tournaments.first
-      FactoryGirl.create(:assessment, user: @user, tournament: rated_tournament)
-      FactoryGirl.create(:assessment, rated_user_id: @user.id, tournament: rated_tournament)
-
-      expect(@completed_tournaments - subject).to eq([rated_tournament])
-    end
-  end
-
   context '#generate_teams' do
     let(:generate_teams) { tournament.generate_teams(1) }
     let(:top_players) { tournament.users.order(rank: :desc)[0..1] }
@@ -116,7 +92,6 @@ RSpec.describe Tournament, type: :model do
 
     it 'should separate top rated users in different teams' do
       rank_players
-      top_players
       tournament.generate_teams(2)
 
       expect(tournament.teams.any? { |t| (t.users - top_players).empty? }).to be_falsey

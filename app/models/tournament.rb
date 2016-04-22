@@ -45,20 +45,4 @@ class Tournament < ActiveRecord::Base
     # insert teams/users
     teams.create(teams_params)
   end
-
-  class << self
-    def unrated_tournaments(user_id)
-      find_by_sql(unrated_tournaments_query(user_id))
-    end
-
-    private
-
-    def unrated_tournaments_query(user_id)
-      %(SELECT DISTINCT tournaments.*
-      FROM tournaments
-        LEFT JOIN assessments
-        ON tournaments.id = assessments.tournament_id AND assessments.user_id = #{user_id}
-      WHERE assessments.id IS NULL AND tournaments.status = 'completed')
-    end
-  end
 end
