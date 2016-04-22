@@ -24,9 +24,9 @@ table.table.table-condensed.table-hover
       td
         | {{ match.hostTeam.name }}
       td
-        | {{ match.hostScore }}
+        | {{ match.hostScore || '-' }}
       td
-        | {{ match.guestScore }}
+        | {{ match.guestScore || '-'}}
       td
         | {{ match.guestTeam.name }}
       td data={ my_authorized: "" }

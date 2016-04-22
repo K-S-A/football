@@ -52,19 +52,19 @@ ActiveRecord::Base.transaction do
     end
 
     # seeding matches
-    games_count = [1, 2].sample
-
     t.rounds.each do |r|
-      t.teams.each do |t1|
-        t.teams.each do |t2|
-          if t1 != t2
-            games_count.times do
-              r.matches.create(
-                host_score: Faker::Number.between(1, 30),
-                guest_score: Faker::Number.between(1, 30),
-                host_team_id: t1.id,
-                guest_team_id: t2.id)
-            end
+      games_count = rand(1..4)
+
+      t.teams.each.with_index(1) do |t1, i|
+        t.teams[i..-1].each do |t2|
+          games_count.times do |index|
+            host_team, guest_team = index.odd? ? [t1, t2] : [t2, t1]
+
+            r.matches.create(
+              host_score: Faker::Number.between(1, 30),
+              guest_score: Faker::Number.between(1, 30),
+              host_team_id: host_team.id,
+              guest_team_id: guest_team.id)
           end
         end
       end

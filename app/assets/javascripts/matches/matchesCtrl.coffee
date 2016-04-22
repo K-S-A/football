@@ -11,12 +11,11 @@ angular.module('mainApp').controller 'MatchesCtrl', [
     vm.countRange = [1, 2, 3, 4, 5]
     vm.count = 1
 
-    vm.default_id = if vm.teams[0] then vm.teams[0].id else null
-
-    vm.match =
-      roundId: Round.current.id
-      hostTeamId: vm.default_id
-      guestTeamId: vm.default_id
+    if vm.teams.length > 1
+      vm.match =
+        roundId: Round.current.id
+        hostTeamId: vm.teams[0].id
+        guestTeamId: vm.teams[1].id
 
     vm.create = ->
       new Match(vm.match).create().then (data) ->

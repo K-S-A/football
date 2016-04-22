@@ -15,6 +15,7 @@ class Tournament < ActiveRecord::Base
 
   def rank_users
     max_score = users.count
+    return if max_score.zero?
 
     users.each do |user|
       rankings = Assessment.where(tournament_id: id, rated_user_id: user.id)
