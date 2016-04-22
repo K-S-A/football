@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :assessment do
-    score 1
-    user nil
-    rated_user_id 1
-    tournament nil
+    score { Faker::Number.between(1, 10) }
+    user
+    rated_user_id 999
+    tournament
   end
 end

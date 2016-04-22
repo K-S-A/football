@@ -19,7 +19,7 @@ class Tournament < ActiveRecord::Base
 
     users.each do |user|
       rankings = Assessment.where(tournament_id: id, rated_user_id: user.id)
-      score = rankings.average(:score) || max_score
+      score = rankings.average(:score) || next
       user.rank = (1 - score / max_score) * RANK_CORRELATION
 
       user.save

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Round, type: :model do
   it { expect(subject).to belong_to(:tournament) }
-  it { expect(subject).to have_many(:matches) }
+  it { expect(subject).to have_many(:matches).dependent(:destroy) }
   it { expect(subject).to have_and_belong_to_many(:teams) }
 
   it 'trigger removing matches on team association destroy' do
@@ -12,6 +12,7 @@ RSpec.describe Round, type: :model do
       FactoryGirl.create(:match, round: round, host_team: host, guest_team: guest)
     end
 
+    expect(round).to receive(:destroy_matches).exactly(3).times.and_call_original
     expect { round.teams = [] }.to change(Match, :count).by(-2)
   end
 end
