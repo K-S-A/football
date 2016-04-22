@@ -14,3 +14,6 @@ AllCops:
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
     - 'bin/**/*'
+
+Documentation:
+  Enabled: false

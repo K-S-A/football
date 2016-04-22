@@ -10,7 +10,7 @@ RSpec.describe Team, type: :model do
   it 'should remove all team matches on destroy' do
     team_with_matches
 
-    expect{ team_with_matches.destroy }.to change{ Match.count }.by(-6)
+    expect { team_with_matches.destroy }.to change { Match.count }.by(-6)
   end
 
   context '#matches' do

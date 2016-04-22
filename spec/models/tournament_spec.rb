@@ -17,7 +17,9 @@ RSpec.describe Tournament, type: :model do
   context '#rated_by?' do
     subject { FactoryGirl.create(:tournament) }
 
-    let(:create_assessment) { FactoryGirl.create(:assessment, user: @user, tournament: subject) }
+    let(:create_assessment) do
+      FactoryGirl.create(:assessment, user: @user, tournament: subject)
+    end
 
     it 'should return true if there is assessments associated with user' do
       create_assessment
@@ -45,17 +47,17 @@ RSpec.describe Tournament, type: :model do
     it 'should change ranks of all tournament participants' do
       create_assessments
 
-      expect{ rank_users }.to change{ tournament.users.pluck(:rank).sort }.from([nil]*5).to([200, 400, 600, 800, 1000])
+      expect { rank_users }.to change { tournament.users.pluck(:rank).sort }.from([nil] * 5).to([200, 400, 600, 800, 1000])
     end
 
     it 'should not change ranks if there is no assessments' do
-      expect{ rank_users }.not_to change{ tournament.users.pluck(:rank) }
+      expect { rank_users }.not_to change { tournament.users.pluck(:rank) }
     end
 
     it 'should destroy all assessments of tournament' do
       create_assessments
 
-      expect{ rank_users }.to change{ tournament.assessments.count }.from(5).to(0)
+      expect { rank_users }.to change { tournament.assessments.count }.from(5).to(0)
     end
   end
 
@@ -84,11 +86,11 @@ RSpec.describe Tournament, type: :model do
     let(:top_players) { tournament.users.order(rank: :desc)[0..1] }
 
     let(:rank_players) do
-      tournament.users.each.with_index { |u, i| u.rank = i; u.save }
+      tournament.users.each.with_index { |u, i| u.update_attribute(:rank, i) }
     end
 
     it 'should accept team_size as argument' do
-      expect{ tournament.generate_teams }.to raise_error(ArgumentError, /expected 1/)
+      expect { tournament.generate_teams }.to raise_error(ArgumentError, /expected 1/)
     end
 
     it 'should return Array' do
@@ -104,12 +106,12 @@ RSpec.describe Tournament, type: :model do
     end
 
     it 'should generate div(participants.count / team_size) teams' do
-      expect{ tournament.generate_teams(2) }.to change{ tournament.teams.count }.by(2)
-      expect{ generate_teams }.to change { tournament.teams.count }.by(5)
+      expect { tournament.generate_teams(2) }.to change { tournament.teams.count }.by(2)
+      expect { generate_teams }.to change { tournament.teams.count }.by(5)
     end
 
     it 'should not generate teams if participants.count < team_size' do
-      expect{ tournament.generate_teams(tournament.users.count + 1) }.not_to change{ tournament.teams.count }
+      expect { tournament.generate_teams(tournament.users.count + 1) }.not_to change { tournament.teams.count }
     end
 
     it 'should separate top rated users in different teams' do

@@ -18,8 +18,7 @@ class Tournament < ActiveRecord::Base
     return if max_score.zero?
 
     users.each do |user|
-      rankings = Assessment.where(tournament_id: id, rated_user_id: user.id)
-      score = rankings.average(:score) || next
+      score = Assessment.where(tournament_id: id, rated_user_id: user.id).average(:score) || next
       user.rank = (1 - score / max_score) * RANK_CORRELATION
 
       user.save
@@ -31,11 +30,11 @@ class Tournament < ActiveRecord::Base
   def generate_teams(team_size)
     # shuffle tournament participants
     return if users.count < team_size
-    new_teams = users.
-      order(rank: :desc).
-      in_groups_of(users.count / team_size)[0..team_size - 1].
-      map(&:shuffle).
-      transpose
+    new_teams = users
+                .order(rank: :desc)
+                .in_groups_of(users.count / team_size)[0..team_size - 1]
+                .map(&:shuffle)
+                .transpose
 
     # generate teams_params
     teams_params = new_teams.each.with_object([]) do |team, obj|
@@ -55,11 +54,11 @@ class Tournament < ActiveRecord::Base
     private
 
     def unrated_tournaments_query(user_id)
-      %{SELECT DISTINCT tournaments.*
+      %(SELECT DISTINCT tournaments.*
       FROM tournaments
         LEFT JOIN assessments
         ON tournaments.id = assessments.tournament_id AND assessments.user_id = #{user_id}
-      WHERE assessments.id IS NULL AND tournaments.status = 'completed'}
+      WHERE assessments.id IS NULL AND tournaments.status = 'completed')
     end
   end
 end
