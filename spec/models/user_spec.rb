@@ -52,10 +52,14 @@ RSpec.describe User, type: :model do
       include_examples 'for read-only abilities'
       it { expect(subject).to be_able_to(:update, Tournament) }
       it { expect(subject).to be_able_to(:create, Assessment) }
+      it { expect(subject).not_to be_able_to(:read, User) }
     end
 
     context 'with unregistered user' do
       include_examples 'for read-only abilities'
+
+      it { expect(subject).not_to be_able_to(:update, Tournament) }
+      it { expect(subject).not_to be_able_to(:read, User) }
     end
   end
 end

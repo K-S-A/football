@@ -54,8 +54,8 @@ RSpec.shared_examples 'for render nothing with status' do |code|
   end
 end
 
-# RSpec.shared_examples 'for assigning instance variable to nil' do |name|
-#   it "assigns @#{name} to nil" do
-#     expect(assigns(name)).to be_nil
-#   end
-# end
+RSpec.shared_examples 'for failed update of' do |obj|
+  it "fails to update #{obj}" do
+    expect(assigns(obj)).to eq(instance_variable_get("@#{obj}"))
+  end
+end

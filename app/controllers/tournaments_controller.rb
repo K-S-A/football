@@ -12,9 +12,7 @@ class TournamentsController < ApplicationController
   end
 
   def create
-    @tournament = Tournament.create(tournament_params)
-
-    render nothing: true, status: 422 unless @tournament.persisted?
+    @tournament = Tournament.create!(tournament_params)
   end
 
   def show
@@ -23,7 +21,7 @@ class TournamentsController < ApplicationController
   def update
     if current_user.admin?
       @tournament.rank_users if tournament_closing?
-      @tournament.update_attributes(tournament_params)
+      @tournament.update_attributes!(tournament_params)
     else
       @tournament.users << current_user
     end
@@ -34,7 +32,7 @@ class TournamentsController < ApplicationController
   def destroy
     @tournament.destroy
 
-    render nothing: true
+    render_nothing_with(200)
   end
 
   private

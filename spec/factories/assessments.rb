@@ -4,5 +4,9 @@ FactoryGirl.define do
     user
     rated_user
     tournament
+
+    factory :invalid_assessment do
+      rated_user nil
+    end
   end
 end

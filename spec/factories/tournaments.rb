@@ -13,6 +13,18 @@ FactoryGirl.define do
       status 'in progress'
     end
 
+    factory :tournament_with_assessments do
+      status 'completed'
+
+      transient do
+        assessments_count 5
+      end
+
+      after(:create) do |tournament, evaluator|
+        create_list(:assessment, evaluator.assessments_count, tournament: tournament)
+      end
+    end
+
     factory :tournament_with_participants do
       transient do
         users_count 5
