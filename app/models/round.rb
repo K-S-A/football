@@ -3,6 +3,9 @@ class Round < ActiveRecord::Base
   has_many :matches, dependent: :destroy
   has_and_belongs_to_many :teams, after_remove: :destroy_matches
 
+  validates :mode, presence: true,
+                   inclusion: { in: %w(regular play-off) }
+
   def destroy_matches(team)
     matches.where('host_team_id = :id OR guest_team_id = :id', id: team.id).destroy_all
   end

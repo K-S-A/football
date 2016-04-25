@@ -32,4 +32,30 @@ RSpec.describe User, type: :model do
       expect(@completed_tournaments - subject).to eq([rated_tournament])
     end
   end
+
+  context 'abilities' do
+    subject { Ability.new(user) }
+    let(:user) { nil }
+
+    context 'with admin user' do
+      let(:user) { FactoryGirl.create(:admin) }
+
+      it { expect(subject).to be_able_to(:manage, Tournament) }
+      it { expect(subject).to be_able_to(:manage, Round) }
+      it { expect(subject).to be_able_to(:manage, Match) }
+      it { expect(subject).to be_able_to(:manage, Team) }
+    end
+
+    context 'with regular user' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      include_examples 'for read-only abilities'
+      it { expect(subject).to be_able_to(:update, Tournament) }
+      it { expect(subject).to be_able_to(:create, Assessment) }
+    end
+
+    context 'with unregistered user' do
+      include_examples 'for read-only abilities'
+    end
+  end
 end

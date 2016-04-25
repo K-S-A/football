@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Tournament, type: :model do
+  STATUSES = %w(not\ started completed in\ progress closed)
+
   before(:all) { @user = FactoryGirl.create(:user) }
 
   let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
@@ -9,6 +11,19 @@ RSpec.describe Tournament, type: :model do
   it { expect(subject).to have_many(:teams) }
   it { expect(subject).to have_many(:assessments) }
   it { expect(subject).to have_and_belong_to_many(:users) }
+
+  it { expect(subject).to validate_presence_of(:name) }
+  it { expect(subject).to validate_length_of(:name).is_at_least(3) }
+  it { expect(subject).to validate_length_of(:name).is_at_most(254) }
+  it { expect(tournament).to validate_uniqueness_of(:name).case_insensitive }
+
+  it { expect(subject).to validate_presence_of(:status) }
+  it { expect(subject).to validate_inclusion_of(:status).in_array(STATUSES) }
+
+  it { expect(subject).to validate_presence_of(:sports_kind) }
+
+  it { expect(subject).to validate_presence_of(:team_size) }
+  it { expect(subject).to validate_inclusion_of(:team_size).in_range(1..20) }
 
   context '#rated_by?' do
     subject { FactoryGirl.create(:tournament) }
