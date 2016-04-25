@@ -4,7 +4,7 @@ class TournamentsController < ApplicationController
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @tournaments = if params[:status]
+    @tournaments = if params[:status] == 'completed'
                      current_user.unrated_tournaments
                    else
                      Tournament.includes(:users, :rounds).all
@@ -12,7 +12,9 @@ class TournamentsController < ApplicationController
   end
 
   def create
-    @tournament = Tournament.create!(tournament_params)
+    @tournament = Tournament.create(tournament_params)
+
+    render nothing: true, status: 422 unless @tournament.persisted?
   end
 
   def show

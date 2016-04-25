@@ -22,5 +22,10 @@ FactoryGirl.define do
         create_list(:user, evaluator.users_count, tournaments: [tournament])
       end
     end
+
+    factory :invalid_tournament do
+      sports_kind nil
+      team_size nil
+    end
   end
 end
