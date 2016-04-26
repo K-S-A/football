@@ -5,5 +5,10 @@ FactoryGirl.define do
     host_team
     guest_team
     round
+
+    factory :invalid_match do
+      host_score -1
+      guest_score -99
+    end
   end
 end

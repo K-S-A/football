@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": ["id", "host_score", "guest_score", "host_team", "guest_team"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "host_score" : { "type" : "integer" },
+    "guest_score" : { "type" : "integer" },
+    "host_team" : {
+      "type": "object",
+      "required": ["id", "name", "users"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "name" : { "type" : "string" },
+        "users" : {
+          "type": "array",
+          "default" : []
+        }
+      }
+    },
+    "guest_team" : {
+      "type": "object",
+      "required": ["id", "name", "users"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "name" : { "type" : "string" },
+        "users" : {
+          "type": "array",
+          "default" : []
+        }
+      }
+    }
+  }
+}

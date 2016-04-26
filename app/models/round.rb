@@ -17,7 +17,7 @@ class Round < ActiveRecord::Base
           games_count.times do |i|
             host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
 
-            arr << matches.create(host_team_id: host_team_id,
+            arr << matches.create!(host_team_id: host_team_id,
                                   guest_team_id: guest_team_id)
           end
         end

@@ -5,7 +5,6 @@ class Team < ActiveRecord::Base
 
   after_destroy { matches.destroy_all }
 
-
   validates :name, presence: true,
                    length: { minimum: 3 },
                    uniqueness: { case_sensitive: false, scope: :tournament_id }

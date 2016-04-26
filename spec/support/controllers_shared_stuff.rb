@@ -13,6 +13,7 @@ end
 
 RSpec.shared_examples 'for successfull request' do |format|
   format ||= 'application/json'
+
   it "responds with #{format} format" do
     expect(response.content_type).to eq(format)
   end
