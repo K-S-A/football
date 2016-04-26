@@ -4,10 +4,6 @@ RSpec.describe TournamentsController, type: :controller do
   include_context 'for logged-in user'
 
   before(:all) do
-    Assessment.delete_all
-    Team.delete_all
-    Tournament.delete_all
-
     @tournament = FactoryGirl.create(:tournament)
     @tournaments = Tournament.all
     @valid_attrs = FactoryGirl.attributes_for(:tournament)
@@ -17,15 +13,13 @@ RSpec.describe TournamentsController, type: :controller do
   context 'GET #index' do
     let!(:call_action) { get :index }
 
-    let(:result) do
-      @tournaments.to_json(only: [:id, :name, :status, :sports_kind, :team_size],
-                           include: [:users, :rounds])
-    end
-
     include_examples 'for successfull request'
     include_examples 'for assigning instance variable', :tournaments
     include_examples 'for rendering templates', [:index, :_tournament]
-    include_examples 'for responding with json', :array, :tournaments
+
+    it 'should match response schema "tournaments"' do
+      expect(response).to match_response_schema('tournaments')
+    end
 
     context 'when params[:status] is "completed"' do
       it 'assigns @tournaments with unrated tournaments' do
@@ -33,7 +27,7 @@ RSpec.describe TournamentsController, type: :controller do
         FactoryGirl.create(:assessment, user: @admin, tournament: tournament)
 
         get :index, status: 'completed'
-        expect(assigns(:tournaments)).to eq(@tournaments.reject{ |t| t.status != 'completed' })
+        expect(assigns(:tournaments)).not_to include(tournament)
       end
     end
   end
@@ -45,7 +39,7 @@ RSpec.describe TournamentsController, type: :controller do
       include_examples 'for successfull request'
       include_examples 'for rendering templates', [:create, :_tournament]
 
-      it "assigns @tournament" do
+      it 'assigns @tournament' do
         expect(assigns(:tournament).name).to eq(@valid_attrs[:name])
       end
 
@@ -71,7 +65,7 @@ RSpec.describe TournamentsController, type: :controller do
     include_examples 'for successfull request'
     include_examples 'for rendering templates', [:show, :_tournament]
 
-    it "assigns @tournament" do
+    it 'assigns @tournament' do
       expect(assigns(:tournament)).to eq(@tournament)
     end
 
@@ -133,13 +127,13 @@ RSpec.describe TournamentsController, type: :controller do
       include_examples 'for successfull request', 'text/plain'
       include_examples 'for render nothing with status', 200
 
-      it "assigns @tournament" do
+      it 'assigns @tournament' do
         expect(assigns(:tournament)).to eq(tournament)
       end
     end
 
     context 'with unexisting tournament' do
-      let!(:call_action) { delete :destroy, id: Tournament.last.id.next }
+      let!(:call_action) { delete :destroy, id: Tournament.last.id + 999 }
 
       include_examples 'for render nothing with status', 404
     end

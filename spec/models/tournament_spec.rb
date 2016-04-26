@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tournament, type: :model do
-  STATUSES = %w(not\ started completed in\ progress closed)
+  STATUSES = %w(not\ started completed in\ progress closed).freeze
 
   before(:all) { @user = FactoryGirl.create(:user) }
 

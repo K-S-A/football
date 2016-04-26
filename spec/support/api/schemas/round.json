@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["id", "mode", "teams"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "mode" : { "type" : "string" },
+    "teams" : {
+      "type" : "array",
+      "required": ["id", "name", "games_total", "games_won", "games_draw", "goals_scored", "goals_against", "points", "goals_diff"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "name" : { "type" : "string" },
+        "games_total" : { "type" : "integer" },
+        "games_won" : { "type" : "integer" },
+        "games_draw" : { "type" : "integer" },
+        "goals_scored" : { "type" : "integer" },
+        "goals_against" : { "type" : "integer" },
+        "points" : { "type" : "integer" },
+        "goals_diff" : { "type" : "integer" }
+      }
+    }
+  }
+}

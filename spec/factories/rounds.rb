@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :round do
     mode { %w(regular play-off).sample }
 
+    factory :invalid_round do
+      mode 'unpermitted mode'
+    end
+
     factory :round_with_teams do
       transient do
         teams_count 3

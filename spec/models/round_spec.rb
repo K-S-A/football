@@ -29,7 +29,7 @@ RSpec.describe Round, type: :model do
 
     it 'should return Array of matches' do
       expect(generate_matches).to be_kind_of(Array)
-      expect(generate_matches.all? { |m| m.kind_of?(Match) }).to be_truthy
+      expect(generate_matches.all? { |m| m.is_a?(Match) }).to be_truthy
     end
 
     it 'should generate specified number of matches' do
@@ -54,10 +54,10 @@ RSpec.describe Round, type: :model do
        [teams[0], teams[2], 5, 9],
        [teams[2], teams[1], 9, 3]].each do |t1, t2, score1, score2|
         FactoryGirl.create(:match, host_team: t1,
-                           guest_team: t2,
-                           host_score: score1,
-                           guest_score: score2,
-                           round: @round)
+                                   guest_team: t2,
+                                   host_score: score1,
+                                   guest_score: score2,
+                                   round: @round)
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Round, type: :model do
 
     it 'should return Array of teams' do
       expect(round_stats).to be_kind_of(Array)
-      expect(round_stats.all? { |m| m.kind_of?(Team) }).to be_truthy
+      expect(round_stats.all? { |m| m.is_a?(Team) }).to be_truthy
     end
 
     it 'should assign points to each team' do

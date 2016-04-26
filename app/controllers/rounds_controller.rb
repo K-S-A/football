@@ -14,36 +14,34 @@ class RoundsController < ApplicationController
   end
 
   def create
-    @round = @tournament.rounds.create(round_params)
+    @round = @tournament.rounds.create!(round_params)
 
     render @round
   end
 
   def update
-    @round.update_attributes(round_params)
+    if params[:round][:team_id]
+      team = @round.teams.find(params[:round][:team_id])
+      @round.teams.delete(team)
+    else
+      @round.update_attributes!(round_params)
+    end
+
     find_teams
 
     render 'show'
   end
 
   def destroy
-    if params[:team_id]
-      team = @round.teams.find(params[:team_id])
-      @round.teams.delete(team)
-      find_teams
+    @round.destroy
 
-      render 'show'
-    else
-      @round.destroy
-
-      render nothing: true
-    end
+    render nothing: true
   end
 
   private
 
   def round_params
-    params.require(:round).permit(:mode, team_ids: [])
+    params.require(:round).permit(:mode, :team_id, team_ids: [])
   end
 
   def find_tournament

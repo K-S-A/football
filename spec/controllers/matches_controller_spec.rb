@@ -104,7 +104,7 @@ RSpec.describe MatchesController, type: :controller do
       include_examples 'for successfull request', 'text/plain'
       include_examples 'for render nothing with status', 200
 
-      it "assigns @match" do
+      it 'assigns @match' do
         expect(assigns(:match)).to eq(match)
       end
     end

@@ -7,8 +7,8 @@ FactoryGirl.define do
     round
 
     factory :invalid_match do
-      host_score -1
-      guest_score -99
+      host_score(-1)
+      guest_score(-99)
     end
   end
 end
