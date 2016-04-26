@@ -3,6 +3,10 @@ FactoryGirl.define do
     name { Faker::Team.name }
     tournament
 
+    factory :invalid_team do
+      name nil
+    end
+
     factory :team_with_matches do
       transient do
         matches_count 5

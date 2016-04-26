@@ -36,7 +36,7 @@ class Tournament < ActiveRecord::Base
     assessments.destroy_all
   end
 
-  def generate_teams(team_size)
+  def generate_teams
     # shuffle tournament participants
     return if users.count < team_size
     new_teams = users

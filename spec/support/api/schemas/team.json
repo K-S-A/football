@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": ["id", "name", "users"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "name" : { "type" : "string" },
+    "users" : {
+      "type": "array",
+      "required": ["id", "first_name", "last_name", "img_link"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "first_name" : { "type" : "string" },
+        "last_name" : { "type" : "string" },
+        "img_link" : { "type" : "string" }
+      }
+    }
+  }
+}

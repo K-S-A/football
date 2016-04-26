@@ -35,6 +35,18 @@ FactoryGirl.define do
       end
     end
 
+    factory :tournament_with_teams do
+      status 'not started'
+
+      transient do
+        teams_count 5
+      end
+
+      after(:create) do |tournament, evaluator|
+        create_list(:team, evaluator.teams_count, tournament: tournament)
+      end
+    end
+
     factory :invalid_tournament do
       sports_kind nil
       team_size nil
