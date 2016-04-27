@@ -21,6 +21,7 @@ class TournamentsController < ApplicationController
   def update
     if current_user.admin?
       @tournament.rank_users if tournament_closing?
+      @tournament.users = [] if params[:tournament][:user_ids].nil?
       @tournament.update_attributes!(tournament_params)
     else
       @tournament.users << current_user

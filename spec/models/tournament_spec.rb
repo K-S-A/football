@@ -7,9 +7,9 @@ RSpec.describe Tournament, type: :model do
 
   let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
 
-  it { expect(subject).to have_many(:rounds) }
-  it { expect(subject).to have_many(:teams) }
-  it { expect(subject).to have_many(:assessments) }
+  it { expect(subject).to have_many(:rounds).dependent(:destroy) }
+  it { expect(subject).to have_many(:teams).dependent(:destroy) }
+  it { expect(subject).to have_many(:assessments).dependent(:destroy) }
   it { expect(subject).to have_and_belong_to_many(:users) }
 
   it { expect(subject).to validate_presence_of(:name) }
@@ -24,6 +24,13 @@ RSpec.describe Tournament, type: :model do
 
   it { expect(subject).to validate_presence_of(:team_size) }
   it { expect(subject).to validate_inclusion_of(:team_size).in_range(1..20) }
+
+  it 'should trigger removing teams on user association destroy' do
+    tournament = FactoryGirl.create(:tournament_with_teams)
+    tournament.teams.each { |team| team.users << @user }
+
+    expect { tournament.users.delete(@user) }.to change { tournament.teams.count }.by(-5)
+  end
 
   context '#rated_by?' do
     subject { FactoryGirl.create(:tournament) }

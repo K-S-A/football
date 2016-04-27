@@ -10,7 +10,7 @@ RSpec.describe Round, type: :model do
   it { expect(subject).to validate_presence_of(:mode) }
   it { expect(subject).to validate_inclusion_of(:mode).in_array(%w(regular play-off)) }
 
-  it 'trigger removing matches on team association destroy' do
+  it 'should trigger removing matches on team association destroy' do
     round.teams.each_cons(2) do |host, guest|
       FactoryGirl.create(:match, round: round, host_team: host, guest_team: guest)
     end

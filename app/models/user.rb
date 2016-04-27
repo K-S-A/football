@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
 
   private
 
+  # def destroy_teams(tournament)
+  #   teams.where(tournament_id: tournament.id).destroy_all
+  # end
+
   def unrated_tournaments_query(user_id)
     %(SELECT DISTINCT tournaments.*
     FROM tournaments

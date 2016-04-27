@@ -101,6 +101,13 @@ RSpec.describe TeamsController, type: :controller do
       it 'assigns @team' do
         expect(assigns(:team)).to eq(team)
       end
+
+      it 'should remove association to user if params[:user_id]' do
+        team = FactoryGirl.create(:team_with_members)
+        params = {id: team.id, user_id: team.users.last.id}
+
+        expect{ delete :destroy, params }.to change { team.users.count }.by(-1)
+      end
     end
 
     context 'with unexisting team' do

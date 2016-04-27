@@ -20,8 +20,11 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    if @tournament
+    case
+    when @tournament
       @tournament.teams.destroy_all
+    when params[:user_id]
+      @team.users.destroy(find_user)
     else
       @team.destroy
     end
@@ -41,5 +44,9 @@ class TeamsController < ApplicationController
 
   def find_team
     @team = Team.find(params[:id])
+  end
+
+  def find_user
+    User.find(params[:user_id])
   end
 end

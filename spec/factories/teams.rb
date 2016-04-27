@@ -17,5 +17,15 @@ FactoryGirl.define do
         create_list(:match, evaluator.matches_count, guest_team: team)
       end
     end
+
+    factory :team_with_members do
+      transient do
+        members_count 2
+      end
+
+      after(:create) do |team, evaluator|
+        create_list(:user, evaluator.members_count, teams: [team])
+      end
+    end
   end
 end

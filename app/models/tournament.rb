@@ -1,10 +1,10 @@
 class Tournament < ActiveRecord::Base
   RANK_CORRELATION = 1000
 
-  has_many :rounds
-  has_many :teams
-  has_many :assessments
-  has_and_belongs_to_many :users
+  has_many :rounds, dependent: :destroy
+  has_many :teams, dependent: :destroy
+  has_many :assessments, dependent: :destroy
+  has_and_belongs_to_many :users, after_remove: :destroy_teams
 
   default_scope { order(id: :desc) }
 
@@ -53,5 +53,11 @@ class Tournament < ActiveRecord::Base
 
     # insert teams/users
     teams.create(teams_params)
+  end
+
+  private
+
+  def destroy_teams(user)
+    user.teams.where(tournament_id: id).destroy_all
   end
 end
