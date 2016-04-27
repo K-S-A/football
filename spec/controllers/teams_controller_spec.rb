@@ -5,6 +5,7 @@ RSpec.describe TeamsController, type: :controller do
 
   before(:all) do
     @tournament = FactoryGirl.create(:tournament_with_teams)
+    @tournament.update_attribute(:team_size, 2)
     @valid_attrs = FactoryGirl.build(:team).attributes
     @invalid_attrs = FactoryGirl.build(:invalid_team).attributes
   end
@@ -55,7 +56,11 @@ RSpec.describe TeamsController, type: :controller do
       end
 
       let!(:call_action) { post :create, tournament_id: @tournament.id, team: @team }
-      let(:call_again) { post :create, tournament_id: @tournament.id, team: @team }
+
+      let(:call_again) do
+        tournament = FactoryGirl.create(:tournament_with_participants)
+        post :create, tournament_id: tournament.id, team: @team
+      end
 
       it 'assigns @tournament' do
         expect(assigns(:tournament).id).to eq(@tournament.id)
@@ -66,7 +71,7 @@ RSpec.describe TeamsController, type: :controller do
       end
 
       it 'should generate new teams' do
-        expect { call_again }.to change { @tournament.teams.count }.by(2)
+        expect { call_again }.to change { Team.count }.by(2)
       end
 
       it 'should match response schema "teams"' do

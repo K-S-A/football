@@ -26,6 +26,8 @@ FactoryGirl.define do
     end
 
     factory :tournament_with_participants do
+      team_size 2
+
       transient do
         users_count 5
       end

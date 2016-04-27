@@ -73,6 +73,12 @@ RSpec.describe Tournament, type: :model do
   end
 
   context '#generate_teams' do
+    let!(:tournament) { FactoryGirl.create(:tournament, team_size: 2) }
+
+    let!(:add_participants) do
+      tournament.users << FactoryGirl.create_list(:user, 5)
+    end
+
     let(:generate_teams) { tournament.generate_teams }
     let(:top_players) { tournament.users.order(rank: :desc)[0..1] }
 
@@ -80,33 +86,34 @@ RSpec.describe Tournament, type: :model do
       tournament.users.each.with_index { |u, i| u.update_attribute(:rank, i) }
     end
 
-    it 'should accept team_size as argument' do
-      expect { tournament.generate_teams }.to raise_error(ArgumentError, /expected 1/)
+    it 'should not accept any arguments' do
+      expect { tournament.generate_teams(1) }.to raise_error(ArgumentError, /expected 0/)
     end
 
     it 'should return Array' do
       expect(generate_teams).to be_kind_of(Array)
     end
 
-    it 'should create teams of specified size' do
-      expect(tournament.teams.count).to be_zero
-      allow(tournament).to receive(:team_size).and_return(3)
-      # tournament.update_attributeteam_size = 3
-      # tournament.save
+    it 'should create teams of tournament team_size' do
+      team_size = 4
+      allow(tournament).to receive(:team_size).and_return(team_size)
       tournament.generate_teams
 
       expect(tournament.teams.last.users.count).to eq(team_size)
     end
 
-    # it 'should generate div(participants.count / team_size) teams' do
-    #   expect { tournament.generate_teams }.to change { tournament.teams.count }.by(2)
-    #   expect { generate_teams }.to change { tournament.teams.count }.by(5)
-    # end
+    it 'should generate div(participants.count / team_size) teams' do
+      allow(tournament).to receive(:team_size).and_return(2)
+      expect { tournament.generate_teams }.to change { tournament.teams.count }.by(2)
 
-    # it 'should not generate teams if participants.count < team_size' do
-    #   allow(tourna)
-    #   expect { tournament.generate_teams(tournament.users.count + 1) }.not_to change { tournament.teams.count }
-    # end
+      allow(tournament).to receive(:team_size).and_return(1)
+      expect { tournament.generate_teams }.to change { tournament.teams.count }.by(5)
+    end
+
+    it 'should not generate teams if participants.count < team_size' do
+      allow(tournament).to receive(:team_size).and_return(6)
+      expect { tournament.generate_teams }.not_to change { tournament.teams.count }
+    end
 
     it 'should separate top rated users in different teams' do
       rank_players
