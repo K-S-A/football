@@ -40,7 +40,7 @@ angular.module('mainApp', [
         url: '/tournaments/{id:[0-9]+}'
         templateUrl: 'tournaments/show.html'
         controller: 'TournamentsCtrl as vm'
-        resolve: getCurrent: ['$stateParams', 'Tournament', 'Auth', ($stateParams, Tournament, Auth) ->
+        resolve: getTournament: ['$stateParams', 'Tournament', 'Auth', ($stateParams, Tournament, Auth) ->
           Tournament.get($stateParams.id).then (data) ->
             Tournament.current = data]
       .state 'tournament.participants',
@@ -49,18 +49,22 @@ angular.module('mainApp', [
       .state 'tournament.teams',
         url: '/teams'
         templateUrl: 'tournaments/teams.html'
+        resolve: getTeams: ['$stateParams', 'Team', 'getTournament',
+          ($stateParams, Team, getTournament) ->
+            Team.$get('/tournaments/' + $stateParams.id + '/teams').then (data) ->
+              getTournament.teams = data]
       .state 'tournament.rounds',
         url: '/rounds'
         templateUrl: 'tournaments/rounds.html'
-        resolve: getRounds: ['$stateParams', 'Round', 'Tournament', 'getCurrent',
-          ($stateParams, Round, Tournament, getCurrent) ->
+        resolve: getRounds: ['$stateParams', 'Round', 'Tournament', 'getTournament',
+          ($stateParams, Round, Tournament, getTournament) ->
             Round.get(tournamentId: $stateParams.id).then (data) ->
-              getCurrent.rounds = data]
+              getTournament.rounds = data]
       .state 'tournament.rounds.show',
         url: '/{round_id:[0-9]+}'
         templateUrl: 'rounds/show.html'
-        resolve: getRound: ['$stateParams', 'Round', 'getCurrent',
-          ($stateParams, Round, getCurrent) ->
+        resolve: getRound: ['$stateParams', 'Round', 'getTournament',
+          ($stateParams, Round, getTournament) ->
             Round.get(tournamentId: $stateParams.id, id: $stateParams.round_id).then (data) ->
               Round.current = data]
       .state 'tournament.rounds.show.teams',
