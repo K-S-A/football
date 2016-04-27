@@ -1,23 +1,33 @@
-h3 Teams
+.container-fluid
+  .text-center data={ my_authorized: "" }
+    .btn-group
+      button.btn.btn-primary my-generate-teams="" Generate teams
+      button.btn.btn-warning my-remove-all-teams="" Remove all teams
 
-div data={ my_authorized: "" }
-  button my-generate-teams="" Generate teams
-  button my-remove-all-teams="" Remove all teams
-
-table.table.table-condensed.table-hover
-  thead
-    th Name
-    th Team members
-    th
-  tbody
-    tr data={ ng_repeat: "team in vm.tournament.teams" }
-      td
-        | {{ team.name }}
-      td
-        ul.list-inline
-          li data={ ng_repeat: "member in team.users" }
-            img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
-            span
-              | {{ member.firstName + " " + member.lastName }}
-      td
-        button data={ my_authorized: "", my_remove_team: "" } Remove
+  table.table.table-condensed.table-hover
+    thead
+      th
+        p.text-center Name
+      th
+        p.text-center Team members
+      th
+    tbody
+      tr data={ ng_repeat: "team in vm.tournament.teams" }
+        td.col-md-2
+          h4
+            | {{ team.name }}
+        td
+          .item.media.col-lg-3 data={ ng_repeat: "member in team.users" }
+            .col-xs-8
+              .media-left
+                img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
+              .media-body
+                strong
+                  p
+                    | {{ member.firstName }}
+                  p
+                    | {{ member.lastName }}
+            .col-xs-4.hiden
+              span.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_authorized: "", my_remove_member: "" }
+        td
+          button.btn.btn-danger data={ my_authorized: "", my_remove_team: "" } Remove
