@@ -14,7 +14,8 @@
                             info: tournament.status == 'not started'}" } }
         td
           a ui-sref="tournament.participants({ id: tournament.id })"
-            | {{ tournament.toTitle() }}
+            strong
+              | {{ tournament.toTitle() }}
           span.label.label-info.pull-right
             | Participants: {{ tournament.users.length }}
         td

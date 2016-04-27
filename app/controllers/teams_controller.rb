@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :find_tournament, only: [:index, :create, :destroy], if: -> { params[:tournament_id] }
-  before_action :find_team, only: [:show, :destroy], unless: -> { params[:tournament_id] }
+  before_action :find_team, only: [:show, :update, :destroy], unless: -> { params[:tournament_id] }
 
   authorize_resource only: [:create, :update, :destroy]
 
@@ -17,6 +17,13 @@ class TeamsController < ApplicationController
     else
       @team = @tournament.teams.create!(team_params)
     end
+  end
+
+  def update
+    @team.users = [] if params[:team][:user_ids].nil?
+    @team.update_attributes!(team_params)
+
+    render 'create'
   end
 
   def destroy

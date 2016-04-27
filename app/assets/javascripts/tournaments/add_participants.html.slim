@@ -13,7 +13,7 @@
             p
               | {{ user.lastName }}
       .col-xs-4
-        button.btn.btn-success data={ ng_click: "vm.moveUser($index, true)" } Add
+        button.btn.btn-success data={ ng_click: "vm.moveUser(vm.users, vm.participants, $index)" } Add
 
   .row
     h3.text-center Selected participants
@@ -29,7 +29,7 @@
             p
               | {{ participant.lastName }}
       .col-xs-4
-        button.btn.btn-danger data={ ng_click: "vm.moveUser($index, false)" } Remove
+        button.btn.btn-danger data={ ng_click: "vm.moveUser( vm.participants, vm.users, $index)" } Remove
 
   .btn-group.btn-group-justified
     .btn-group

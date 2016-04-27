@@ -1,6 +1,7 @@
 .container-fluid
   .text-center data={ my_authorized: "" }
     .btn-group
+      button.btn.btn-success my-create-team="" Create team
       button.btn.btn-primary my-generate-teams="" Generate teams
       button.btn.btn-warning my-remove-all-teams="" Remove all teams
 
@@ -13,7 +14,7 @@
       th
     tbody
       tr data={ ng_repeat: "team in vm.tournament.teams" }
-        td.col-md-2
+        td.col-md-2.vcenter
           h4
             | {{ team.name }}
         td
@@ -29,5 +30,6 @@
                     | {{ member.lastName }}
             .col-xs-4.hiden
               span.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_authorized: "", my_remove_member: "" }
-        td
-          button.btn.btn-danger data={ my_authorized: "", my_remove_team: "" } Remove
+        td.col-md-1.vcenter
+          button.btn.btn-danger.btn-block data={ my_authorized: "", my_remove_team: "" } Remove
+          button.btn.btn-success.btn-block data={ my_authorized: "", my_add_team_members: "" } Manage
