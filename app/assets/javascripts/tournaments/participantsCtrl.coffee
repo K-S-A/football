@@ -11,19 +11,7 @@ angular.module('mainApp').controller 'ParticipantsCtrl', [
     vm.users = User.unsubscribed
     vm.teams = Tournament.current.teams
 
-    # TODO - ...
-    vm.moveUser = (index, add) ->
-      if add
-        [from, to] = [vm.users, vm.participants]
-      else
-        [to, from] = [vm.users, vm.participants]
-        user = from[index]
-        vm.teams.forEach (t, i) ->
-          t.users.forEach (u) ->
-            if u.id is user.id
-              t.delete().then ->
-                vm.teams.splice(i, 1)
-
+    vm.moveUser = (from, to, index) ->
       to.push(from.splice(index, 1)[0])
 
     vm.close = ->

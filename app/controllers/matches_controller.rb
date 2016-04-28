@@ -13,7 +13,7 @@ class MatchesController < ApplicationController
 
     case
     when !match.key?(:team_ids)
-      @match = @round.matches.create(match_params)
+      @match = @round.matches.create!(match_params)
     when match[:team_ids]
       @matches = @round.generate_matches(match[:team_ids], match[:count])
     else render nothing: true, status: 400
@@ -22,7 +22,7 @@ class MatchesController < ApplicationController
 
   def update
     @match = @round.matches.find(params[:id])
-    @match.update_attributes(match_params)
+    @match.update_attributes!(match_params)
 
     render 'create'
   end

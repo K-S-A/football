@@ -1,16 +1,25 @@
 class Tournament < ActiveRecord::Base
   RANK_CORRELATION = 1000
 
-  has_many :rounds
-  has_many :teams
-  has_many :assessments
-  has_and_belongs_to_many :users
+  has_many :rounds, dependent: :destroy
+  has_many :teams, dependent: :destroy
+  has_many :assessments, dependent: :destroy
+  has_and_belongs_to_many :users, after_remove: :destroy_teams
 
   default_scope { order(id: :desc) }
 
+  validates :name, presence: true,
+                   length: { minimum: 3, maximum: 254 },
+                   uniqueness: { case_sensitive: false }
+  validates :status, presence: true,
+                     inclusion: { in: %w(not\ started completed in\ progress closed) }
+  validates :sports_kind, presence: true
+  validates :team_size, presence: true,
+                        inclusion: { in: 1..20 }
+
   # TODO: move to controller?
   def rated_by?(user_id)
-    assessments.where(user_id: user_id).count > 0
+    assessments.where(user_id: user_id).any?
   end
 
   def rank_users
@@ -27,7 +36,7 @@ class Tournament < ActiveRecord::Base
     assessments.destroy_all
   end
 
-  def generate_teams(team_size)
+  def generate_teams
     # shuffle tournament participants
     return if users.count < team_size
     new_teams = users
@@ -44,5 +53,11 @@ class Tournament < ActiveRecord::Base
 
     # insert teams/users
     teams.create(teams_params)
+  end
+
+  private
+
+  def destroy_teams(user)
+    user.teams.where(tournament_id: id).destroy_all
   end
 end

@@ -4,8 +4,8 @@ class AssessmentsController < ApplicationController
   def create
     Assessment.transaction do
       assessments_params.each.with_index do |param, i|
-        param[:score] = i
-        param[:user_id] = i != 10 ? current_user.id : nil
+        param[:score] ||= i
+        param[:user_id] = current_user.id
         param[:tournament_id] = params[:tournament_id]
 
         Assessment.create!(param)

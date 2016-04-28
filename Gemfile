@@ -43,4 +43,5 @@ group :test do
   gem 'database_cleaner', '~> 1.5'
   gem 'fuubar', '~> 2.0'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'json-schema', '~> 2.6'
 end

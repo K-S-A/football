@@ -1,10 +1,11 @@
 class TeamsController < ApplicationController
-  before_action :find_team, only: [:show]
+  before_action :find_tournament, only: [:index, :create, :destroy], if: -> { params[:tournament_id] }
+  before_action :find_team, only: [:show, :update, :destroy], unless: -> { params[:tournament_id] }
 
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @teams = Team.includes(:users).where('tournament_id = ?', params[:tournament_id])
+    @teams = @tournament.teams
   end
 
   def show
@@ -12,18 +13,26 @@ class TeamsController < ApplicationController
 
   def create
     if params[:team][:team_size]
-      @tournament = Tournament.find(params[:tournament_id])
-      @teams = @tournament.generate_teams(params[:team][:team_size])
+      @teams = @tournament.generate_teams
     else
-      @team = Team.create!(team_params)
+      @team = @tournament.teams.create!(team_params)
     end
   end
 
+  def update
+    @team.users = [] if params[:team][:user_ids].nil?
+    @team.update_attributes!(team_params)
+
+    render 'create'
+  end
+
   def destroy
-    if params[:tournament_id]
-      Team.where('tournament_id = ?', params[:tournament_id]).destroy_all
+    case
+    when @tournament
+      @tournament.teams.destroy_all
+    when params[:user_id]
+      @team.users.destroy(find_user)
     else
-      find_team
       @team.destroy
     end
 
@@ -36,7 +45,15 @@ class TeamsController < ApplicationController
     params.require(:team).permit(:name, user_ids: [])
   end
 
+  def find_tournament
+    @tournament = Tournament.find(params[:tournament_id])
+  end
+
   def find_team
     @team = Team.find(params[:id])
+  end
+
+  def find_user
+    User.find(params[:user_id])
   end
 end

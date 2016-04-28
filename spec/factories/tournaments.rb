@@ -13,7 +13,21 @@ FactoryGirl.define do
       status 'in progress'
     end
 
+    factory :tournament_with_assessments do
+      status 'completed'
+
+      transient do
+        assessments_count 5
+      end
+
+      after(:create) do |tournament, evaluator|
+        create_list(:assessment, evaluator.assessments_count, tournament: tournament)
+      end
+    end
+
     factory :tournament_with_participants do
+      team_size 2
+
       transient do
         users_count 5
       end
@@ -21,6 +35,23 @@ FactoryGirl.define do
       after(:create) do |tournament, evaluator|
         create_list(:user, evaluator.users_count, tournaments: [tournament])
       end
+    end
+
+    factory :tournament_with_teams do
+      status 'not started'
+
+      transient do
+        teams_count 5
+      end
+
+      after(:create) do |tournament, evaluator|
+        create_list(:team, evaluator.teams_count, tournament: tournament)
+      end
+    end
+
+    factory :invalid_tournament do
+      sports_kind nil
+      team_size nil
     end
   end
 end

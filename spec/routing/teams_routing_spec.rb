@@ -4,7 +4,6 @@ RSpec.describe TeamsController, type: :routing do
   context 'routing' do
     it 'routes to #index' do
       expect(get: '/tournaments/1/teams').to route_to('teams#index', tournament_id: '1')
-      expect(get: '/rounds/1/teams').to route_to('teams#index', round_id: '1')
     end
 
     it 'doesn\'t route to #new' do
@@ -21,7 +20,6 @@ RSpec.describe TeamsController, type: :routing do
 
     it 'routes to #create' do
       expect(post: '/tournaments/1/teams').to route_to('teams#create', tournament_id: '1')
-      expect(post: '/rounds/1/teams').to route_to('teams#create', round_id: '1')
     end
 
     it 'routes to #update via PUT' do

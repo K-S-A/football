@@ -1,0 +1,8 @@
+{
+  "type": "array",
+  "required": ["id", "mode"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "mode" : { "type" : "string" }
+  }
+}

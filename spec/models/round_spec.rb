@@ -7,7 +7,10 @@ RSpec.describe Round, type: :model do
   it { expect(subject).to have_many(:matches).dependent(:destroy) }
   it { expect(subject).to have_and_belong_to_many(:teams) }
 
-  it 'trigger removing matches on team association destroy' do
+  it { expect(subject).to validate_presence_of(:mode) }
+  it { expect(subject).to validate_inclusion_of(:mode).in_array(%w(regular play-off)) }
+
+  it 'should trigger removing matches on team association destroy' do
     round.teams.each_cons(2) do |host, guest|
       FactoryGirl.create(:match, round: round, host_team: host, guest_team: guest)
     end
@@ -26,7 +29,7 @@ RSpec.describe Round, type: :model do
 
     it 'should return Array of matches' do
       expect(generate_matches).to be_kind_of(Array)
-      expect(generate_matches.all? { |m| m.kind_of?(Match) }).to be_truthy
+      expect(generate_matches.all? { |m| m.is_a?(Match) }).to be_truthy
     end
 
     it 'should generate specified number of matches' do
@@ -45,17 +48,24 @@ RSpec.describe Round, type: :model do
     before(:all) do
       @round = FactoryGirl.create(:round)
       teams = FactoryGirl.create_list(:team, 4)
-      FactoryGirl.create(:match, host_team: teams[0], guest_team: teams[1], host_score: 5, guest_score: 5, round: @round)
-      FactoryGirl.create(:match, host_team: teams[0], guest_team: teams[2], host_score: 5, guest_score: 9, round: @round)
-      FactoryGirl.create(:match, host_team: teams[2], guest_team: teams[1], host_score: 9, guest_score: 3, round: @round)
       @round.teams << teams
+
+      [[teams[0], teams[1], 5, 5],
+       [teams[0], teams[2], 5, 9],
+       [teams[2], teams[1], 9, 3]].each do |t1, t2, score1, score2|
+        FactoryGirl.create(:match, host_team: t1,
+                                   guest_team: t2,
+                                   host_score: score1,
+                                   guest_score: score2,
+                                   round: @round)
+      end
     end
 
     let(:round_stats) { @round.stats }
 
     it 'should return Array of teams' do
       expect(round_stats).to be_kind_of(Array)
-      expect(round_stats.all? { |m| m.kind_of?(Team) }).to be_truthy
+      expect(round_stats.all? { |m| m.is_a?(Team) }).to be_truthy
     end
 
     it 'should assign points to each team' do

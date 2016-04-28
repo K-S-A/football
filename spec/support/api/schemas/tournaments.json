@@ -1,0 +1,31 @@
+{
+  "type": "array",
+  "required": ["id", "name", "status", "sports_kind", "team_size", "users", "rounds"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "name" : { "type" : "string" },
+    "status" : { "type" : "string" },
+    "sports_kind" : { "type" : "string" },
+    "team_size" : { "type" : "integer" },
+    "users" : {
+      "type": "array",
+      "required": ["id", "first_name", "last_name", "img_link", "admin", "rank"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "first_name" : { "type" : "string" },
+        "last_name" : { "type" : "string" },
+        "img_link" : { "type" : "string" },
+        "admin" : { "type" : "string" },
+        "rank" : { "type" : "string" }
+      }
+    },
+    "rounds" : {
+      "type": "array",
+      "required": ["id", "mode"],
+      "properties": {
+        "id" : { "type" : "integer" },
+        "mode" : { "type" : "string" }
+      }
+    }
+  }
+}

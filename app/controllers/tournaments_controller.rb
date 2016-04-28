@@ -4,7 +4,7 @@ class TournamentsController < ApplicationController
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @tournaments = if params[:status]
+    @tournaments = if params[:status] == 'completed'
                      current_user.unrated_tournaments
                    else
                      Tournament.includes(:users, :rounds).all
@@ -21,7 +21,8 @@ class TournamentsController < ApplicationController
   def update
     if current_user.admin?
       @tournament.rank_users if tournament_closing?
-      @tournament.update_attributes(tournament_params)
+      @tournament.users = [] if params[:tournament][:user_ids].nil?
+      @tournament.update_attributes!(tournament_params)
     else
       @tournament.users << current_user
     end
@@ -32,7 +33,7 @@ class TournamentsController < ApplicationController
   def destroy
     @tournament.destroy
 
-    render nothing: true
+    render_nothing_with(200)
   end
 
   private
