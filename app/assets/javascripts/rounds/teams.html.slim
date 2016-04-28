@@ -37,8 +37,9 @@ table.table.table-hover
         | {{ team.goalsDiff }}
       td
         | {{ team.points }}
-      td.hiden
-        span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
+      td
+        .hiden
+          span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
     tr
       td colspan="11"
         button.btn.btn-success.btn-block data={ my_add_round_teams: "", my_authorized: "" } Add team
