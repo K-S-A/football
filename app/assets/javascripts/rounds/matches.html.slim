@@ -57,8 +57,8 @@ table.table.table-bordered.table-hover data={ ng_show: "vm.viewMode == 'Table'" 
           | {{ hostTeam.name }}
       td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
         p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
-          span.glyphicon.glyphicon-edit.text-info.hover.hiden data={ my_edit_match: "" }
+          span.glyphicon.glyphicon-edit.text-info.hover.hiden data={ my_edit_match: "", my_authorized: "" }
           strong
             | {{ match.hostScore }} : {{ match.guestScore }}
-          span.glyphicon.glyphicon-remove.text-danger.hover.hiden data={ my_delete_match: "" }
-        span.glyphicon.glyphicon-plus.hover.hiden.text-success data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "" }
+          span.glyphicon.glyphicon-remove.text-danger.hover.hiden data={ my_delete_match: "", my_authorized: "" }
+        span.glyphicon.glyphicon-plus.hover.hiden.text-success data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "", my_authorized: "" }
