@@ -11,6 +11,11 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
     vm.tournaments = Tournament.all
     vm.tournament = Tournament.current
     vm.statuses = ['not started', 'in progress', 'completed']
+    vm.sport_kinds = ['ping-pong', 'football']
+    vm.team_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+    vm.tournament.sports_kind ||= vm.sport_kinds[0]
+    vm.tournament.team_size ||= vm.team_sizes[1]
 
     vm.create = ->
       new Tournament(vm.tournament).create().then (data) ->

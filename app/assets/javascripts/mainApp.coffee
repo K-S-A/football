@@ -114,11 +114,12 @@ angular.module('mainApp', [
     $rootScope.$on '$stateChangeError', (event, toState, toParams, fromState, fromParams, options) ->
       switch toState.name
         when'tournament.rounds.show'
-          event.preventDefault()
           Round.get(tournamentId: toParams.id).then (data) ->
             Tournament.current.rounds = data
-            toParams.round_id = Tournament.current.rounds[0].id
-            $state.go('tournament.rounds.show', toParams)
+            if data.length
+              event.preventDefault()
+              toParams.round_id = Tournament.current.rounds[0].id
+              $state.go('tournament.rounds.show', toParams)
         when 'assessment'
           event.preventDefault()
           $state.go('profile')
