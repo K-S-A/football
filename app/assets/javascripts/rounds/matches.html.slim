@@ -1,15 +1,15 @@
 br/
 
-div data={ my_authorized: "" }
+div
   div data={ ng_if: "vm.teams.length > 1" }
-    .col-lg-3.col-md-4
+    .col-lg-3.col-md-4 data={ my_authorized: "" }
       form.form-inline
         .form-group
           .input-group
             select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
             span.input-group-btn
               button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
-    .col-lg-7.col-md-12
+    .col-lg-7.col-md-12 data={ my_authorized: "" }
       my-add-match-form
       my-edit-match-form
     .col-lg-2
@@ -37,8 +37,8 @@ table.table.table-hover data={ ng_show: "vm.viewMode == 'List'" }
       td.col-md-4
         strong
           | {{ match.guestTeam.name }}
-      td.col-md-2 data={ my_authorized: "" }
-        ul.list-inline.list-unstyled.hiden
+      td.col-md-2
+        ul.list-inline.list-unstyled.hiden data={ my_authorized: "" }
           li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "" }
           li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "" }
           li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "" }
