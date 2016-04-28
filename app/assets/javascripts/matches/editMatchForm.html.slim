@@ -5,10 +5,10 @@ form.form-inline#edit_match_form.hidden name="editMatchForm"
                id="host_team"
                data={ ng_model: "vm.editedMatch.hostTeam.id",
                       ng_options: "team.id as team.name for team in vm.teams" } }
-  .form-group.col-sm-1
+  .score-input.form-group.col-sm-1
     .input-group
       input.form-control.input-lg data={ ng_model: "vm.editedMatch.hostScore" } /
-  .form-group.col-sm-1
+  .score-input.form-group.col-sm-1
     .input-group
       input.form-control.input-lg data={ ng_model: "vm.editedMatch.guestScore" } /
   .form-group.col-sm-3
@@ -17,7 +17,7 @@ form.form-inline#edit_match_form.hidden name="editMatchForm"
                id="guest_team"
                data={ ng_model: "vm.editedMatch.guestTeam.id",
                       ng_options: "team.id as team.name for team in vm.teams" } }
-  .form-group.col-sm-4
+  .score-submit.form-group.col-sm-4
     .input-group
       .btn-group
         button.btn.btn-primary.btn-lg type="submit" Update match
