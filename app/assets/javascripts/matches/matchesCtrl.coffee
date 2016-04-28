@@ -10,7 +10,7 @@ angular.module('mainApp').controller 'MatchesCtrl', [
     vm.teams = Round.current.teams
     vm.countRange = [1, 2, 3, 4, 5]
     vm.count = 1
-    vm.viewModes = ['List', 'Table']
+    vm.viewModes = ['Table', 'List']
     vm.viewMode = vm.viewModes[0]
 
     if vm.teams.length > 1
