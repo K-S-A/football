@@ -1,22 +1,22 @@
 form.form-inline#add_match_form name="addMatchForm" data={ ng_submit: "vm.create()" }
-  .form-group
+  .form-group.col-sm-3
     .input-group
       select.form-control.input-lg { name="host_team"
                id="host_team"
                data={ ng_model: "vm.match.hostTeamId",
                       ng_options: "team.id as team.name for team in vm.teams" } }
-  .form-group
+  .form-group.col-sm-1
     .input-group
       input.form-control.input-lg data={ ng_model: "vm.match.hostScore" } /
-  .form-group
+  .form-group.col-sm-1
     .input-group
       input.form-control.input-lg data={ ng_model: "vm.match.guestScore" } /
-  .form-group
+  .form-group.col-sm-3
     .input-group
       select.form-control.input-lg { name="guest_team"
                id="guest_team"
                data={ ng_model: "vm.match.guestTeamId",
                       ng_options: "team.id as team.name for team in vm.teams" } }
-  .form-group
+  .form-group.col-sm-4
     .input-group
         button.btn.btn-success.btn-lg type="submit" Add match
