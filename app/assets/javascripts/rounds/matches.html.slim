@@ -1,4 +1,4 @@
-h3 Matches
+br/
 
 div data={ my_authorized: "" }
   div data={ ng_if: "vm.teams.length > 1" }
@@ -9,14 +9,17 @@ div data={ my_authorized: "" }
             select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
             span.input-group-btn
               button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
-    .col-lg-9.col-md-12
+    .col-lg-7.col-md-12
       my-add-match-form
       my-edit-match-form
+    .col-lg-2
+      .form-group
+        .input-group
+          select.form-control.input-lg data={ ng_model: "vm.viewMode", ng_options: "mode as (mode + ' view') for mode in vm.viewModes" }
   a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
 
-table.table.table-hover
+table.table.table-hover data={ ng_show: "vm.viewMode == 'List'" }
   thead
-    / th ID
     th Host team
     th Host score
     th Guest score
@@ -24,8 +27,6 @@ table.table.table-hover
     th
   tbody
     tr.item data={ ng_repeat: "match in vm.matches" }
-      / td.col-md-4
-      /   | {{ match.id }}
       td.col-md-4
         strong
           | {{ match.hostTeam.name }}
@@ -41,3 +42,22 @@ table.table.table-hover
           li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "" }
           li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "" }
           li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "" }
+
+
+table.table.table-bordered.table-hover data={ ng_show: "vm.viewMode == 'Table'" }
+  thead
+    th
+    th data={ ng_repeat: "guestTeam in vm.teams" }
+      p
+        | {{ guestTeam.name }}
+  tbody
+    tr data={ ng_repeat: "hostTeam in vm.teams" }
+      th
+        p
+          | {{ hostTeam.name }}
+      td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
+        p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
+          strong
+            | {{ match.hostScore }} : {{ match.guestScore }}
+          span.glyphicon.glyphicon-remove.text-danger.hover.hiden data={ my_delete_match: "" }
+        span.glyphicon.glyphicon-plus.hover.hiden.text-success data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "" }

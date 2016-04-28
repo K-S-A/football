@@ -10,5 +10,11 @@ angular.module('mainApp').directive 'myDeleteMatch', [
       element.on 'click', ->
         if $window.confirm('Remove match?')
           Match.$delete('/matches/' + scope.match.id).then (data) ->
-              Match.all.splice(scope.$index, 1)
+            indexes = Match.all.map (match) ->
+              match.id
+
+            index = indexes.indexOf(scope.match.id)
+
+            Match.all.splice(index, 1)
+
 ]

@@ -19,4 +19,4 @@ form.form-inline#add_match_form name="addMatchForm" data={ ng_submit: "vm.create
                       ng_options: "team.id as team.name for team in vm.teams" } }
   .form-group.col-sm-4
     .input-group
-        button.btn.btn-success.btn-lg type="submit" Add match
+        button.btn.btn-success.btn-lg type="submit" data={ ng_disabled: "vm.match.hostTeamId == vm.match.guestTeamId" } Add match

@@ -38,7 +38,11 @@
   cursor: hand;
 }
 
-.item:hover .hiden {
+.item:hover > .hiden {
+  display: block;
+}
+
+.item:hover > td > .hiden {
   display: block;
 }
 
@@ -76,4 +80,8 @@
 
 tr:hover .hiden-control {
   display: block;
+}
+
+p:hover > span.hiden {
+  display: inline;
 }
