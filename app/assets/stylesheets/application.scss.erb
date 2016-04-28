@@ -52,10 +52,24 @@
   font-size: 2.5em;
 }
 
+.glyphicon-remove, .glyphicon-retweet, .glyphicon-edit {
+  @extend .hover;
+}
+
 .media:first-child {
   margin-top: 15px;
 }
 
 .table .vcenter {
+  vertical-align: middle;
+}
+
+.table {
+  th, td {
+    text-align: center;
+  }
+}
+
+.table tbody > tr > td {
   vertical-align: middle;
 }

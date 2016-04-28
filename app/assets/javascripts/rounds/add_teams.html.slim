@@ -1,8 +1,31 @@
-h3 Available teams
-ul
-  li data={ ng_repeat: "team in vm.teams" }
-    span
-      | {{ team.name }}
-    button data={ ng_click: "vm.addTeam($index)" } Add
-button data={ ng_click: "vm.close()" } Save
-button data={ ng_click: "vm.cancel()" } Cancel
+.container-fluid
+  .row
+    h3.text-center Available teams
+
+    .media.col-md-12 data={ ng_repeat: "team in vm.teams" }
+      .col-md-4
+        strong
+          p
+            | {{ team.name }}
+      .col-md-7
+        .col-xs-3 data={ ng_repeat: "member in team.users" }
+          img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
+      .col-md-1
+        button.btn.btn-success data={ ng_click: "vm.addTeam($index)" } Add
+  br/
+
+  .btn-group.btn-group-justified
+    .btn-group
+      button.btn.btn-primary.btn-lg data={ ng_click: "vm.close()" } Save
+    .btn-group
+      button.btn.btn-default.btn-lg data={ ng_click: "vm.cancel()" } Cancel
+  br/
+
+/ h3 Available teams
+/ ul
+/   li data={ ng_repeat: "team in vm.teams" }
+/     span
+/       | {{ team.name }}
+/     button data={ ng_click: "vm.addTeam($index)" } Add
+/ button data={ ng_click: "vm.close()" } Save
+/ button data={ ng_click: "vm.cancel()" } Cancel

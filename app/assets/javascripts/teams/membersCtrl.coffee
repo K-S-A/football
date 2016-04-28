@@ -19,6 +19,7 @@ angular.module('mainApp').controller 'MembersCtrl', [
     vm.moveUser = (from, to, index) ->
       to.push(from.splice(index, 1)[0])
 
+    # TODO: move to factory/service
     vm.generateName = ->
       vm.team.name = vm.members.map (m) ->
         m.firstName + ' ' + m.lastName[0] + '.'

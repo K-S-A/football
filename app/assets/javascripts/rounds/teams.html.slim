@@ -1,7 +1,7 @@
-table.table.table-condensed.table-hover
+table.table.table-hover
   thead
     th Place
-    th ID
+    / th ID
     th Team name
     th Total games
     th Win
@@ -10,14 +10,19 @@ table.table.table-condensed.table-hover
     th Goals scored/against
     th Goals diff
     th Points
+    th
   tbody
-    tr data={ ng_repeat: "team in vm.round.teams" }
+    tr data={ ng_if: "!vm.round.teams.length" }
+      td colspan="9"
+        p No teams added yet.
+    tr.item data={ ng_repeat: "team in vm.round.teams" }
       td
         | {{ $index + 1 }}
+      / td
+      /   | {{ team.id }}
       td
-        | {{ team.id }}
-      td
-        | {{ team.name }}
+        strong
+          | {{ team.name }}
       td
         | {{ team.gamesTotal }}
       td
@@ -32,8 +37,9 @@ table.table.table-condensed.table-hover
         | {{ team.goalsDiff }}
       td
         | {{ team.points }}
-      td
+      td.hiden
+        span 1
         span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
     tr
       td colspan="11"
-        button data={ my_add_round_teams: "", my_authorized: "" } Add team
+        button.btn.btn-success.btn-block data={ my_add_round_teams: "", my_authorized: "" } Add team

@@ -15,5 +15,6 @@ angular.module('mainApp').directive 'myEditMatch', [
 
         angular.element(document).find('#add_match_form').hide()
         angular.element(document).find('#edit_match_form').removeClass('hidden').show()
+        angular.element(document).find('#edit_match_form input:first').focus()
 
 ]

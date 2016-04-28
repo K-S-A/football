@@ -1,14 +1,22 @@
-br/
-
-form#add_match_form name="addMatchForm" data={ ng_submit: "vm.create()" }
-  select { name="host_team"
-           id="host_team"
-           data={ ng_model: "vm.match.hostTeamId",
-                  ng_options: "team.id as team.name for team in vm.teams" } }
-  input data={ ng_model: "vm.match.hostScore" } /
-  input data={ ng_model: "vm.match.guestScore" } /
-  select { name="guest_team"
-           id="guest_team"
-           data={ ng_model: "vm.match.guestTeamId",
-                  ng_options: "team.id as team.name for team in vm.teams" } }
-  button type="submit" Add match
+form.form-inline#add_match_form name="addMatchForm" data={ ng_submit: "vm.create()" }
+  .form-group
+    .input-group
+      select.form-control.input-lg { name="host_team"
+               id="host_team"
+               data={ ng_model: "vm.match.hostTeamId",
+                      ng_options: "team.id as team.name for team in vm.teams" } }
+  .form-group
+    .input-group
+      input.form-control.input-lg data={ ng_model: "vm.match.hostScore" } /
+  .form-group
+    .input-group
+      input.form-control.input-lg data={ ng_model: "vm.match.guestScore" } /
+  .form-group
+    .input-group
+      select.form-control.input-lg { name="guest_team"
+               id="guest_team"
+               data={ ng_model: "vm.match.guestTeamId",
+                      ng_options: "team.id as team.name for team in vm.teams" } }
+  .form-group
+    .input-group
+        button.btn.btn-success.btn-lg type="submit" Add match

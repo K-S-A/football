@@ -2,34 +2,42 @@ h3 Matches
 
 div data={ my_authorized: "" }
   div data={ ng_if: "vm.teams.length > 1" }
-    form
-      select data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
-      button my-generate-matches="" Generate matches
-    my-add-match-form
-    my-edit-match-form
+    .col-md-2.col-xs-3
+      form.form-inline
+        .form-group
+          .input-group
+            select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
+            span.input-group-btn
+              button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
+    .col-md-10
+      my-add-match-form
+      my-edit-match-form
   a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
 
-table.table.table-condensed.table-hover
+table.table.table-hover
   thead
-    th ID
+    / th ID
     th Host team
     th Host score
     th Guest score
     th Guest team
     th
   tbody
-    tr data={ ng_repeat: "match in vm.matches" }
-      td
-        | {{ match.id }}
-      td
-        | {{ match.hostTeam.name }}
-      td
-        | {{ match.hostScore || '-' }}
-      td
-        | {{ match.guestScore || '-'}}
-      td
-        | {{ match.guestTeam.name }}
-      td data={ my_authorized: "" }
-        span.glyphicon.glyphicon-edit data={ my_edit_match: "" }
-        span.glyphicon.glyphicon-retweet data={ my_swap_teams: "" }
-        span.glyphicon.glyphicon-remove data={ my_delete_match: "" }
+    tr.item data={ ng_repeat: "match in vm.matches" }
+      / td.col-md-4
+      /   | {{ match.id }}
+      td.col-md-4
+        strong
+          | {{ match.hostTeam.name }}
+      td.col-md-1
+        | {{ match.hostScore == null ? '-' : match.hostScore }}
+      td.col-md-1
+        | {{ match.guestScore == null ? '-' : match.guestScore }}
+      td.col-md-4
+        strong
+          | {{ match.guestTeam.name }}
+      td.col-md-2 data={ my_authorized: "" }
+        ul.list-inline.list-unstyled.hiden
+          li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "" }
+          li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "" }
+          li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "" }
