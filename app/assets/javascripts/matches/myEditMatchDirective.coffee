@@ -7,8 +7,11 @@ angular.module('mainApp').directive 'myEditMatch', [
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
+        indexes = Match.all.map (match) ->
+          match.id
+
         match = angular.copy(scope.match)
-        match.$index = scope.$index
+        match.$index = indexes.indexOf(scope.match.id)
 
         scope.$apply ->
           scope.vm.editedMatch = match

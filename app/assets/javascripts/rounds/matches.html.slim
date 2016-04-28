@@ -38,10 +38,10 @@ table.table.table-hover data={ ng_show: "vm.viewMode == 'List'" }
         strong
           | {{ match.guestTeam.name }}
       td.col-md-2
-        ul.list-inline.list-unstyled.hiden data={ my_authorized: "" }
-          li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "" }
-          li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "" }
-          li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "" }
+        ul.list-inline.list-unstyled.hiden
+          li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
+          li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
+          li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
 
 
 table.table.table-bordered.table-hover data={ ng_show: "vm.viewMode == 'Table'" }
@@ -57,6 +57,7 @@ table.table.table-bordered.table-hover data={ ng_show: "vm.viewMode == 'Table'" 
           | {{ hostTeam.name }}
       td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
         p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
+          span.glyphicon.glyphicon-edit.text-info.hover.hiden data={ my_edit_match: "" }
           strong
             | {{ match.hostScore }} : {{ match.guestScore }}
           span.glyphicon.glyphicon-remove.text-danger.hover.hiden data={ my_delete_match: "" }
