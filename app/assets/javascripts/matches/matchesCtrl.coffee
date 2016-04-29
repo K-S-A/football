@@ -3,11 +3,12 @@
 angular.module('mainApp').controller 'MatchesCtrl', [
   'Match'
   'Round'
-  (Match, Round) ->
+  'Team'
+  (Match, Round, Team) ->
     vm = this
 
     vm.matches = Match.all
-    vm.teams = Round.current.teams
+    vm.teams = Team.all
     vm.countRange = [1, 2, 3, 4, 5]
     vm.count = 1
     vm.viewModes = ['Table', 'List']

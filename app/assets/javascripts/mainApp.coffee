@@ -75,10 +75,12 @@ angular.module('mainApp', [
         url: '/matches'
         templateUrl: 'rounds/matches.html'
         controller: 'MatchesCtrl as vm'
-        resolve: getMatches: ['$stateParams', 'Match',
-          ($stateParams, Match) ->
+        resolve: getMatches: ['$stateParams', 'Match', 'Team',
+          ($stateParams, Match, Team) ->
             Match.get(roundId: $stateParams.round_id).then (data) ->
-              Match.all = data]
+              Match.all = data
+            Team.$get('/rounds/' + $stateParams.round_id + '/teams').then (data) ->
+              Team.all = data]
       .state 'tournaments',
         url: '/tournaments'
         templateUrl: 'tournaments/index.html'

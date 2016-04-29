@@ -20,6 +20,7 @@ gem 'thin', '~> 1.6'
 gem 'faker', '~> 1.6'
 gem 'figaro', '~> 1.1'
 gem 'cancancan', '~> 1.13'
+gem 'ranked-model', '~> 0.4.0'
 
 group :development, :test do
   gem 'byebug'

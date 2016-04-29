@@ -5,7 +5,11 @@ class TeamsController < ApplicationController
   authorize_resource only: [:create, :update, :destroy]
 
   def index
-    @teams = @tournament.teams
+    @teams = if params[:round_id]
+               Round.find(params[:round_id]).teams
+             else
+               @tournament.teams
+             end
   end
 
   def show
