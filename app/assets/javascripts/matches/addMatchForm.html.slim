@@ -4,19 +4,21 @@ form.form-inline#add_match_form name="addMatchForm" data={ ng_submit: "vm.create
       select.form-control.input-lg { name="host_team"
                id="host_team"
                data={ ng_model: "vm.match.hostTeamId",
-                      ng_options: "team.id as team.name for team in vm.teams" } }
+                      ng_options: "team.id as team.name for team in vm.teams",
+                      animate_on_change: "vm.match.hostTeamId" } }
   .score-input.form-group.col-sm-1
     .input-group
-      input.form-control.input-lg data={ ng_model: "vm.match.hostScore" } /
+      input.form-control.input-lg.text-center data={ ng_model: "vm.match.hostScore" } /
   .score-input.form-group.col-sm-1
     .input-group
-      input.form-control.input-lg data={ ng_model: "vm.match.guestScore" } /
+      input.form-control.input-lg.text-center data={ ng_model: "vm.match.guestScore" } /
   .form-group.col-sm-3
     .input-group
       select.form-control.input-lg { name="guest_team"
                id="guest_team"
                data={ ng_model: "vm.match.guestTeamId",
-                      ng_options: "team.id as team.name for team in vm.teams" } }
+                      ng_options: "team.id as team.name for team in vm.teams",
+                      animate_on_change: "vm.match.guestTeamId" } }
   .form-group.col-sm-4
     .input-group
         button.btn.btn-success.btn-lg type="submit" data={ ng_disabled: "vm.match.hostTeamId == vm.match.guestTeamId" } Add match

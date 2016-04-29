@@ -1,0 +1,21 @@
+.container-fluid
+  h3 User
+  / | {{ vm.user }}
+  / .col-md-3
+  /   ul.nav.nav-pills.nav-stacked
+  /     li.active
+  /       a href="#" 1
+  /     li
+  /       a href="#" 1
+  /     li
+  /       a href="#" 1
+
+
+  uib-tabset active="active"
+    uib-tab index="0" heading="Static title"
+      p Static content
+    uib-tab index="1"
+      uib-tab-heading
+        i.glyphicon.glyphicon-bell
+        span Alert!
+      p I've got an HTML heading, and a select callback. Pretty cool!
