@@ -10,7 +10,9 @@ class Round < ActiveRecord::Base
     matches.where('host_team_id = :id OR guest_team_id = :id', id: team.id).destroy_all
   end
 
-  def generate_matches(team_ids, games_count = 1)
+  def generate_matches(games_count = 1)
+    team_ids = teams.pluck(:id)
+
     transaction do
       team_ids.each.with_index(1).with_object([]) do |(t1, index), arr|
         team_ids[index..-1].each do |t2|

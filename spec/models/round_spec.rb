@@ -20,11 +20,12 @@ RSpec.describe Round, type: :model do
   end
 
   context '#generate_matches' do
-    let(:generate_matches) { round.generate_matches(round.teams.pluck(:id), 1) }
-    let(:generate_multiple_matches) { round.generate_matches(round.teams.pluck(:id), 3) }
+    let(:generate_matches) { round.generate_matches(1) }
+    let(:generate_multiple_matches) { round.generate_matches(3) }
 
-    it 'should accept team_ids and games_count as attributes' do
-      expect { round.generate_matches }.to raise_error(ArgumentError, /expected 1..2/)
+    it 'should accept games_count as attributes' do
+      expect { round.generate_matches }.to_not raise_error
+      expect { round.generate_matches(1) }.to_not raise_error
     end
 
     it 'should return Array of matches' do

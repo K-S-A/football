@@ -15,7 +15,7 @@ class MatchesController < ApplicationController
     when !match.key?(:team_ids)
       @match = @round.matches.create!(match_params)
     when match[:team_ids]
-      @matches = @round.generate_matches(match[:team_ids], match[:count])
+      @matches = @round.generate_matches(match[:count])
     else render nothing: true, status: 400
     end
   end
