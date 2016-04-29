@@ -12,9 +12,10 @@
       th
         p.text-center Team members
       th
-    tbody
+    tbody data={ ui_sortable: "vm.sortableOptions", ng_model: "vm.tournament.teams" }
       tr data={ ng_repeat: "team in vm.tournament.teams" }
         td.col-md-2.vcenter
+          span.glyphicon.glyphicon-sort.glyphicon-lg.text-info.pull-left.hiden-control
           h4
             | {{ team.name }}
         td

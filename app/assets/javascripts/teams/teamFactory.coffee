@@ -8,7 +8,7 @@ angular.module('mainApp').factory 'Team', [
       url: '/teams'
       name: 'team'
       serializer: railsSerializer ->
-        @only 'id', 'name', 'team_size', 'users')
+        @only 'id', 'name', 'teamSize', 'users', 'listOrderPosition')
 
     # TODO: move to separate serializer
     Team.beforeRequest (data) ->

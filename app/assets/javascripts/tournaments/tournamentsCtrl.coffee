@@ -14,6 +14,17 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
     vm.sport_kinds = ['ping-pong', 'football']
     vm.team_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
+    vm.sortableOptions =
+      handle: '.glyphicon-sort'
+      start: ->
+        vm.beforeSorting = angular.copy(vm.tournament.teams)
+      update: (e, ui) ->
+        team = angular.copy(ui.item.sortable.model)
+        team.listOrderPosition = ui.item.sortable.dropindex
+
+        team.update().catch ->
+          vm.tournament.teams = vm.beforeSorting
+
     vm.tournament.sports_kind ||= vm.sport_kinds[0]
     vm.tournament.team_size ||= vm.team_sizes[1]
 

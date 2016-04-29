@@ -46,7 +46,7 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, user_ids: [])
+    params.require(:team).permit(:name, :list_order_position, user_ids: [])
   end
 
   def find_tournament
