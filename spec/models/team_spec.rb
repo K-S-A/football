@@ -33,4 +33,15 @@ RSpec.describe Team, type: :model do
       expect(team_with_matches.matches.size).to eq(6)
     end
   end
+
+  context 'default scope' do
+    it 'should order by :list_order' do
+      tournament = FactoryGirl.create(:tournament)
+      teams = FactoryGirl.create_list(:team, 3, tournament: tournament)
+      teams[1].update_attribute(:list_order_position, :last)
+
+      result = Tournament.find(tournament.id).teams
+      expect(result).to eq([teams[0], teams[2], teams[1]])
+    end
+  end
 end
