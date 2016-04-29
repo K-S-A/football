@@ -13,13 +13,17 @@ RSpec.describe UsersController, type: :controller do
     let!(:call_action) { get :index }
 
     let(:result) do
-      @users.to_json(only: [:id, :first_name, :last_name, :img_link, :rank, :admin])
+      @users.to_json(only: [:id, :first_name, :last_name, :img_link, :admin])
     end
 
     include_examples 'for successfull request'
     include_examples 'for assigning instance variable', :users
     include_examples 'for rendering templates', [:index, :_user]
     include_examples 'for responding with json', :array, :users
+
+    it 'should match response schema "users"' do
+      expect(response).to match_response_schema('users')
+    end
 
     context 'when params[:tournament_id]' do
       it 'assigns @tournament' do
@@ -42,4 +46,20 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  context 'GET #show' do
+    let!(:call_action) { get :show, id: @user.id }
+
+    include_examples 'for successfull request'
+    include_examples 'for rendering templates', [:show, :_user]
+
+    it 'assigns @user' do
+      expect(assigns(:user)).to eq(@user)
+    end
+
+    it 'should match response schema "user"' do
+      expect(response).to match_response_schema('user')
+    end
+  end
+
 end

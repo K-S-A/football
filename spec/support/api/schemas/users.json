@@ -1,0 +1,11 @@
+{
+  "type": "array",
+  "required": ["id", "first_name", "last_name", "img_link", "admin"],
+  "properties": {
+    "id" : { "type" : "integer" },
+    "first_name" : { "type" : "string" },
+    "last_name" : { "type" : "string" },
+    "img_link" : { "type" : "string" },
+    "admin" : { "type" : "boolean" }
+  }
+}

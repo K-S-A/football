@@ -10,10 +10,10 @@ class Ability
       can :update, Tournament
       can :create, Assessment
       can :read, :all
-      cannot :read, User
+      cannot :index, User
     else
       can :read, :all
-      cannot :read, User
+      cannot :index, User
     end
   end
 end

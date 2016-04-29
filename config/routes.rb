@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'application#main'
 
-  resources :users, only: [:index]
+  resources :users, only: [:index, :show]
 
   resources :tournaments, except: [:new, :edit], id: /\d+/ do
     resources :teams, only: [:index, :create]

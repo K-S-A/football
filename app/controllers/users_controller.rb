@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   authorize_resource
+  load_resource only: [:show]
 
   def index
     @users = if params[:tournament_id]
@@ -8,6 +9,9 @@ class UsersController < ApplicationController
              else
                User.all
              end
+  end
+
+  def show
   end
 
   private
