@@ -24,17 +24,26 @@ angular.module('mainApp', [
       .state 'profile',
         url: '/profile'
         templateUrl: 'auth/profile.html'
-        controller: 'AuthCtrl as vm'
-        resolve: completedTournaments: ['Auth', 'Tournament', (Auth, Tournament) ->
+        controller: 'UserCtrl as vm'
+        resolve: completedTournaments: ['Auth', 'Tournament', 'User', (Auth, Tournament, User) ->
           Auth.currentUser().then (user) ->
-            Tournament.getUnrated(user.id)]
-      .state 'assessment',
-        url: '/tournaments/{id:[0-9]+}/assessments'
+            Tournament.getUnrated(user.id).then ->
+              User.get(id: user.id).then (data) ->
+                User.current = data]
+      .state 'tournament.assessment',
+        url: '/assessments'
         templateUrl: 'assessments/index.html'
         controller: 'AssessmentsCtrl as vm'
-        resolve: tournamentAssessments: ['$stateParams', 'Auth', 'User', ($stateParams, Auth, User) ->
-          Auth.currentUser().then (user) ->
-            User.getParticipants($stateParams.id, user.id)]
+        resolve: tournamentAssessments: ['$q', 'getTournament', 'Auth', 'User', ($q, getTournament, Auth, User) ->
+          defered = $q.defer()
+          if getTournament.status == 'completed'
+            defered.resolve()
+          else
+            defered.reject('wrong tournament status')
+
+          defered.promise.then ->
+            Auth.currentUser().then (user) ->
+              User.getParticipants(getTournament.id, user.id)]
       .state 'tournament',
         abstract: true
         url: '/tournaments/{id:[0-9]+}'
@@ -75,10 +84,13 @@ angular.module('mainApp', [
         url: '/matches'
         templateUrl: 'rounds/matches.html'
         controller: 'MatchesCtrl as vm'
-        resolve: getMatches: ['$stateParams', 'Match', 'Team',
-          ($stateParams, Match, Team) ->
+        resolve: getMatches: ['$stateParams', 'getRound', 'Match', 'Team',
+          ($stateParams, getRound, Match, Team) ->
             Match.get(roundId: $stateParams.round_id).then (data) ->
-              Match.all = data
+              if getRound.mode == 'regular'
+                Match.all = data
+              else
+                Match.all = Match.toTree(data)
             Team.$get('/rounds/' + $stateParams.round_id + '/teams').then (data) ->
               Team.all = data]
       .state 'tournaments',
@@ -89,13 +101,13 @@ angular.module('mainApp', [
           Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
-      .state 'user',
-        url: '/users/{id:[0-9]+}'
-        templateUrl: 'users/show.html'
-        controller: 'UsersCtrl as vm'
-        resolve: getUser: ['User', '$stateParams', (User, $stateParams) ->
-          User.get(id: $stateParams.id).then (data) ->
-            User.current = data]
+#      .state 'user',
+#        url: '/users/{id:[0-9]+}'
+#        templateUrl: 'users/show.html'
+#        controller: 'UsersCtrl as vm'
+#        resolve: getUser: ['User', '$stateParams', (User, $stateParams) ->
+#          User.get(id: $stateParams.id).then (data) ->
+#            User.current = data]
 
     $urlRouterProvider.otherwise '/tournaments'
     return
@@ -133,7 +145,7 @@ angular.module('mainApp', [
               event.preventDefault()
               toParams.round_id = Tournament.current.rounds[0].id
               $state.go('tournament.rounds.show', toParams)
-        when 'assessment'
+        when 'tournament.assessment'
           event.preventDefault()
           $state.go('profile')
         else

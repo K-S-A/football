@@ -1,17 +1,39 @@
-form.form-horizontal editable-form="" name="userProfile" onbeforesave="vm.update($data)"
-  .form-group
-    label.control-label.col-sm-2 for="first_name" First name:
-    .col-sm-10
-      p.form-control-static editable-text="vm.user.first_name" e-name="first_name"
-        | {{ vm.user.first_name || 'empty' }}
-  .form-group
-    label.control-label.col-sm-2 for="last_name" Last name:
-    .col-sm-10
-      p.form-control-static editable-text="vm.user.last_name" e-name="last_name"
-        | {{ vm.user.last_name || 'empty' }}
+uib-tabset type="pills" active="active"
+  uib-tab.profile-nav index="0" heading="Personal info"
+    div data={ ng_include: "'auth/personal.html'" }
+  uib-tab.profile-nav index="1" heading="Tournaments"
+    div data={ ng_include: "'tournaments/index.html'" }
+  uib-tab.profile-nav index="2" heading="Teams"
+    div data={ ng_include: "'tournaments/teams.html'" }
+  uib-tab.profile-nav index="3" disable="!vm.unratedTournaments.length"
+    uib-tab-heading
+      i.glyphicon.glyphicon-bell data={ ng_if: "vm.unratedTournaments.length" }
+      span Assessments
 
-  div
-    button type="button" class="btn btn-default" ng-click="userProfile.$show()" ng-show="!userProfile.$visible" Edit
-    span ng-show="userProfile.$visible"
-      button type="submit" class="btn btn-primary" ng-disabled="userProfile.$waiting" Save
-      button type="button" class="btn btn-default" ng-disabled="userProfile.$waiting" ng-click="userProfile.$cancel()" Cancel
+    table.table.table-hover
+      thead
+        th Name
+        th Status
+        th
+      tbody
+        tr { data={ ng_repeat: "tournament in vm.unratedTournaments",
+                  ng_class: "{success: tournament.status == 'in progress',
+                              default: tournament.status == 'closed',
+                              danger: tournament.status == 'completed',
+                              info: tournament.status == 'not started'}" } }
+          td
+            a ui-sref="tournament.assessment({ id: tournament.id })"
+              strong
+                | {{ tournament.toTitle() }}
+            span.label.label-info.pull-right
+              | Participants: {{ tournament.users.length }}
+          td
+            form data={ my_authorized: ""}
+              select data={ ng_model: "tournament.status", ng_options: "status for status in vm.statuses", my_tournament_status_change: "" }
+            span data={ ng_if: "!vm.user || !vm.user.admin || tournament.status == 'closed'" }
+              | {{ tournament.status }}
+          td
+            span data={ my_authorized: ""}
+              button.btn.btn-danger.col-xs-3 data={ my_delete_tournament: "" } Remove
+              button.btn.btn-warning.col-xs-3 data={ my_finish_voting: "" } Finish voting
+            button.btn.btn-success.col-xs-3 data={ my_participate: "" } Join
