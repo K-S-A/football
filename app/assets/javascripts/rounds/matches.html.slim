@@ -1,67 +1,77 @@
 br/
-
-div
-  div data={ ng_if: "vm.teams.length > 1" }
-    .col-lg-3.col-md-4 data={ my_authorized: "" }
-      form.form-inline
+div data={ ng_if: "vm.round.mode == 'regular'" }
+  div
+    div data={ ng_if: "vm.teams.length > 1" }
+      .col-lg-3.col-md-4 data={ my_authorized: "" }
+        form.form-inline
+          .form-group
+            .input-group
+              select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
+              span.input-group-btn
+                button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
+      .col-lg-7.col-md-12 data={ my_authorized: "" }
+        my-add-match-form
+        my-edit-match-form
+      .col-lg-2
         .form-group
           .input-group
-            select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
-            span.input-group-btn
-              button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
-    .col-lg-7.col-md-12 data={ my_authorized: "" }
-      my-add-match-form
-      my-edit-match-form
-    .col-lg-2
-      .form-group
-        .input-group
-          select.form-control.input-lg data={ ng_model: "vm.viewMode", ng_options: "mode as (mode + ' view') for mode in vm.viewModes" }
-  a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
+            select.form-control.input-lg data={ ng_model: "vm.viewMode", ng_options: "mode as (mode + ' view') for mode in vm.viewModes" }
+    a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
 
-table.table.table-hover data={ ng_if: "vm.viewMode == 'List'" }
-  thead
-    th Host team
-    th Host score
-    th Guest score
-    th Guest team
-    th
-  tbody
-    tr.item data={ ng_repeat: "match in vm.matches" }
-      td.col-md-4
-        strong
-          | {{ match.hostTeam.name }}
-      td.col-md-1
-        | {{ match.hostScore == null ? '-' : match.hostScore }}
-      td.col-md-1
-        | {{ match.guestScore == null ? '-' : match.guestScore }}
-      td.col-md-4
-        strong
-          | {{ match.guestTeam.name }}
-      td.col-md-2
-        ul.list-inline.list-unstyled.hiden
-          li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
-          li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
-          li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
-
-
-table.table.table-bordered.table-hover data={ ng_if: "vm.viewMode == 'Table'" }
-  thead
-    th
-    th data={ ng_repeat: "guestTeam in vm.teams" }
-      p
-        | {{ guestTeam.name }}
-  tbody
-    tr data={ ng_repeat: "hostTeam in vm.teams" }
+  table.table.table-hover data={ ng_if: "vm.viewMode == 'List'" }
+    thead
+      th Host team
+      th Host score
+      th Guest score
+      th Guest team
       th
-        p
-          | {{ hostTeam.name }}
-      td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
-        p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
-          span.hiden
-            span.glyphicon.glyphicon-edit.text-info.hover data={ my_edit_match: "", my_authorized: "" }
+    tbody
+      tr.item data={ ng_repeat: "match in vm.matches" }
+        td.col-md-4
           strong
-            | {{ match.hostScore }} : {{ match.guestScore }}
+            | {{ match.hostTeam.name }}
+        td.col-md-1
+          | {{ match.hostScore == null ? '-' : match.hostScore }}
+        td.col-md-1
+          | {{ match.guestScore == null ? '-' : match.guestScore }}
+        td.col-md-4
+          strong
+            | {{ match.guestTeam.name }}
+        td.col-md-2
+          ul.list-inline.list-unstyled.hiden
+            li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
+            li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
+            li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
+
+
+  table.table.table-bordered.table-hover data={ ng_if: "vm.viewMode == 'Table'" }
+    thead
+      th
+      th data={ ng_repeat: "guestTeam in vm.teams" }
+        p
+          | {{ guestTeam.name }}
+    tbody
+      tr data={ ng_repeat: "hostTeam in vm.teams" }
+        th
+          p
+            | {{ hostTeam.name }}
+        td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
+          p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
+            span.hiden
+              span.glyphicon.glyphicon-edit.text-info.hover data={ my_edit_match: "", my_authorized: "" }
+            strong
+              | {{ match.hostScore }} : {{ match.guestScore }}
+            span.hiden
+              span.glyphicon.glyphicon-remove.text-danger.hover data={ my_delete_match: "", my_authorized: "" }
           span.hiden
-            span.glyphicon.glyphicon-remove.text-danger.hover data={ my_delete_match: "", my_authorized: "" }
-        span.hiden
-          span.glyphicon.glyphicon-plus.text-success.hover data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "", my_authorized: "" }
+            span.glyphicon.glyphicon-plus.text-success.hover data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "", my_authorized: "" }
+
+div data={ ng_if: "vm.round.mode == 'play-off'" }
+  div.grid-header
+    strong 1/16
+    strong 1/8
+    strong 1/4
+    strong 1/2
+    strong Final
+  div.grid-container
+    div.matches.match-col data={ ng_repeat: 'match in vm.matches', ng_include: "'matches/tree_matches.html'" }

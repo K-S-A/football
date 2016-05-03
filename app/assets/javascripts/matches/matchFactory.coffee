@@ -21,5 +21,27 @@ angular.module('mainApp').factory 'Match', [
 
       data
 
+    Match.rootNode = (arr) ->
+      for match in arr
+        return match unless match.nextId
+
+    Match.toTree = (arr, parent, tree) ->
+      tree ||= []
+      parent ||= { id: null }
+
+      children = arr.filter (match) ->
+        match.nextId == parent.id
+
+      if children != []
+        if parent.id
+          parent.children = children
+        else
+          tree = children
+
+        children.forEach (match) ->
+          Match.toTree(arr, match)
+
+      tree
+
     Match
 ]

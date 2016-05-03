@@ -1,4 +1,4 @@
-form.form-inline name="createTournament" data={ ng_submit: "vm.create()" }
+form.form-inline name="createTournament" data={ ng_submit: "vm.create()", ng_if: "vm.team_sizes" }
   .form-group
     label for="name" Name:
     input.form-control name="name" placeholder="Enter tourament name..." data={ ng_model: "vm.tournament.name" }

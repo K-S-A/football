@@ -7,6 +7,7 @@ angular.module('mainApp').controller 'MatchesCtrl', [
   (Match, Round, Team) ->
     vm = this
 
+    vm.round = Round.current
     vm.matches = Match.all
     vm.teams = Team.all
     vm.countRange = [1, 2, 3, 4, 5]

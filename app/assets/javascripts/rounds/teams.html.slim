@@ -1,7 +1,6 @@
-table.table.table-hover
+table#rankings.table.table-hover
   thead
     th Place
-    / th ID
     th Team name
     th Total games
     th Win
@@ -18,8 +17,6 @@ table.table.table-hover
     tr.item data={ ng_repeat: "team in vm.round.teams" }
       td
         | {{ $index + 1 }}
-      / td
-      /   | {{ team.id }}
       td
         strong
           | {{ team.name }}

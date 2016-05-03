@@ -1,0 +1,14 @@
+div.match-row
+  div.match.text-center
+    / | {{ match.id }} - {{ match.nextId }}
+    a href="" data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
+      | {{ match.hostTeam.name }}
+    p data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
+      | {{ match.hostScore || '-'}}
+    p data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
+      | {{ match.guestScore || '-' }}
+    a href="" data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
+      | {{ match.guestTeam.name }}
+  div.spacer
+  div.matches.match-col
+    div data={ ng_repeat: "match in match.children", ng_include: "'matches/tree_matches.html'" }
