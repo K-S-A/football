@@ -51,7 +51,7 @@ RSpec.describe UsersController, type: :controller do
     let!(:call_action) { get :show, id: @user.id }
 
     include_examples 'for successfull request'
-    include_examples 'for rendering templates', [:show, :_user]
+    include_examples 'for rendering templates', [:show]
 
     it 'assigns @user' do
       expect(assigns(:user)).to eq(@user)

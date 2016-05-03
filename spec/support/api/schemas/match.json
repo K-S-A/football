@@ -1,10 +1,11 @@
 {
   "type": "object",
-  "required": ["id", "host_score", "guest_score", "host_team", "guest_team"],
+  "required": ["id", "host_score", "guest_score", "next_id", "host_team", "guest_team"],
   "properties": {
     "id" : { "type" : "integer" },
     "host_score" : { "type" : "integer" },
     "guest_score" : { "type" : "integer" },
+    "next_id" : { "type" : ["integer", "null"] },
     "host_team" : {
       "type": "object",
       "required": ["id", "name", "users"],

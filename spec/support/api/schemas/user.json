@@ -1,11 +1,13 @@
 {
   "type": "object",
-  "required": ["id", "first_name", "last_name", "img_link", "admin"],
+  "required": ["id", "first_name", "last_name", "img_link", "admin", "tournaments", "teams"],
   "properties": {
     "id" : { "type" : "integer" },
     "first_name" : { "type" : "string" },
     "last_name" : { "type" : "string" },
     "img_link" : { "type" : "string" },
-    "admin" : { "type" : "boolean" }
+    "admin" : { "type" : "boolean" },
+    "tournaments" : { "type" : "array" },
+    "teams" : { "type" : "array" }
   }
 }
