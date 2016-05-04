@@ -30,8 +30,5 @@ angular.module('mainApp').controller 'AuthCtrl', [
         $state.reload()
       return
 
-    vm.update = (user) ->
-      auths.updateUser(user)
-
     vm
 ]

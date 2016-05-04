@@ -14,8 +14,10 @@ angular.module('mainApp').controller 'UserCtrl', [
       new Tournament(params)
     vm.tournament = teams: vm.user.teams
 
-
     vm.statuses = ['not started', 'in progress', 'completed']
+
+    vm.update = (user) ->
+      auths.updateUser(user)
 
     vm
 

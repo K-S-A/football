@@ -1,22 +1,21 @@
 br/
 div data={ ng_if: "vm.round.mode == 'regular'" }
-  div
-    div data={ ng_if: "vm.teams.length > 1" }
-      .col-lg-3.col-md-4 data={ my_authorized: "" }
-        form.form-inline
-          .form-group
-            .input-group
-              select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
-              span.input-group-btn
-                button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
-      .col-lg-7.col-md-12 data={ my_authorized: "" }
-        my-add-match-form
-        my-edit-match-form
-      .col-lg-2
+  div data={ ng_if: "vm.teams.length > 1" }
+    .col-lg-3.col-md-4 data={ my_authorized: "" }
+      form.form-inline
         .form-group
           .input-group
-            select.form-control.input-lg data={ ng_model: "vm.viewMode", ng_options: "mode as (mode + ' view') for mode in vm.viewModes" }
-    a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
+            select.form-control.input-lg data={ ng_model: "vm.count", ng_options: "index as ('x' + index) for index in vm.countRange" }
+            span.input-group-btn
+              button.btn.btn-danger.btn-lg my-generate-matches="" Generate matches
+    .col-lg-7.col-md-12 data={ my_authorized: "" }
+      my-add-match-form
+      my-edit-match-form
+    .col-lg-2
+      .form-group
+        .input-group
+          select.form-control.input-lg data={ ng_model: "vm.viewMode", ng_options: "mode as (mode + ' view') for mode in vm.viewModes" }
+  a ui-sref="^.teams" data={ ng_if: "vm.teams.length < 2" } Add teams
 
   table.table.table-hover data={ ng_if: "vm.viewMode == 'List'" }
     thead
@@ -28,15 +27,17 @@ div data={ ng_if: "vm.round.mode == 'regular'" }
     tbody
       tr.item data={ ng_repeat: "match in vm.matches" }
         td.col-md-4
-          strong
-            | {{ match.hostTeam.name }}
+          a ui-sref="team({ id: hostTeam.id })"
+            strong
+              | {{ match.hostTeam.name }}
         td.col-md-1
           | {{ match.hostScore == null ? '-' : match.hostScore }}
         td.col-md-1
           | {{ match.guestScore == null ? '-' : match.guestScore }}
         td.col-md-4
-          strong
-            | {{ match.guestTeam.name }}
+          a ui-sref="team({ id: guestTeam.id })"
+            strong
+              | {{ match.guestTeam.name }}
         td.col-md-2
           ul.list-inline.list-unstyled.hiden
             li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
@@ -48,12 +49,12 @@ div data={ ng_if: "vm.round.mode == 'regular'" }
     thead
       th
       th data={ ng_repeat: "guestTeam in vm.teams" }
-        p
+        a ui-sref="team({ id: guestTeam.id })"
           | {{ guestTeam.name }}
     tbody
       tr data={ ng_repeat: "hostTeam in vm.teams" }
         th
-          p
+          a ui-sref="team({ id: hostTeam.id })"
             | {{ hostTeam.name }}
         td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
           p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }

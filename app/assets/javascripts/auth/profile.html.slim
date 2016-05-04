@@ -1,11 +1,11 @@
-uib-tabset type="pills" active="active"
-  uib-tab.profile-nav index="0" heading="Personal info"
+uib-tabset type="pills" active="active" justified="true"
+  uib-tab index="0" heading="Personal info"
     div data={ ng_include: "'auth/personal.html'" }
-  uib-tab.profile-nav index="1" heading="Tournaments"
+  uib-tab index="1" heading="Tournaments"
     div data={ ng_include: "'tournaments/index.html'" }
-  uib-tab.profile-nav index="2" heading="Teams"
+  uib-tab index="2" heading="Teams"
     div data={ ng_include: "'tournaments/teams.html'" }
-  uib-tab.profile-nav index="3" disable="!vm.unratedTournaments.length"
+  uib-tab index="3" disable="!vm.unratedTournaments.length"
     uib-tab-heading
       i.glyphicon.glyphicon-bell data={ ng_if: "vm.unratedTournaments.length" }
       span Assessments

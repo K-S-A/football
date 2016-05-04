@@ -1,21 +1,78 @@
 .container-fluid
   h3 User
-  / | {{ vm.user }}
-  / .col-md-3
-  /   ul.nav.nav-pills.nav-stacked
-  /     li.active
-  /       a href="#" 1
-  /     li
-  /       a href="#" 1
-  /     li
-  /       a href="#" 1
 
+uib-tabset { type="pills"
+             active="active"
+             justified="true" }
+  uib-tab index="0" heading="Personal info"
 
-  / uib-tabset active="active"
-  /   uib-tab index="0" heading="Static title"
-  /     p Static content
-  /   uib-tab index="1"
-  /     uib-tab-heading
-  /       i.glyphicon.glyphicon-bell
-  /       span Alert!
-  /     p I've got an HTML heading, and a select callback. Pretty cool!
+    form.form-horizontal editable-form="" name="userProfile" onbeforesave="vm.update($data)"
+      .form-group
+        label.control-label.col-sm-2 for="first_name" First name:
+        .col-sm-9
+          p.form-control-static editable-text="vm.user.firstName" e-name="first_name"
+            | {{ vm.user.firstName || 'empty' }}
+      .form-group
+        label.control-label.col-sm-2 for="last_name" Last name:
+        .col-sm-9
+          p.form-control-static editable-text="vm.user.lastName" e-name="last_name"
+            | {{ vm.user.lastName || 'empty' }}
+
+      button.btn.btn-default.btn-block { type="button"
+                                         my-allow-edit-profile=""
+                                         data={ ng_click: "userProfile.$show()", ng_show: "!userProfile.$visible" } } Edit
+      span ng-show="userProfile.$visible"
+        .btn-group.btn-group-justified
+          .btn-group
+            button.btn.btn-primary type="submit" ng-disabled="userProfile.$waiting" Save
+          .btn-group
+            button.btn.btn-default type="button" ng-disabled="userProfile.$waiting" ng-click="userProfile.$cancel()" Cancel
+
+  uib-tab index="1" heading="Tournaments"
+
+    table.table.table-hover
+      thead
+        th Name
+        th Status
+      tbody
+        tr { data={ ng_repeat: "tournament in vm.tournaments",
+                    ng_class: "{success: tournament.status == 'in progress',
+                                default: tournament.status == 'closed',
+                                danger: tournament.status == 'completed',
+                                info: tournament.status == 'not started'}" } }
+          td
+            a ui-sref="tournament.participants({ id: tournament.id })"
+              strong
+                | {{ tournament.toTitle() }}
+            span.label.label-info.pull-right
+              | Participants: {{ tournament.users.length }}
+          td
+            span
+              | {{ tournament.status }}
+
+  uib-tab index="2" heading="Teams"
+
+    table.table.table-condensed.table-hover
+      thead
+        th
+          p.text-center Name
+        th
+          p.text-center Team members
+      tbody data={ ui_sortable: "vm.sortableOptions", ng_model: "vm.tournament.teams" }
+        tr data={ ng_repeat: "team in vm.user.teams" }
+          td.col-md-2.vcenter
+            a ui-sref="team({ id: team.id })"
+              | {{ team.name }}
+          td
+            .item.media.col-lg-3 data={ ng_repeat: "member in team.users" }
+              .col-xs-8
+                .media-left
+                  img.img-responsive.img-thumbnail { width="50"
+                                                     heigth="50"
+                                                     data={ ng_src: "{{ member.imgLink }}" } }
+                .media-body
+                  strong
+                    p
+                      | {{ member.firstName }}
+                    p
+                      | {{ member.lastName }}
