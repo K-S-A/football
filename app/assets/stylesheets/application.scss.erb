@@ -78,8 +78,14 @@
   vertical-align: middle;
 }
 
-tr:hover .hiden-control {
-  display: block;
+tr:hover {
+  .hiden-control {
+    display: block;
+  }
+
+  .hover-hide {
+    display: none;
+  }
 }
 
 p:hover > span.hiden {
@@ -148,4 +154,8 @@ p:hover > span.hiden {
 
 .profile-nav {
   margin-bottom: 20px;
+}
+
+.editable-input {
+  min-width: 400px;
 }

@@ -9,5 +9,9 @@ angular.module('mainApp').controller 'TeamsCtrl', [
     vm.tournament = Tournament.current
     vm.team = Team.current
 
+    vm.update = (team) ->
+      team = angular.extend({}, vm.team, team)
+      new Team(team).update()
+
     vm
 ]

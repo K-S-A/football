@@ -101,6 +101,13 @@ angular.module('mainApp', [
           Tournament.current = {}
           Tournament.get().then (data) ->
             Tournament.all = data]
+      .state 'team',
+        url: '/teams/{id:[0-9]+}'
+        templateUrl: 'teams/show.html'
+        controller: 'TeamsCtrl as vm'
+        resolve: getTeam: ['Team', '$stateParams', (Team, $stateParams) ->
+          Team.get(id: $stateParams.id).then (data) ->
+            Team.current = data]
 #      .state 'user',
 #        url: '/users/{id:[0-9]+}'
 #        templateUrl: 'users/show.html'

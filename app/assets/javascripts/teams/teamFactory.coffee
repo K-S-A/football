@@ -18,6 +18,10 @@ angular.module('mainApp').factory 'Team', [
         delete data['users']
         data
 
+    Team.prototype.includeMember = (user) ->
+      @users.some (u) ->
+        u.id == user.id
+
     Team
 
 ]
