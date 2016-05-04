@@ -40,9 +40,12 @@ div data={ ng_if: "vm.round.mode == 'regular'" }
               | {{ match.guestTeam.name }}
         td.col-md-2
           ul.list-inline.list-unstyled.hiden
-            li.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
-            li.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
-            li.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
+            li
+              span.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
+            li
+              span.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
+            li
+              span.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
 
 
   table.table.table-bordered.table-hover data={ ng_if: "vm.viewMode == 'Table'" }
@@ -68,11 +71,14 @@ div data={ ng_if: "vm.round.mode == 'regular'" }
             span.glyphicon.glyphicon-plus.text-success.hover data={ ng_if: "hostTeam.id != guestTeam.id", my_fill_teams: "", my_authorized: "" }
 
 div data={ ng_if: "vm.round.mode == 'play-off'" }
-  div.grid-header
-    strong 1/16
-    strong 1/8
-    strong 1/4
-    strong 1/2
-    strong Final
-  div.grid-container
-    div.matches.match-col data={ ng_repeat: 'match in vm.matches', ng_include: "'matches/tree_matches.html'" }
+  my-edit-match-form
+  / .grid-header data={ ng_if: "vm.matches.length" }
+  /   strong 1/16
+  /   strong 1/8
+  /   strong 1/4
+  /   strong 1/2
+  /   strong Final
+  .grid-container
+    / .matches.match-row data={ ng_if: "!vm.matches.length" }
+    / span.glyphicon.glyphicon-plus.glyphicon-lg.text-success data={ my_add_playoff_match: "" }
+    .matches.match-col data={ ng_repeat: 'match in vm.matches', ng_include: "'matches/tree_matches.html'" }

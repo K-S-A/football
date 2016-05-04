@@ -9,7 +9,7 @@ angular.module('mainApp').factory 'Match', [
       name: 'match'
       serializer: railsSerializer ->
         # TODO: possible issues
-        @only 'id', 'hostTeamId', 'guestTeamId', 'hostTeam', 'guestTeam', 'hostScore', 'guestScore', 'teams', 'teamIds', 'count')
+        @only 'id', 'hostTeamId', 'guestTeamId', 'hostTeam', 'guestTeam', 'hostScore', 'guestScore', 'teams', 'teamIds', 'count', 'nextId')
 
     Match.beforeRequest (data) ->
       if data

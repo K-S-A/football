@@ -1,6 +1,9 @@
-div.match-row
-  div.match.text-center
-    / | {{ match.id }} - {{ match.nextId }}
+.match-row
+  .match.text-center.item
+    / span.glyphicon.glyphicon-edit.text-info data={ my_edit_match: "",  my_authorized: "" }
+    span.hiden.pull-right
+      span.glyphicon.glyphicon-remove.text-danger data={ my_delete_playoff_match: "", my_authorized: "" }
+    | {{ match.id }} - {{ match.nextId }}
     a href="" data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
       | {{ match.hostTeam.name }}
     p data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
@@ -9,6 +12,8 @@ div.match-row
       | {{ match.guestScore || '-' }}
     a href="" data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
       | {{ match.guestTeam.name }}
-  div.spacer
-  div.matches.match-col
+  .spacer.text-center
+    span.hiden
+      span.glyphicon.glyphicon-plus.glyphicon-lg.text-success data={ my_add_playoff_match: "" }
+  .matches.match-col
     div data={ ng_repeat: "match in match.children", ng_include: "'matches/tree_matches.html'" }

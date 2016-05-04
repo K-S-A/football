@@ -42,6 +42,10 @@
   display: block;
 }
 
+.item:hover + .spacer > .hiden, .spacer:hover > .hiden {
+  display: block;
+}
+
 .item:hover > td > .hiden {
   display: block;
 }
@@ -114,8 +118,9 @@ p:hover > span.hiden {
 }
 
 .match {
-  min-width: 200px;
-  border: solid 1px;
+  width: 200px;
+  border: solid;
+  border-width: 1px 0;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -134,12 +139,12 @@ p:hover > span.hiden {
 
 .match-col {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
 }
 
 .spacer {
-  width: 100px;
+  width: 60px;
 }
 
 .grid-container {
