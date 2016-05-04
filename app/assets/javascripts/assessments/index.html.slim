@@ -1,11 +1,26 @@
-h3 Assessments
+h3 Assessments for {{ vm.tournament.toTitle() }} tournament
 
-ul data={ ui_sortable: "", ng_model: "vm.participants" }
-  li data={ ng_repeat: "participant in vm.participants" }
-    span
-      | {{ $index + 1 }}
-    img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ participant.imgLink }}" }
-    span
-      | {{ participant.firstName + ' ' + participant.lastName }}
+table.table.table-condensed.table-hover
+  thead
+    th Rating
+    th
+      p.text-center First name
+    th
+      p.text-center Last name
+    th
+  tbody data={ ui_sortable: "vm.sortableOptions", ng_model: "vm.participants" }
+    tr data={ ng_repeat: "participant in vm.participants" }
+      td.col-md-1
+        strong.hover-hide
+          | {{ $index + 1 }}
+        span.glyphicon.glyphicon-sort.glyphicon-lg.text-info.hiden-control
+      td.col-md-5.vcenter
+        p
+          | {{ participant.firstName }}
+      td.col-md-5.vcenter
+        p
+          | {{ participant.lastName }}
+      td.col-md-1
+        img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ participant.imgLink }}" }
 
-button data={ ng_click: "vm.create()" } Submit
+button.btn.btn-success.btn-lg.btn-block data={ ng_click: "vm.create()" } Submit ratings

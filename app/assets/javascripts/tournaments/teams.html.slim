@@ -16,7 +16,7 @@
       tr data={ ng_repeat: "team in vm.tournament.teams" }
         td.col-md-2.vcenter
           span.glyphicon.glyphicon-sort.glyphicon-lg.text-info.pull-left.hiden-control
-          h4
+          a ui-sref="team({ id: team.id })"
             | {{ team.name }}
         td
           .item.media.col-lg-3 data={ ng_repeat: "member in team.users" }
