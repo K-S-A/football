@@ -265,7 +265,8 @@ Devise.setup do |config|
   config.omniauth :facebook,
                     ENV['FACEBOOK_APP_ID'],
                     ENV['FACEBOOK_APP_SECRET'],
-                    { image_size: 'square' }
+                    { image_size: 'square',
+                      info_fields: 'first_name,last_name,email' }
 
 # config.omniauth :vkontakte,
 #                   ENV['VK_APP_ID'],

@@ -1,13 +1,9 @@
 class User < ActiveRecord::Base
-  # # Include default devise modules. Others available are:
-  # # :confirmable, :lockable, :timeoutable and :omniauthable
-  # devise :database_authenticatable, :registerable,
-  #        :recoverable, :rememberable, :trackable, :validatable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:twitter, :google, :facebook, :vkontakte]
+         :omniauthable, omniauth_providers: [:facebook]
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :tournaments
   has_many :assessments
@@ -20,11 +16,22 @@ class User < ActiveRecord::Base
     Tournament.find_by_sql(unrated_tournaments_query(id))
   end
 
-  private
+  class << self
+    def from_omniauth(auth)
+      # Prevents NoMethodError (auth == nil):
+      # in case if user revoces access when redirected to omniauth provider
+      return unless auth
 
-  # def destroy_teams(tournament)
-  #   teams.where(tournament_id: tournament.id).destroy_all
-  # end
+      where(email: auth.info.email).first_or_create do |user|
+        user.password = Devise.friendly_token[0, 20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.img_link = auth.info.image
+      end
+    end
+  end
+
+  private
 
   def unrated_tournaments_query(user_id)
     %(SELECT DISTINCT tournaments.*

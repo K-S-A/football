@@ -14,6 +14,6 @@
       | {{ match.guestTeam.name }}
   .spacer.text-center
     span.hiden
-      span.glyphicon.glyphicon-plus.glyphicon-lg.text-success data={ my_add_playoff_match: "" }
+      span.glyphicon.glyphicon-plus.glyphicon-lg.text-success data={ my_add_playoff_match: "", my_authorized: "" }
   .matches.match-col
     div data={ ng_repeat: "match in match.children", ng_include: "'matches/tree_matches.html'" }

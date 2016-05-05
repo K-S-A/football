@@ -3,7 +3,8 @@
 angular.module('mainApp').factory 'auths', [
   '$timeout'
   '$http'
-  ($timeout, $http) ->
+  'Auth'
+  ($timeout, $http, Auth) ->
     o =
       user: {}
       email_pattern: '^([a-z0-9_.-]+@[a-z]+\\.[a-z]{2,5})$'
@@ -28,6 +29,12 @@ angular.module('mainApp').factory 'auths', [
         u.alert = u.notice = null
       , 5000
       return
+
+    o.watchLoginChange = ->
+      FB.Event.subscribe 'auth.authResponseChange', (res) ->
+        if res.status == 'connected'
+          $http.post('/users/auth/facebook/callback', res).then ->
+            Auth.login()
 
     o
 ]

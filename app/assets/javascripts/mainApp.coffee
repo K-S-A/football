@@ -122,12 +122,13 @@ angular.module('mainApp', [
 ]).run([
   '$rootScope'
   '$state'
+  '$window'
   'Auth'
   'auths'
   'editableOptions'
   'Tournament'
   'Round'
-  ($rootScope, $state, Auth, auths, editableOptions, Tournament, Round) ->
+  ($rootScope, $state, $window, Auth, auths, editableOptions, Tournament, Round) ->
     editableOptions.theme = 'bs3'
 
     $rootScope.$on("$stateChangeError", console.log.bind(console))
@@ -173,6 +174,29 @@ angular.module('mainApp', [
     $rootScope.$on 'devise:login', (e, user) ->
       auths.setUser(user, 'You are authorized successfully.')
       return
+
+    # fb SDK
+    $window.fbAsyncInit = ->
+      FB.init
+        appId: '1534051593567666'
+        cookie: true
+        xfbml: true
+        version: 'v2.5'
+
+      auths.watchLoginChange()
+      return
+
+    ((d, s, id) ->
+      js = undefined
+      fjs = d.getElementsByTagName(s)[0]
+      if d.getElementById(id)
+        return
+      js = d.createElement(s)
+      js.id = id
+      js.src = '//connect.facebook.net/en_US/sdk.js'
+      fjs.parentNode.insertBefore js, fjs
+      return
+    ) document, 'script', 'facebook-jssdk'
 
     return
 ])

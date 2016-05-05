@@ -13,6 +13,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def facebook
+    render nothing: true
   end
 
   # def vkontakte
@@ -22,6 +23,6 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
   def fill_user
     @user = User.from_omniauth(request.env['omniauth.auth'])
-    end
+    sign_in @user
   end
 end

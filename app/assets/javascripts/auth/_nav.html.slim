@@ -20,6 +20,8 @@ nav.navbar.navbar-default role="navigation"
           | Home
     ul.nav.navbar-nav.navbar-right
       li data={ ng_hide: "vm.signedIn()" }
+        a.fb-login-button data={ data_size: "xlarge", show_faces: "false", scope: "public_profile,email" }
+      li data={ ng_hide: "vm.signedIn()" }
         a data={ ui_sref: "login" }
           | Log in
       li data={ ng_hide: "vm.signedIn()" }
