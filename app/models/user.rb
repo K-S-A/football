@@ -38,8 +38,10 @@ class User < ActiveRecord::Base
     # TODO: fix selection of tournaments that not connected to user.
     %(SELECT DISTINCT tournaments.*
     FROM tournaments
-      LEFT JOIN assessments
-      ON tournaments.id = assessments.tournament_id AND assessments.user_id = #{user_id}
-    WHERE assessments.id IS NULL AND tournaments.status = 'completed')
+      JOIN tournaments_users
+      ON tournaments.id = tournaments_users.tournament_id
+        LEFT JOIN assessments
+        ON tournaments.id = assessments.tournament_id
+    WHERE assessments.id IS NULL AND tournaments.status = 'completed' AND tournaments_users.user_id = #{user_id})
   end
 end
