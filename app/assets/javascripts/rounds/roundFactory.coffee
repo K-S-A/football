@@ -18,5 +18,9 @@ angular.module('mainApp').factory 'Round', [
 
       data
 
+    Round.prototype.removeTeam = (team_id) ->
+      Round.$delete('/rounds/' + @id + '/teams/' + team_id).then (data) ->
+        Round.current.teams = data.teams
+
     Round
 ]

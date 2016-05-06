@@ -88,18 +88,6 @@ RSpec.describe RoundsController, type: :controller do
       it 'should match response schema "round"' do
         expect(response).to match_response_schema('round')
       end
-
-      context 'when params[:team_id]' do
-        let!(:round) { FactoryGirl.create(:round_with_teams) }
-
-        let(:delete_team) do
-          put :update, id: round.id, round: {team_id: round.teams.last.id}
-        end
-
-        it 'should delete association to team' do
-          expect { delete_team }.to change { round.teams.count }.by(-1)
-        end
-      end
     end
 
     context 'with invalid params' do
@@ -132,6 +120,22 @@ RSpec.describe RoundsController, type: :controller do
       let!(:call_action) { delete :destroy, id: Round.last.id.next }
 
       include_examples 'for render nothing with status', 404
+    end
+  end
+
+  context 'DELETE #remove_team' do
+    let!(:round) { FactoryGirl.create(:round_with_teams) }
+
+    let(:delete_team) do
+      delete :remove_team, round_id: round.id, id: round.teams.last.id
+    end
+
+    it 'should remove association to team' do
+      expect { delete_team }.to change { round.teams.count }.by(-1)
+    end
+
+    it 'should not delete team itself' do
+      expect { delete_team }.not_to change { Team.count }
     end
   end
 end

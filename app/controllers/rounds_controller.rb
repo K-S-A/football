@@ -20,12 +20,7 @@ class RoundsController < ApplicationController
   end
 
   def update
-    if params[:round][:team_id]
-      team = @round.teams.find(params[:round][:team_id])
-      @round.teams.delete(team)
-    else
-      @round.update_attributes!(round_params)
-    end
+    @round.update_attributes!(round_params)
 
     find_teams
 
@@ -36,6 +31,16 @@ class RoundsController < ApplicationController
     @round.destroy
 
     render nothing: true
+  end
+
+  def remove_team
+    @round = Round.find(params[:round_id])
+    team = @round.teams.find(params[:id])
+    @round.teams.delete(team)
+
+    find_teams
+
+    render 'show'
   end
 
   private

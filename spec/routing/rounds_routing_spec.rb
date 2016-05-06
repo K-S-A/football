@@ -33,5 +33,9 @@ RSpec.describe RoundsController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/rounds/1').to route_to('rounds#destroy', id: '1')
     end
+
+    it 'routes to #remove_team' do
+      expect(delete: '/rounds/1/teams/2').to route_to('rounds#remove_team', round_id: '1', id: '2')
+    end
   end
 end

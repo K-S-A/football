@@ -8,6 +8,6 @@ angular.module('mainApp').directive 'myDeleteRoundTeam', [
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
         if $window.confirm('Remove team?')
-          Round.$patch('/rounds/' + scope.vm.round.id, teamId: scope.team.id).then (data) ->
-            Round.current.teams = data.teams
+          scope.vm.round.removeTeam(scope.team.id)
+
 ]
