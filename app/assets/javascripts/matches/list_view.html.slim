@@ -1,0 +1,30 @@
+table.table.table-hover
+  thead
+    th Host team
+    th Host score
+    th Guest score
+    th Guest team
+    th
+  tbody
+    tr.item data={ ng_repeat: "match in vm.matches" }
+      td.col-md-4
+        a ui-sref="team({ id: hostTeam.id })"
+          strong
+            | {{ match.hostTeam.name }}
+      td.col-md-1
+        | {{ match.hostScore == null ? '-' : match.hostScore }}
+      td.col-md-1
+        | {{ match.guestScore == null ? '-' : match.guestScore }}
+      td.col-md-4
+        a ui-sref="team({ id: guestTeam.id })"
+          strong
+            | {{ match.guestTeam.name }}
+      td.col-md-2
+        ul.list-inline.list-unstyled.hiden
+          li
+            span.glyphicon.glyphicon-edit.glyphicon-lg.text-info data={ my_edit_match: "",  my_authorized: "" }
+          li
+            span.glyphicon.glyphicon-retweet.glyphicon-lg.text-warning data={ my_swap_teams: "", my_authorized: "" }
+          li
+            span.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_delete_match: "", my_authorized: "" }
+

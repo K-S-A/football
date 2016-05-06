@@ -1,0 +1,11 @@
+my-edit-match-form
+/ .grid-header data={ ng_if: "vm.matches.length" }
+/   strong 1/16
+/   strong 1/8
+/   strong 1/4
+/   strong 1/2
+/   strong Final
+.grid-container
+  / .matches.match-row data={ ng_if: "!vm.matches.length" }
+  / span.glyphicon.glyphicon-plus.glyphicon-lg.text-success data={ my_add_playoff_match: "" }
+  .matches.match-col data={ ng_repeat: 'match in vm.matches', ng_include: "'matches/tree_matches.html'" }

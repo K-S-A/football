@@ -14,7 +14,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise', '~> 3.5'
 gem 'omniauth-facebook', '~> 3.0'
-# gem 'koala', '~> 2.3'
 gem 'omniauth-vkontakte', '~> 1.3'
 gem 'thin', '~> 1.6'
 gem 'faker', '~> 1.6'
