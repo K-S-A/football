@@ -32,7 +32,7 @@ angular.module('mainApp', [
                 User.current = data]
       .state 'tournament.assessment',
         url: '/assessments'
-        templateUrl: 'assessments/index.html'
+        templateUrl: 'tournaments/assessments.html'
         controller: 'AssessmentsCtrl as vm'
         resolve: tournamentAssessments: ['$q', 'getTournament', 'Auth', 'User', ($q, getTournament, Auth, User) ->
           defered = $q.defer()
@@ -175,7 +175,7 @@ angular.module('mainApp', [
       auths.setUser(user, 'You are authorized successfully.')
       return
 
-    # fb SDK
+    # Facebook SDK
     $window.fbAsyncInit = ->
       FB.init
         appId: '1534051593567666'
@@ -197,6 +197,29 @@ angular.module('mainApp', [
       fjs.parentNode.insertBefore js, fjs
       return
     ) document, 'script', 'facebook-jssdk'
+
+    # VK SDK
+    #$window.vkAsyncInit = ->
+    #  VK.init
+    #    apiId: '5450208'
+    #    scope: 'email'
+    #    redirect_uri: 'http://localhost:3000/users/auth/vkontakte/callback'
+    #    response_type: 'code'
+
+    #  VK.UI.button('vk-login-button')
+    #  auths.watchVkLoginChange()
+
+    #((d, s, id) ->
+    #  js = undefined
+    #  fjs = d.getElementsByTagName(s)[0]
+    #  if d.getElementById(id)
+    #    return
+    #  js = d.createElement(s)
+    #  js.id = id
+    #  js.src = '//vk.com/js/api/openapi.js'
+    #  fjs.parentNode.insertBefore js, fjs
+    #  return
+    #) document, 'script', 'vk-jssdk'
 
     return
 ])
