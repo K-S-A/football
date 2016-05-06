@@ -9,16 +9,14 @@ table.table.table-hover
     tr.item data={ ng_repeat: "match in vm.matches" }
       td.col-md-4
         a ui-sref="team({ id: hostTeam.id })"
-          strong
-            | {{ match.hostTeam.name }}
+          strong data={ ng_bind: "match.hostTeam.name" }
       td.col-md-1
-        | {{ match.hostScore == null ? '-' : match.hostScore }}
+        p data={ ng_bind: "match.hostScore == null ? '-' : match.hostScore" }
       td.col-md-1
-        | {{ match.guestScore == null ? '-' : match.guestScore }}
+        p data={ ng_bind: "match.guestScore == null ? '-' : match.guestScore" }
       td.col-md-4
         a ui-sref="team({ id: guestTeam.id })"
-          strong
-            | {{ match.guestTeam.name }}
+          strong data={ ng_bind: "match.guestTeam.name" }
       td.col-md-2
         ul.list-inline.list-unstyled.hiden
           li

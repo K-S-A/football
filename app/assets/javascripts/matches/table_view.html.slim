@@ -2,13 +2,11 @@ table.table.table-bordered.table-hover
   thead
     th
     th data={ ng_repeat: "guestTeam in vm.teams" }
-      a ui-sref="team({ id: guestTeam.id })"
-        | {{ guestTeam.name }}
+      a ui-sref="team({ id: guestTeam.id })" data={ ng_bind: "guestTeam.name" }
   tbody
     tr data={ ng_repeat: "hostTeam in vm.teams" }
       th
-        a ui-sref="team({ id: hostTeam.id })"
-          | {{ hostTeam.name }}
+        a ui-sref="team({ id: hostTeam.id })" data={ ng_bind: "hostTeam.name" }
       td.item data={ ng_repeat: "guestTeam in vm.teams", ng_class: "{'bg-warning': (hostTeam.id == guestTeam.id)}" }
         p data={ ng_repeat: "match in vm.matches | filter : { hostTeam: { id: hostTeam.id }, guestTeam: { id: guestTeam.id } }" }
           span.hiden

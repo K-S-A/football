@@ -1,26 +1,26 @@
-h3 Assessments for {{ vm.tournament.toTitle() }} tournament
-
-table.table.table-condensed.table-hover
+table.table.table-hover
   thead
-    th Rating
+    th Name
+    th Status
     th
-      p.text-center First name
-    th
-      p.text-center Last name
-    th
-  tbody data={ ui_sortable: "vm.sortableOptions", ng_model: "vm.participants" }
-    tr data={ ng_repeat: "participant in vm.participants" }
-      td.col-md-1
-        strong.hover-hide
-          | {{ $index + 1 }}
-        span.glyphicon.glyphicon-sort.glyphicon-lg.text-info.hiden-control
-      td.col-md-5.vcenter
-        p
-          | {{ participant.firstName }}
-      td.col-md-5.vcenter
-        p
-          | {{ participant.lastName }}
-      td.col-md-1
-        img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ participant.imgLink }}" }
-
-button.btn.btn-success.btn-lg.btn-block data={ ng_click: "vm.create()" } Submit ratings
+  tbody
+    tr { data={ ng_repeat: "tournament in vm.unratedTournaments",
+              ng_class: "{success: tournament.status == 'in progress',
+                          default: tournament.status == 'closed',
+                          danger: tournament.status == 'completed',
+                          info: tournament.status == 'not started'}" } }
+      td
+        a ui-sref="tournament.assessment({ id: tournament.id })"
+          strong data={ ng_bind: "tournament.toTitle()" }
+        span.label.label-info.pull-right
+          | Participants: {{ tournament.users.length }}
+      td
+        form data={ my_authorized: ""}
+          select data={ ng_model: "tournament.status", ng_options: "status for status in vm.statuses", my_tournament_status_change: "" }
+        span data={ ng_if: "!vm.user || !vm.user.admin || tournament.status == 'closed'",
+                    ng_bind: "tournament.status" }
+      td
+        span data={ my_authorized: ""}
+          button.btn.btn-danger.col-xs-3 data={ my_delete_tournament: "" } Remove
+          button.btn.btn-warning.col-xs-3 data={ my_finish_voting: "" } Finish voting
+        button.btn.btn-success.col-xs-3 data={ my_participate: "" } Join

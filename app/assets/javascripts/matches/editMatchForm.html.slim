@@ -1,10 +1,9 @@
 form.form-inline#edit_match_form.hidden name="editMatchForm"
   .form-group.col-sm-3
     .input-group
-      select.form-control.input-lg { name="host_team"
-               id="host_team"
-               data={ ng_model: "vm.editedMatch.hostTeam.id",
-                      ng_options: "team.id as team.name for team in vm.teams" } }
+      select#host_team.form-control.input-lg { name="host_team"
+                                               data={ ng_model: "vm.editedMatch.hostTeam.id",
+                                                      ng_options: "team.id as team.name for team in vm.teams" } }
   .score-input.form-group.col-sm-1
     .input-group
       input.form-control.input-lg data={ ng_model: "vm.editedMatch.hostScore" } /
@@ -13,10 +12,9 @@ form.form-inline#edit_match_form.hidden name="editMatchForm"
       input.form-control.input-lg data={ ng_model: "vm.editedMatch.guestScore" } /
   .form-group.col-sm-3
     .input-group
-      select.form-control.input-lg { name="guest_team"
-               id="guest_team"
-               data={ ng_model: "vm.editedMatch.guestTeam.id",
-                      ng_options: "team.id as team.name for team in vm.teams" } }
+      select#guest_team.form-control.input-lg { name="guest_team"
+                                                data={ ng_model: "vm.editedMatch.guestTeam.id",
+                                                       ng_options: "team.id as team.name for team in vm.teams" } }
   .score-submit.form-group.col-sm-4
     .input-group
       .btn-group

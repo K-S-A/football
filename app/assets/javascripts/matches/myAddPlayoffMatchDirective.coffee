@@ -7,9 +7,11 @@ angular.module('mainApp').directive 'myAddPlayoffMatch', [
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
-        nextId = if scope.match then scope.match.id else null
-
-        new Match(nextId: nextId, roundId: Round.current.id).create().then (data) ->
-          scope.match.children ||= []
-          scope.match.children.push(data)
+        if scope.match
+          new Match(nextId: scope.match.id, roundId: Round.current.id).create().then (data) ->
+            scope.match.children ||= []
+            scope.match.children.push(data)
+        else
+          new Match(nextId: null, roundId: Round.current.id).create().then (data) ->
+            scope.vm.matches.push(data)
 ]
