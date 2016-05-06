@@ -4,20 +4,15 @@
 #
 ##############################################################################
 class CallbacksController < Devise::OmniauthCallbacksController
-  before_action :fill_user
-
-  # def twitter
-  # end
-
-  # def google
-  # end
+  before_action :fill_user, except: [:passthru]
 
   def facebook
     render nothing: true
   end
 
-  # def vkontakte
-  # end
+  def vkontakte
+    render nothing: true
+  end
 
   private
 

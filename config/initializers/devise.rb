@@ -268,8 +268,10 @@ Devise.setup do |config|
                     { image_size: 'square',
                       info_fields: 'first_name,last_name,email' }
 
-# config.omniauth :vkontakte,
-#                   ENV['VK_APP_ID'],
-#                   ENV['VK_APP_SECRET'],
-#                   { image_size: 'mini' }
+config.omniauth :vkontakte,
+                  ENV['VK_APP_ID'],
+                  ENV['VK_APP_SECRET'],
+                  { image_size: 'mini',
+                    display: 'popup',
+                    scope: 'email' }
 end

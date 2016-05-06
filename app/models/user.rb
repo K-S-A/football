@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :vkontakte]
+
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :tournaments
   has_many :assessments
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
   private
 
   def unrated_tournaments_query(user_id)
+    # TODO: fix selection of tournaments that not connected to user.
     %(SELECT DISTINCT tournaments.*
     FROM tournaments
       LEFT JOIN assessments
