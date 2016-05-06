@@ -9,31 +9,4 @@ uib-tabset type="pills" active="active" justified="true"
     uib-tab-heading
       i.glyphicon.glyphicon-bell data={ ng_if: "vm.unratedTournaments.length" }
       span Assessments
-
-    table.table.table-hover
-      thead
-        th Name
-        th Status
-        th
-      tbody
-        tr { data={ ng_repeat: "tournament in vm.unratedTournaments",
-                  ng_class: "{success: tournament.status == 'in progress',
-                              default: tournament.status == 'closed',
-                              danger: tournament.status == 'completed',
-                              info: tournament.status == 'not started'}" } }
-          td
-            a ui-sref="tournament.assessment({ id: tournament.id })"
-              strong
-                | {{ tournament.toTitle() }}
-            span.label.label-info.pull-right
-              | Participants: {{ tournament.users.length }}
-          td
-            form data={ my_authorized: ""}
-              select data={ ng_model: "tournament.status", ng_options: "status for status in vm.statuses", my_tournament_status_change: "" }
-            span data={ ng_if: "!vm.user || !vm.user.admin || tournament.status == 'closed'" }
-              | {{ tournament.status }}
-          td
-            span data={ my_authorized: ""}
-              button.btn.btn-danger.col-xs-3 data={ my_delete_tournament: "" } Remove
-              button.btn.btn-warning.col-xs-3 data={ my_finish_voting: "" } Finish voting
-            button.btn.btn-success.col-xs-3 data={ my_participate: "" } Join
+    div data={ ng_include: "'assessments/index.html'" }

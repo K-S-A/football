@@ -36,5 +36,14 @@ angular.module('mainApp').factory 'auths', [
           $http.post('/users/auth/facebook/callback', res).then ->
             Auth.login()
 
+#    o.watchVkLoginChange = ->
+#      VK.Observer.subscribe "auth.login", (res) ->
+#        console.log(VK.Auth.getSession())
+#        #console.log(res)
+
+        #$http.post('/users/auth/vkontakte/callback', res).then ->
+        #  console.log(res)
+        #  Auth.login()
+
     o
 ]

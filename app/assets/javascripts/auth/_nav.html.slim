@@ -16,27 +16,24 @@ nav.navbar.navbar-default role="navigation"
   .collapse.navbar-collapse data={ ng_class: "{ in: collapsed }" }
     ul.nav.navbar-nav
       li
-        a data={ ui_sref: "tournaments" }
-          | Home
+        a data={ ui_sref: "tournaments" } Home
     ul.nav.navbar-nav.navbar-right
+      / li data={ ng_hide: "vm.signedIn()" }
+      /   a#vk-login-button onclick="VK.Auth.login()" scope="email"
       li data={ ng_hide: "vm.signedIn()" }
         a.fb-login-button data={ data_size: "xlarge", show_faces: "false", scope: "public_profile,email" }
       li data={ ng_hide: "vm.signedIn()" }
-        a data={ ui_sref: "login" }
-          | Log in
+        a data={ ui_sref: "login" } Log in
       li data={ ng_hide: "vm.signedIn()" }
-        a data={ ui_sref: "register" }
-          | Register
+        a data={ ui_sref: "register" } Register
       li.pointer-hover data={ is_open: "isopen", ng_show: "vm.signedIn()", uib_dropdown: "" }
         a type="button" data={ uib_dropdown_toggle: "" }
           | Logged in as: "{{ vm.user.first_name || ' unnamed' }} {{ vm.user.last_name }}"
           span.caret
         ul aria-labelledby="single-button" role="menu" data={ uib_dropdown_menu: "" }
           li role="menuitem"
-            a data={ ui_sref: "profile" }
-              | Profile
+            a data={ ui_sref: "profile" } Profile
           li.divider
           li role="menuitem"
-            a data={ ng_click: "vm.logout()" }
-              | Log Out
+            a data={ ng_click: "vm.logout()" } Log Out
 
