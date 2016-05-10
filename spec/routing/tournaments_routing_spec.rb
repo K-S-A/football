@@ -45,5 +45,9 @@ RSpec.describe TournamentsController, type: :routing do
     it 'routes to #join' do
       expect(post: '/tournaments/1/join').to route_to('tournaments#join', id: '1')
     end
+
+    it 'routes to #remove_user' do
+      expect(delete: '/tournaments/1/users/2').to route_to('tournaments#remove_user', id: '1', user_id: '2')
+    end
   end
 end

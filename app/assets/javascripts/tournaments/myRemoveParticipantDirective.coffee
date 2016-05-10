@@ -6,14 +6,7 @@ angular.module('mainApp').directive 'myRemoveParticipant', [
     restrict: 'A'
     link: (scope, element, attrs, ctrl, transcludeFn) ->
       element.on 'click', ->
-        index = scope.$index
-        userIds = Tournament.current.users.map (obj) ->
-          obj.id
+        Tournament.removeParticipant(scope.participant.id).then ->
+            Tournament.current.users.splice(scope.$index, 1)
 
-        userIds.splice(index, 1)
-
-        Tournament.$patch(
-          '/tournaments/' + Tournament.current.id
-          userIds: userIds).then (data) ->
-            Tournament.current.users = data.users
 ]

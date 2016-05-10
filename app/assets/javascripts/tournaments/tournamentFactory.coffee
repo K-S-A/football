@@ -32,5 +32,10 @@ angular.module('mainApp').factory 'Tournament', [
       @users.some (u) ->
         u.id is user.id
 
+    Tournament.removeParticipant = (user_id) ->
+      path = '/tournaments/' + Tournament.current.id + '/users/' + user_id
+
+      Tournament.$delete(path)
+
     Tournament
 ]

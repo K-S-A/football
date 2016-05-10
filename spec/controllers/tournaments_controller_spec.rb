@@ -166,6 +166,29 @@ RSpec.describe TournamentsController, type: :controller do
     end
   end
 
+  context 'DELETE #remove_user', :focus do
+    let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
+    let(:call_action) { delete :remove_user, id: tournament.id,
+                                             user_id: tournament.users.last.id }
+
+    it 'should remove association to user' do
+      expect { call_action }.to change { tournament.users.count }.by(-1)
+    end
+
+    it 'should not destroy user record' do
+      tournament
+
+      expect { call_action }.not_to change { User.count }
+    end
+
+    it "responds nothing with success status" do
+      call_action
+
+      expect(response.status).to eq(200)
+      expect(response).to render_template(nil)
+    end
+  end
+
   context 'POST #join' do
     let!(:tournament) { FactoryGirl.create(:tournament) }
     let!(:call_action) do
