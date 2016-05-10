@@ -12,10 +12,12 @@ class Ability
       can :read, :all
       cannot :index, User
       can :index_teams, :all
+      can :join, Tournament
     else
       can :read, :all
       cannot :index, User
       can :index_teams, :all
+      cannot :join, Tournament
     end
   end
 end

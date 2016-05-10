@@ -41,5 +41,9 @@ RSpec.describe TournamentsController, type: :routing do
     it 'routes to #index_teams' do
       expect(get: '/tournaments/1/teams').to route_to('tournaments#index_teams', id: '1')
     end
+
+    it 'routes to #join' do
+      expect(post: '/tournaments/1/join').to route_to('tournaments#join', id: '1')
+    end
   end
 end

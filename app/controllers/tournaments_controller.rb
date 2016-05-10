@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :find_tournament, only: [:show, :update, :destroy, :index_teams, :destroy_teams]
+  before_action :find_tournament, only: [:show, :update, :destroy, :index_teams, :destroy_teams, :join]
 
   authorize_resource only: [:create, :update, :destroy]
 
@@ -19,13 +19,9 @@ class TournamentsController < ApplicationController
   end
 
   def update
-    if current_user.admin?
-      @tournament.rank_users if tournament_closing?
-      @tournament.users = [] if params[:tournament][:user_ids].nil?
-      @tournament.update_attributes!(tournament_params)
-    else
-      @tournament.users << current_user
-    end
+    @tournament.rank_users if tournament_closing?
+    @tournament.users = [] if params[:tournament][:user_ids].nil?
+    @tournament.update_attributes!(tournament_params)
 
     render 'show'
   end
@@ -44,6 +40,12 @@ class TournamentsController < ApplicationController
 
   def destroy_teams
     @tournament.teams.destroy_all
+
+    render nothing: true
+  end
+
+  def join
+    @tournament.users << current_user
 
     render nothing: true
   end

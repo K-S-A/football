@@ -21,7 +21,6 @@ class RoundsController < ApplicationController
 
   def update
     @round.update_attributes!(round_params)
-
     find_teams
 
     render 'show'

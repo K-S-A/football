@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
     get 'teams', to: 'tournaments#index_teams', on: :member
     delete 'teams', to: 'tournaments#destroy_teams', on: :member
+    post 'join', on: :member
   end
 
   resources :rounds, only: [:update, :destroy] do

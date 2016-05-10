@@ -165,4 +165,25 @@ RSpec.describe TournamentsController, type: :controller do
       expect { call_action }.to change { tournament.teams.count }.from(3).to(0)
     end
   end
+
+  context 'POST #join' do
+    let!(:tournament) { FactoryGirl.create(:tournament) }
+    let!(:call_action) do
+      sign_in user
+      post :join, id: tournament.id
+    end
+
+    let(:user) { FactoryGirl.create(:user) }
+
+    include_examples 'for render nothing with status', 200
+
+    it 'should assign @tournament' do
+      expect(assigns(:tournament)).to eq(tournament)
+    end
+
+    it 'should add association for tournament and current_user' do
+      expect { post :join, id: tournament.id }.to change { tournament.users.count }.by(1)
+      expect(tournament.users).to include(user)
+    end
+  end
 end

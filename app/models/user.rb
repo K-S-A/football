@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:facebook, :vkontakte]
 
   has_and_belongs_to_many :teams
-  has_and_belongs_to_many :tournaments
+  has_and_belongs_to_many :tournaments, uniq: true
   has_many :assessments
 
   def short_name
@@ -35,7 +35,6 @@ class User < ActiveRecord::Base
   private
 
   def unrated_tournaments_query(user_id)
-    # TODO: fix selection of tournaments that not connected to user.
     %(SELECT DISTINCT tournaments.*
     FROM tournaments
       JOIN tournaments_users
