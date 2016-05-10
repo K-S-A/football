@@ -138,4 +138,31 @@ RSpec.describe TournamentsController, type: :controller do
       include_examples 'for render nothing with status', 404
     end
   end
+
+  context 'GET #index_teams' do
+    let!(:call_action) { get :index_teams, id: @tournament.id }
+
+    include_examples 'for successfull request'
+    include_examples 'for assigning instance variable', :tournament
+    include_examples 'for rendering templates', [:'teams/index']
+
+    it 'should assign @teams' do
+      expect(assigns(:teams)).to eq(@tournament.teams)
+    end
+
+    it 'should match response schema "teams"' do
+      expect(response).to match_response_schema('teams')
+    end
+  end
+
+  context 'DELETE #destroy_teams' do
+    let(:tournament) { FactoryGirl.create(:tournament) }
+    let(:call_action) { delete :destroy_teams, id: tournament.id }
+
+    it 'should destroy all tournament teams' do
+      FactoryGirl.create_list(:team, 3, tournament: tournament)
+
+      expect { call_action }.to change { tournament.teams.count }.from(3).to(0)
+    end
+  end
 end

@@ -129,9 +129,14 @@ RSpec.describe Tournament, type: :model do
       expect(tournament.teams.any? { |t| (t.users - top_players).empty? }).to be_falsey
     end
 
+    # TODO: not fully cover edge cases.
     it 'should return different result on each call' do
       rank_players
-      expect(tournament.generate_teams).not_to eq(tournament.generate_teams)
+      first_call = tournament.generate_teams
+      tournament.teams.delete_all
+      second_call = tournament.generate_teams
+
+      expect(first_call).not_to eq(second_call)
     end
 
     it 'should assign player to only one team' do

@@ -12,8 +12,6 @@ angular.module('mainApp').directive 'myRemoveAllTeams', [
 
       element.on 'click', ->
         if $window.confirm('Remove all teams?')
-          Team.$delete(
-            '/teams/all'
-            tournament_id: Tournament.current.id).then ->
-              Tournament.current.teams = []
+          Team.$delete('/tournaments/' + Tournament.current.id + '/teams').then ->
+            Tournament.current.teams = []
 ]

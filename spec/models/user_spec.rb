@@ -47,6 +47,9 @@ RSpec.describe User, type: :model do
       it { expect(subject).to be_able_to(:manage, Match) }
       it { expect(subject).to be_able_to(:manage, Team) }
       it { expect(subject).to be_able_to(:manage, User) }
+      it { expect(subject).to be_able_to(:remove_team, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Tournament) }
     end
 
     context 'with regular user' do
@@ -57,6 +60,9 @@ RSpec.describe User, type: :model do
       it { expect(subject).to be_able_to(:create, Assessment) }
       it { expect(subject).not_to be_able_to(:index, User) }
       it { expect(subject).to be_able_to(:show, User) }
+      it { expect(subject).not_to be_able_to(:remove_team, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Tournament) }
     end
 
     context 'with unregistered user' do
@@ -65,6 +71,9 @@ RSpec.describe User, type: :model do
       it { expect(subject).not_to be_able_to(:update, Tournament) }
       it { expect(subject).not_to be_able_to(:index, User) }
       it { expect(subject).to be_able_to(:show, User) }
+      it { expect(subject).not_to be_able_to(:remove_team, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Round) }
+      it { expect(subject).to be_able_to(:index_teams, Tournament) }
     end
   end
 end

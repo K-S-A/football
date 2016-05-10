@@ -8,6 +8,7 @@ RSpec.describe RoundsController, type: :controller do
     FactoryGirl.create_list(:round, 3, tournament: @tournament)
     @rounds = @tournament.rounds
     @round = @rounds.first
+    @round.teams << FactoryGirl.create(:team)
     @valid_attrs = FactoryGirl.build(:round).attributes
     @invalid_attrs = FactoryGirl.attributes_for(:invalid_round)
   end
@@ -138,4 +139,21 @@ RSpec.describe RoundsController, type: :controller do
       expect { delete_team }.not_to change { Team.count }
     end
   end
+
+  context 'GET #index_teams' do
+    let!(:call_action) { get :index_teams, id: @round.id }
+
+    include_examples 'for successfull request'
+    include_examples 'for assigning instance variable', :round
+    include_examples 'for rendering templates', [:'teams/index']
+
+    it 'should assign @teams' do
+      expect(assigns(:teams)).to eq(@round.teams)
+    end
+
+    it 'should match response schema "teams"' do
+      expect(response).to match_response_schema('teams')
+    end
+  end
+
 end

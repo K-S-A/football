@@ -10,7 +10,7 @@ angular.module('mainApp').directive 'myGenerateTeams', [
       element.on 'click', ->
         if $window.confirm('Generate teams?')
           Team.$post(
-            '/tournaments/' + Tournament.current.id + '/teams'
+            '/tournaments/' + Tournament.current.id + '/teams/generate'
             team_size: Tournament.current.teamSize).then (data) ->
               data.forEach (t) ->
                 Tournament.current.teams.push(t)

@@ -33,5 +33,13 @@ RSpec.describe TournamentsController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/tournaments/1').to route_to('tournaments#destroy', id: '1')
     end
+
+    it 'routes to #destroy_teams' do
+      expect(delete: '/tournaments/1/teams').to route_to('tournaments#destroy_teams', id: '1')
+    end
+
+    it 'routes to #index_teams' do
+      expect(get: '/tournaments/1/teams').to route_to('tournaments#index_teams', id: '1')
+    end
   end
 end
