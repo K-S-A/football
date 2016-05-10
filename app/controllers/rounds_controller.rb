@@ -2,7 +2,7 @@ class RoundsController < ApplicationController
   before_action :find_tournament, only: [:index, :create, :show]
 
   authorize_resource only: [:create]
-  load_and_authorize_resource only: [:update, :destroy]
+  load_and_authorize_resource only: [:update, :destroy, :index_teams]
 
   def index
     @rounds = @tournament.rounds.includes(teams: :users)
@@ -41,6 +41,12 @@ class RoundsController < ApplicationController
     find_teams
 
     render 'show'
+  end
+
+  def index_teams
+    @teams = @round.teams
+
+    render 'teams/index'
   end
 
   private

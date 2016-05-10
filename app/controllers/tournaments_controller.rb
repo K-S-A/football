@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :find_tournament, only: [:show, :update, :destroy]
+  before_action :find_tournament, only: [:show, :update, :destroy, :index_teams, :destroy_teams]
 
   authorize_resource only: [:create, :update, :destroy]
 
@@ -34,6 +34,18 @@ class TournamentsController < ApplicationController
     @tournament.destroy
 
     render_nothing_with(200)
+  end
+
+  def index_teams
+    @teams = @tournament.teams
+
+    render 'teams/index'
+  end
+
+  def destroy_teams
+    @tournament.teams.destroy_all
+
+    render nothing: true
   end
 
   private

@@ -1,26 +1,14 @@
 class TeamsController < ApplicationController
-  before_action :find_tournament, only: [:index, :create, :destroy], if: -> { params[:tournament_id] }
-  before_action :find_team, only: [:show, :update, :destroy], unless: -> { params[:tournament_id] }
+  before_action :find_tournament, only: [:create, :generate]
+  before_action :find_team, only: [:show, :update, :destroy, :remove_user]
 
   authorize_resource only: [:create, :update, :destroy]
-
-  def index
-    @teams = if params[:round_id]
-               Round.find(params[:round_id]).teams
-             else
-               @tournament.teams
-             end
-  end
 
   def show
   end
 
   def create
-    if params[:team][:team_size]
-      @teams = @tournament.generate_teams
-    else
-      @team = @tournament.teams.create!(team_params)
-    end
+    @team = @tournament.teams.create!(team_params)
   end
 
   def update
@@ -31,14 +19,19 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    case
-    when @tournament
-      @tournament.teams.destroy_all
-    when params[:user_id]
-      @team.users.destroy(find_user)
-    else
-      @team.destroy
-    end
+    @team.destroy
+
+    render nothing: true
+  end
+
+  def generate
+    @teams = @tournament.generate_teams
+
+    render 'index'
+  end
+
+  def remove_user
+    @team.users.destroy(find_user)
 
     render nothing: true
   end

@@ -52,7 +52,7 @@ class Tournament < ActiveRecord::Base
     end
 
     # insert teams/users
-    teams.create(teams_params)
+    teams.create!(teams_params)
   end
 
   private
