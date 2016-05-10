@@ -168,8 +168,10 @@ RSpec.describe TournamentsController, type: :controller do
 
   context 'DELETE #remove_user' do
     let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
-    let(:call_action) { delete :remove_user, id: tournament.id,
-                                             user_id: tournament.users.last.id }
+
+    let(:call_action) do
+      delete :remove_user, id: tournament.id, user_id: tournament.users.last.id
+    end
 
     it 'should remove association to user' do
       expect { call_action }.to change { tournament.users.count }.by(-1)
@@ -181,7 +183,7 @@ RSpec.describe TournamentsController, type: :controller do
       expect { call_action }.not_to change { User.count }
     end
 
-    it "responds nothing with success status" do
+    it 'responds nothing with success status' do
       call_action
 
       expect(response.status).to eq(200)

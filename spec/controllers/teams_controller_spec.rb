@@ -105,13 +105,13 @@ RSpec.describe TeamsController, type: :controller do
     end
   end
 
-
   context 'DELETE #remove_user' do
     context 'with existing team' do
       let!(:team) { FactoryGirl.create(:team_with_members) }
-      let!(:call_action) { delete :remove_user,
-                                  id: team.id,
-                                  user_id: team.users.last.id }
+      let!(:call_action) do
+        delete :remove_user, id: team.id, user_id: team.users.last.id
+      end
+
       let(:params) { { id: team.id, user_id: team.users.last.id } }
 
       include_examples 'for successfull request', 'text/plain'
@@ -131,9 +131,9 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     context 'with unexisting team' do
-      let!(:call_action) { delete :remove_user,
-                                  id: Team.last.id.next,
-                                  user_id: 1 }
+      let!(:call_action) do
+        delete :remove_user, id: Team.last.id.next, user_id: 1
+      end
 
       include_examples 'for render nothing with status', 404
     end

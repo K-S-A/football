@@ -155,5 +155,4 @@ RSpec.describe RoundsController, type: :controller do
       expect(response).to match_response_schema('teams')
     end
   end
-
 end

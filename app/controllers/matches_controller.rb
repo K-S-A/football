@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :find_round, only: [:index, :create, :update]
+  before_action :find_round, only: [:index, :create, :update, :generate]
 
   authorize_resource only: [:create, :update]
   load_and_authorize_resource only: [:destroy]
@@ -8,17 +8,8 @@ class MatchesController < ApplicationController
     @matches = @round.matches
   end
 
-  # TODO: reduce complexity
   def create
-    match = params[:match]
-
-    case
-    when !match.key?(:team_ids)
-      @match = @round.matches.create!(match_params)
-    when match[:team_ids]
-      @matches = @round.generate_matches(match[:count])
-    else render nothing: true, status: 400
-    end
+    @match = @round.matches.create!(match_params)
   end
 
   def update
@@ -34,6 +25,12 @@ class MatchesController < ApplicationController
     render nothing: true
   end
 
+  def generate
+    @matches = @round.generate_matches(games_count)
+
+    render 'index'
+  end
+
   private
 
   def match_params
@@ -42,5 +39,9 @@ class MatchesController < ApplicationController
 
   def find_round
     @round = Round.find(params[:round_id])
+  end
+
+  def games_count
+    params[:match] && params[:match][:count].to_i || 1
   end
 end

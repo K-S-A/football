@@ -16,16 +16,18 @@ Rails.application.routes.draw do
     resources :assessments, only: [:create]
 
     get '/teams', to: 'tournaments#index_teams', on: :member
+    post 'join', on: :member
     delete '/teams', to: 'tournaments#destroy_teams', on: :member
     delete '/users/:user_id', to: 'tournaments#remove_user', on: :member
-    post 'join', on: :member
   end
 
   resources :rounds, only: [:update, :destroy] do
-    resources :matches, only: [:index, :create, :update]
+    resources :matches, only: [:index, :create, :update] do
+      post 'generate', on: :collection
+    end
 
-    delete '/teams/:id', to: 'rounds#remove_team'
     get '/teams', to: 'rounds#index_teams', on: :member
+    delete '/teams/:id', to: 'rounds#remove_team'
   end
 
   resources :teams, only: [:show, :update, :destroy] do

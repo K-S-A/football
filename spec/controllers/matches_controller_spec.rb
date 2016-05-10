@@ -115,4 +115,29 @@ RSpec.describe MatchesController, type: :controller do
       include_examples 'for render nothing with status', 404
     end
   end
+
+  context 'POST #generate' do
+    let!(:call_action) { post :generate, round_id: @round.id }
+    let(:call_again) { post :generate, round_id: @round.id }
+
+    include_examples 'for successfull request'
+    include_examples 'for rendering templates', [:index, :_match]
+
+    it 'assigns @round' do
+      expect(assigns(:round)).to eq(@round)
+    end
+
+    it 'assigns @matches' do
+      expect(assigns(:matches).count).to eq(3)
+    end
+
+    it 'should generate new teams' do
+      expect { call_again }.to change { @round.matches.count }.by(3)
+      expect { post :generate, round_id: @round.id, match: { count: 3 } }.to change { @round.matches.count }.by(9)
+    end
+
+    it 'should match response schema "matches"' do
+      expect(response).to match_response_schema('matches')
+    end
+  end
 end

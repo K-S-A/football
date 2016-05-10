@@ -43,5 +43,9 @@ angular.module('mainApp').factory 'Match', [
 
       tree
 
+    Match.generate = (roundId, gamesCount) ->
+      path = '/rounds/' + roundId + '/matches/generate'
+      Match.$post(path, count: gamesCount)
+
     Match
 ]

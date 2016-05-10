@@ -33,5 +33,9 @@ RSpec.describe MatchesController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/matches/1').to route_to('matches#destroy', id: '1')
     end
+
+    it 'routes to #generate' do
+      expect(post: '/rounds/1/matches/generate').to route_to('matches#generate', round_id: '1')
+    end
   end
 end

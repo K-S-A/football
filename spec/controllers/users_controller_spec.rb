@@ -61,5 +61,4 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to match_response_schema('user')
     end
   end
-
 end

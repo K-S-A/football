@@ -20,7 +20,7 @@ class Round < ActiveRecord::Base
             host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
 
             arr << matches.create!(host_team_id: host_team_id,
-                                  guest_team_id: guest_team_id)
+                                   guest_team_id: guest_team_id)
           end
         end
       end
