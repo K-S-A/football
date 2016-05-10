@@ -166,7 +166,7 @@ RSpec.describe TournamentsController, type: :controller do
     end
   end
 
-  context 'DELETE #remove_user', :focus do
+  context 'DELETE #remove_user' do
     let(:tournament) { FactoryGirl.create(:tournament_with_participants) }
     let(:call_action) { delete :remove_user, id: tournament.id,
                                              user_id: tournament.users.last.id }

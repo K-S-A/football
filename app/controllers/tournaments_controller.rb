@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
-  before_action :find_tournament, only: [:show, :update, :destroy, :index_teams, :destroy_teams, :join, :remove_user]
+  authorize_resource
 
-  authorize_resource only: [:create, :update, :destroy]
+  before_action :find_tournament, except: [:index, :create]
 
   def index
     @tournaments = if params[:status] == 'completed'

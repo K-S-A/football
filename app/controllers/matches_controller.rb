@@ -8,6 +8,7 @@ class MatchesController < ApplicationController
     @matches = @round.matches
   end
 
+  # TODO: reduce complexity
   def create
     match = params[:match]
 

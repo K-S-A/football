@@ -1,8 +1,8 @@
 class TeamsController < ApplicationController
+  authorize_resource
+
   before_action :find_tournament, only: [:create, :generate]
   before_action :find_team, only: [:show, :update, :destroy, :remove_user]
-
-  authorize_resource only: [:create, :update, :destroy]
 
   def show
   end
@@ -12,7 +12,6 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team.users = [] if params[:team][:user_ids].nil?
     @team.update_attributes!(team_params)
 
     render 'create'

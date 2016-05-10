@@ -54,6 +54,7 @@ RSpec.describe User, type: :model do
       it { expect(subject).to be_able_to(:generate, Team) }
       it { expect(subject).to be_able_to(:destroy_teams, Tournament) }
       it { expect(subject).to be_able_to(:join, Tournament) }
+      it { expect(subject).to be_able_to(:remove_user, Tournament) }
     end
 
     context 'with regular user' do
@@ -71,6 +72,7 @@ RSpec.describe User, type: :model do
       it { expect(subject).not_to be_able_to(:generate, Team) }
       it { expect(subject).not_to be_able_to(:destroy_teams, Tournament) }
       it { expect(subject).to be_able_to(:join, Tournament) }
+      it { expect(subject).not_to be_able_to(:remove_user, Tournament) }
     end
 
     context 'with unregistered user' do
@@ -86,6 +88,7 @@ RSpec.describe User, type: :model do
       it { expect(subject).not_to be_able_to(:generate, Team) }
       it { expect(subject).not_to be_able_to(:destroy_teams, Tournament) }
       it { expect(subject).not_to be_able_to(:join, Tournament) }
+      it { expect(subject).not_to be_able_to(:remove_user, Tournament) }
     end
   end
 end
