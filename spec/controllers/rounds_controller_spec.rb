@@ -127,16 +127,16 @@ RSpec.describe RoundsController, type: :controller do
   context 'DELETE #remove_team' do
     let!(:round) { FactoryGirl.create(:round_with_teams) }
 
-    let(:delete_team) do
-      delete :remove_team, round_id: round.id, id: round.teams.last.id
+    let(:remove_team) do
+      delete :remove_team, id: round.id, team_id: round.teams.last.id
     end
 
     it 'should remove association to team' do
-      expect { delete_team }.to change { round.teams.count }.by(-1)
+      expect { remove_team }.to change { round.teams.count }.by(-1)
     end
 
     it 'should not delete team itself' do
-      expect { delete_team }.not_to change { Team.count }
+      expect { remove_team }.not_to change { Team.count }
     end
   end
 

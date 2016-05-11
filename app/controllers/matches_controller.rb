@@ -1,8 +1,8 @@
 class MatchesController < ApplicationController
-  before_action :find_round, only: [:index, :create, :update, :generate]
+  before_action :find_round, except: [:destroy]
 
-  authorize_resource only: [:create, :update]
-  load_and_authorize_resource only: [:destroy]
+  authorize_resource
+  load_resource only: [:destroy]
 
   def index
     @matches = @round.matches

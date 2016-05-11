@@ -37,8 +37,14 @@ class Tournament < ActiveRecord::Base
   end
 
   def generate_teams
-    # shuffle tournament participants
     return if users.count < team_size
+    teams.create!(teams_params)
+  end
+
+  private
+
+  def teams_params
+    # shuffle tournament participants
     new_teams = users
                 .order(rank: :desc)
                 .in_groups_of(users.count / team_size)[0..team_size - 1]
@@ -46,16 +52,11 @@ class Tournament < ActiveRecord::Base
                 .transpose
 
     # generate teams_params
-    teams_params = new_teams.each.with_object([]) do |team, obj|
+    new_teams.each.with_object([]) do |team, obj|
       obj.push(name: team.map(&:short_name).join(' + '),
                user_ids: team.map(&:id))
     end
-
-    # insert teams/users
-    teams.create!(teams_params)
   end
-
-  private
 
   def destroy_teams(user)
     user.teams.where(tournament_id: id).destroy_all

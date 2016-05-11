@@ -11,19 +11,8 @@ class Round < ActiveRecord::Base
   end
 
   def generate_matches(games_count = 1)
-    team_ids = teams.pluck(:id)
-
     transaction do
-      team_ids.each.with_index(1).with_object([]) do |(t1, index), arr|
-        team_ids[index..-1].each do |t2|
-          games_count.times do |i|
-            host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
-
-            arr << matches.create!(host_team_id: host_team_id,
-                                   guest_team_id: guest_team_id)
-          end
-        end
-      end
+      matches.create!(combine_params(games_count))
     end
   end
 
@@ -32,6 +21,21 @@ class Round < ActiveRecord::Base
   end
 
   private
+
+  def combine_params(games_count)
+    team_ids = teams.pluck(:id)
+
+    team_ids.each.with_index(1).with_object([]) do |(t1, index), arr|
+      team_ids[index..-1].each do |t2|
+        games_count.times do |i|
+          host_team_id, guest_team_id = i.odd? ? [t1, t2] : [t2, t1]
+
+          arr.push(host_team_id: host_team_id,
+                   guest_team_id: guest_team_id)
+        end
+      end
+    end
+  end
 
   def round_stats_query(round_id)
     # TODO: refactor nested subqueries
