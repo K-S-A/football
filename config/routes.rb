@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
 
     get '/teams', to: 'rounds#index_teams', on: :member
-    delete '/teams/:id', to: 'rounds#remove_team'
+    delete '/teams/:team_id', to: 'rounds#remove_team', on: :member
   end
 
   resources :teams, only: [:show, :update, :destroy] do

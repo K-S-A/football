@@ -1,8 +1,8 @@
 class RoundsController < ApplicationController
-  before_action :find_tournament, only: [:index, :create, :show]
+  authorize_resource
+  load_resource only: [:update, :destroy, :index_teams, :remove_team]
 
-  authorize_resource only: [:create]
-  load_and_authorize_resource only: [:update, :destroy, :index_teams]
+  before_action :find_tournament, only: [:index, :create, :show]
 
   def index
     @rounds = @tournament.rounds.includes(teams: :users)
@@ -33,8 +33,7 @@ class RoundsController < ApplicationController
   end
 
   def remove_team
-    @round = Round.find(params[:round_id])
-    team = @round.teams.find(params[:id])
+    team = @round.teams.find(params[:team_id])
     @round.teams.delete(team)
 
     find_teams
