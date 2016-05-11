@@ -4,6 +4,11 @@ ul.nav.nav-tabs.nav-justified.hover
   li ui-sref="tournament.rounds.show.teams" ui-sref-opts="{reload: true}" ui-sref-active="active"
     a Teams
   li ui-sref="tournament.rounds.show.matches" ui-sref-active="active"
-    a Matches
+    a
+      | Matches
+      span.label.label-success.pull-right.hover { data={ my_if_state: "tournament.rounds.show.matches",
+                                                         my_add_playoff_match: "",
+                                                         my_authorized: ""} } Add final match
+
 
 ui-view

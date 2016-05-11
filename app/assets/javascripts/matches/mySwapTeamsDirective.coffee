@@ -12,6 +12,6 @@ angular.module('mainApp').directive 'mySwapTeams', [
         [match.hostTeamId, match.guestTeamId] = [match.guestTeam.id, match.hostTeam.id]
 
         match.update().then (data) ->
-          scope.match = data
+          Match.all[scope.$index] = data
 
 ]
