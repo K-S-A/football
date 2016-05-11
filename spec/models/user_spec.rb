@@ -35,6 +35,25 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context '#update_rank_from' do
+    before(:all) do
+      @tournament = FactoryGirl.create(:tournament_with_participants)
+      @rated_user = FactoryGirl.create(:user)
+      @assessments = @tournament.users.each.with_index do |user, index|
+        FactoryGirl.create(:assessment, tournament: @tournament,
+                                        user: user,
+                                        rated_user: @rated_user,
+                                        score: index)
+      end
+    end
+
+    let(:call_method) { @rated_user.update_rank_from(@tournament) }
+
+    it 'should update users rank' do
+      expect { call_method }.to change { @rated_user.rank }.from(nil).to(600)
+    end
+  end
+
   context 'abilities' do
     subject { Ability.new(user) }
     let(:user) { nil }

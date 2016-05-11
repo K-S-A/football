@@ -1,6 +1,4 @@
 class Tournament < ActiveRecord::Base
-  RANK_CORRELATION = 1000
-
   has_many :rounds, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :assessments, dependent: :destroy
@@ -17,23 +15,17 @@ class Tournament < ActiveRecord::Base
   validates :team_size, presence: true,
                         inclusion: { in: 1..20 }
 
-  # TODO: move to controller?
   def rated_by?(user_id)
     assessments.where(user_id: user_id).any?
   end
 
   def rank_users
-    max_score = users.count
-    return if max_score.zero?
+    return if users.count.zero?
 
-    users.each do |user|
-      score = Assessment.where(tournament_id: id, rated_user_id: user.id).average(:score) || next
-      user.rank = (1 - score / max_score) * RANK_CORRELATION
-
-      user.save
+    transaction do
+      users.each { |user| user.update_rank_from(self) }
+      assessments.destroy_all
     end
-
-    assessments.destroy_all
   end
 
   def generate_teams
@@ -44,18 +36,18 @@ class Tournament < ActiveRecord::Base
   private
 
   def teams_params
-    # shuffle tournament participants
-    new_teams = users
-                .order(rank: :desc)
-                .in_groups_of(users.count / team_size)[0..team_size - 1]
-                .map(&:shuffle)
-                .transpose
-
-    # generate teams_params
-    new_teams.each.with_object([]) do |team, obj|
+    shuffled_users.each.with_object([]) do |team, obj|
       obj.push(name: team.map(&:short_name).join(' + '),
                user_ids: team.map(&:id))
     end
+  end
+
+  def shuffled_users
+    users
+      .order(rank: :desc)
+      .in_groups_of(users.count / team_size)[0..team_size - 1]
+      .map(&:shuffle)
+      .transpose
   end
 
   def destroy_teams(user)
