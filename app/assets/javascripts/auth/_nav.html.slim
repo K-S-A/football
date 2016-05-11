@@ -17,6 +17,8 @@ nav.navbar.navbar-default role="navigation"
     ul.nav.navbar-nav
       li
         a data={ ui_sref: "tournaments" } Home
+      li data={ my_if_state: "tournament." }
+        a data={ my_current_tournament_link: "" }
     ul.nav.navbar-nav.navbar-right
       / li data={ ng_hide: "vm.signedIn()" }
       /   a#vk-login-button onclick="VK.Auth.login()" scope="email"
