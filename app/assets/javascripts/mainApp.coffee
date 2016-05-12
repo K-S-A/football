@@ -65,6 +65,7 @@ angular.module('mainApp', [
       .state 'tournament.rounds',
         url: '/rounds'
         templateUrl: 'tournaments/rounds.html'
+        controller: 'RoundsCtrl as vm'
         resolve: getRounds: ['$stateParams', 'Round', 'Tournament', 'getTournament',
           ($stateParams, Round, Tournament, getTournament) ->
             Round.get(tournamentId: $stateParams.id).then (data) ->

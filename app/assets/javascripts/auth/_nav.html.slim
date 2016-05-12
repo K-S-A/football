@@ -30,6 +30,14 @@ nav.navbar.navbar-default role="navigation"
           li
             a data={ my_current_tournament_link: "/rounds", set_name: "" } Rounds
     ul.nav.navbar-nav.navbar-right
+      li data={ my_if_state: "tournament.",
+                ng_if: "vm.user.admin",
+                uib_dropdown: "" }
+        a href="" data={ uib_dropdown_toggle: "" }
+          span Administrative actions
+          span.caret
+        ul { aria-labelledby="simple-dropdown"
+             data={ ng_include: "'auth/admin_actions.html'", uib_dropdown_menu: "" } }
       / li data={ ng_hide: "vm.signedIn()" }
       /   a#vk-login-button onclick="VK.Auth.login()" scope="email"
       li data={ ng_hide: "vm.signedIn()" }
@@ -39,13 +47,13 @@ nav.navbar.navbar-default role="navigation"
       li data={ ng_hide: "vm.signedIn()" }
         a data={ ui_sref: "register" } Register
       li.pointer-hover data={ is_open: "isopen", ng_show: "vm.signedIn()", uib_dropdown: "" }
-        a type="button" data={ uib_dropdown_toggle: "" }
+        a href="" type="button" data={ uib_dropdown_toggle: "" }
           | Logged in as: "{{ vm.user.first_name || ' unnamed' }} {{ vm.user.last_name }}"
           span.caret
         ul aria-labelledby="single-button" role="menu" data={ uib_dropdown_menu: "" }
           li role="menuitem"
-            a data={ ui_sref: "profile" } Profile
+            a href="" data={ ui_sref: "profile" } Profile
           li.divider
           li role="menuitem"
-            a data={ ng_click: "vm.logout()" } Log Out
+            a href="" data={ ng_click: "vm.logout()" } Log Out
 
