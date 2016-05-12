@@ -34,7 +34,9 @@ class MatchesController < ApplicationController
   private
 
   def match_params
-    params.require(:match).permit(:host_score, :guest_score, :host_team_id, :guest_team_id, :next_id)
+    params
+      .require(:match)
+      .permit(:host_score, :guest_score, :host_team_id, :guest_team_id, :next_id)
   end
 
   def find_round

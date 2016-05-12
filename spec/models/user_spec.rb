@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   before(:all) do
     @user = FactoryGirl.create(:user, first_name: 'John', last_name: 'Doe')
-    @completed_tournament = FactoryGirl.create(:completed_tournament)
-    @completed_tournament.users << @user
-    FactoryGirl.create_list(:completed_tournament, 3)
-    FactoryGirl.create_list(:inprogress_tournament, 3)
   end
 
   context '#short_name' do

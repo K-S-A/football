@@ -65,7 +65,9 @@ RSpec.describe Tournament, type: :model do
     it 'should change ranks of all tournament participants' do
       create_assessments
 
-      expect { rank_users }.to change { tournament.users.pluck(:rank).sort }.from([nil] * 5).to([200, 400, 600, 800, 1000])
+      expect { rank_users }.to change { tournament.users.pluck(:rank).sort }
+        .from([nil] * 5)
+        .to([200, 400, 600, 800, 1000])
     end
 
     it 'should not change ranks if there is no assessments' do
@@ -75,7 +77,9 @@ RSpec.describe Tournament, type: :model do
     it 'should destroy all assessments of tournament' do
       create_assessments
 
-      expect { rank_users }.to change { tournament.assessments.count }.from(5).to(0)
+      expect { rank_users }.to change { tournament.assessments.count }
+        .from(5)
+        .to(0)
     end
   end
 
@@ -133,7 +137,7 @@ RSpec.describe Tournament, type: :model do
     it 'should return different result on each call' do
       rank_players
       first_call = tournament.generate_teams
-      tournament.teams.delete_all
+      tournament.teams.delete_all # prevents random uniq team name validation error
       second_call = tournament.generate_teams
 
       expect(first_call).not_to eq(second_call)

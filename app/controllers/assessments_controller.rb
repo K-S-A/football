@@ -18,6 +18,8 @@ class AssessmentsController < ApplicationController
   private
 
   def assessments_params
-    params.permit(assessments: [:rated_user_id, :score, :user_id, :tournament_id]).require(:assessments)
+    params
+      .permit(assessments: [:rated_user_id, :score, :user_id, :tournament_id])
+      .require(:assessments)
   end
 end

@@ -1,4 +1,6 @@
 class Tournament < ActiveRecord::Base
+  STATUSES = %w(not\ started completed in\ progress closed).freeze
+
   has_many :rounds, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :assessments, dependent: :destroy
@@ -10,7 +12,7 @@ class Tournament < ActiveRecord::Base
                    length: { minimum: 3, maximum: 254 },
                    uniqueness: { case_sensitive: false }
   validates :status, presence: true,
-                     inclusion: { in: %w(not\ started completed in\ progress closed) }
+                     inclusion: { in: STATUSES }
   validates :sports_kind, presence: true
   validates :team_size, presence: true,
                         inclusion: { in: 1..20 }
