@@ -129,7 +129,7 @@ RSpec.describe Tournament, type: :model do
       expect(tournament.teams.any? { |t| (t.users - top_players).empty? }).to be_falsey
     end
 
-    # TODO: not fully cover edge cases.
+    # TODO: not fully covered edge cases.
     it 'should return different result on each call' do
       rank_players
       first_call = tournament.generate_teams
@@ -143,6 +143,35 @@ RSpec.describe Tournament, type: :model do
       teams_player_ids = tournament.generate_teams.flat_map { |t| t.users.pluck(:id) }
 
       expect(teams_player_ids.size).to eq(teams_player_ids.uniq.size)
+    end
+  end
+
+  context '.unrated_by' do
+    subject { described_class.unrated_by(@user) }
+    before(:all) do
+      @completed_tournament = FactoryGirl.create(:completed_tournament)
+      @completed_tournament.users << @user
+      FactoryGirl.create_list(:completed_tournament, 3)
+      FactoryGirl.create_list(:inprogress_tournament, 3)
+    end
+
+    it 'should return Array' do
+      expect(subject).to be_kind_of(Array)
+    end
+
+    it 'should return tournaments with status "completed"' do
+      expect(subject).to eq([@completed_tournament])
+    end
+
+    it 'should return tournaments that have no assessments by user' do
+      rated_tournament = FactoryGirl.create(:completed_tournament)
+      rated_tournament.users << @user
+      FactoryGirl.create(:assessment, rated_user_id: FactoryGirl.create(:user).id,
+                                      user: @user,
+                                      tournament: rated_tournament,
+                                      score: 1)
+
+      expect(subject).to eq([@completed_tournament])
     end
   end
 end

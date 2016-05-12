@@ -15,26 +15,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context '#unrated_tournaments' do
-    subject { @user.unrated_tournaments }
-
-    it 'should return Array' do
-      expect(subject).to be_kind_of(Array)
-    end
-
-    it 'should return tournaments with status "completed"' do
-      expect(subject).to eq([@completed_tournament])
-    end
-
-    it 'should return tournaments that have no assessments by user' do
-      rated_tournament = [@completed_tournament].first
-      FactoryGirl.create(:assessment, user: @user, tournament: rated_tournament)
-      FactoryGirl.create(:assessment, rated_user_id: @user.id, tournament: rated_tournament)
-
-      expect([@completed_tournament] - subject).to eq([rated_tournament])
-    end
-  end
-
   context '#update_rank_from' do
     before(:all) do
       @tournament = FactoryGirl.create(:tournament_with_participants)

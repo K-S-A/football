@@ -5,7 +5,7 @@ class MatchesController < ApplicationController
   load_resource only: [:destroy]
 
   def index
-    @matches = @round.matches
+    @matches = @round.matches.includes(host_team: :users, guest_team: :users)
   end
 
   def create

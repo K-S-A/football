@@ -15,10 +15,6 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name.first}."
   end
 
-  def unrated_tournaments
-    Tournament.find_by_sql(unrated_tournaments_query(id))
-  end
-
   def update_rank_from(tournament)
     max_score = tournament.users.count
     score = tournament.assessments.where(rated_user_id: id).average(:score)
@@ -41,17 +37,5 @@ class User < ActiveRecord::Base
         user.img_link = auth.info.image
       end
     end
-  end
-
-  private
-
-  def unrated_tournaments_query(user_id)
-    %(SELECT DISTINCT tournaments.*
-    FROM tournaments
-      JOIN tournaments_users
-      ON tournaments.id = tournaments_users.tournament_id
-        LEFT JOIN assessments
-        ON tournaments.id = assessments.tournament_id
-    WHERE assessments.id IS NULL AND tournaments.status = 'completed' AND tournaments_users.user_id = #{user_id})
   end
 end

@@ -42,7 +42,7 @@ class RoundsController < ApplicationController
   end
 
   def index_teams
-    @teams = @round.teams
+    @teams = @round.teams.includes(:users)
 
     render 'teams/index'
   end

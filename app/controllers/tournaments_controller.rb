@@ -5,7 +5,7 @@ class TournamentsController < ApplicationController
 
   def index
     @tournaments = if params[:status] == 'completed'
-                     current_user.unrated_tournaments
+                     Tournament.unrated_by(current_user)
                    else
                      Tournament.includes(:users, :rounds).all
                    end
