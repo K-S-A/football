@@ -1,0 +1,22 @@
+form.form-inline name="editMatchForm" data={ my_update_playoff_match: "" }
+  .form-group
+    .input-group
+      select#host_team.form-control.playoff-team { name="host_team"
+                                                   data={ ng_model: "match.$edited.hostTeam.id",
+                                                          ng_options: "team.id as team.name for team in vm.teams" } }
+  .score-input.form-group.col-xs-8
+    .input-group
+      input.form-control data={ ng_model: "match.$edited.hostScore" } /
+    .input-group
+      input.form-control data={ ng_model: "match.$edited.guestScore" } /
+
+  .score-submit.form-group.col-xs-4
+    .input-group
+      button.btn.btn-primary.btn-sm.btn-block type="submit" Save
+      button.btn.btn-default.btn-sm.btn-block type="button" data={ ng_click: "match.$edited = null" } Close
+
+  .form-group
+    .input-group
+      select#guest_team.form-control.playoff-team { name="guest_team"
+                                                    data={ ng_model: "match.$edited.guestTeam.id",
+                                                           ng_options: "team.id as team.name for team in vm.teams" } }

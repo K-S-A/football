@@ -1,9 +1,4 @@
 .container-fluid
-  .text-center data={ my_authorized: "", ng_if: "vm.team_sizes" }
-    .btn-group
-      button.btn.btn-success my-create-team="" Create team
-      button.btn.btn-primary my-generate-teams="" Generate teams
-      button.btn.btn-warning my-remove-all-teams="" Remove all teams
 
   table.table.table-condensed.table-hover
     thead
@@ -13,11 +8,13 @@
         p.text-center Team members
       th
     tbody data={ ui_sortable: "vm.sortableOptions", ng_model: "vm.tournament.teams" }
+      tr data={ ng_if: "!vm.tournament.teams.length" }
+        td colspan="3"
+          p No teams added yet.
       tr data={ ng_repeat: "team in vm.tournament.teams" }
         td.col-md-2.vcenter
           span.glyphicon.glyphicon-sort.glyphicon-lg.text-info.pull-left.hiden-control
-          a ui-sref="team({ id: team.id })"
-            | {{ team.name }}
+          a ui-sref="team({ id: team.id })" data={ ng_bind: "team.name" }
         td
           .item.media.col-lg-3 data={ ng_repeat: "member in team.users" }
             .col-xs-8
@@ -25,13 +22,14 @@
                 img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
               .media-body
                 strong
-                  p
-                    | {{ member.firstName }}
-                  p
-                    | {{ member.lastName }}
+                  p data={ ng_bind: "member.firstName" }
+                  p data={ ng_bind: "member.lastName" }
             .col-xs-4.hiden
               span.glyphicon.glyphicon-remove.glyphicon-lg.text-danger data={ my_authorized: "", my_remove_member: "" }
         td.col-md-1.vcenter
           .hiden-control
             button.btn.btn-danger.btn-block data={ my_authorized: "", my_remove_team: "" } Remove
             button.btn.btn-success.btn-block data={ my_authorized: "", my_add_team_members: "" } Manage
+      tr
+        td colspan="3"
+          button.btn.btn-success.btn-block data={ my_create_team: "", my_authorized: "" } Create team

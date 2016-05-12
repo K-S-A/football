@@ -47,5 +47,8 @@ angular.module('mainApp').factory 'Match', [
       path = '/rounds/' + roundId + '/matches/generate'
       Match.$post(path, count: gamesCount)
 
+    Match.prototype.teams = ->
+      [@hostTeam, @guestTeam]
+
     Match
 ]

@@ -1,12 +1,6 @@
 .container-fluid
-  .text-center data={ my_authorized: "" }
-    .btn-group
-      button.btn.btn-primary data={ my_add_round: "regular" } Add regular round
-      button.btn.btn-success data={ my_add_round: "play-off" } Add play-off round
-
-.container-fluid
   ul.nav.nav-tabs.nav-justified.hover
-    li ui-sref="tournament.rounds.show({round_id: round.id})" ui-sref-active="active" data={ ng_repeat: "round in vm.tournament.rounds" }
+    li ui-sref="tournament.rounds.show({round_id: round.id})" ui-sref-active="active" data={ ng_repeat: "round in vm.rounds" }
       a
         | {{ round.mode }} round
         span.glyphicon.glyphicon-remove.pull-right.scale data={ my_delete_round: "", my_authorized: "" }

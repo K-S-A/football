@@ -1,16 +1,28 @@
 .match-row
   .match.text-center.item
-    span.hiden.pull-right
+    span.hiden.pull-left data={ ng_hide: "match.$edited" }
+      span.glyphicon.glyphicon-edit.text-primary data={ my_authorized: "", my_edit_playoff_match: "" }
+    span.hiden.pull-right data={ ng_hide: "match.$edited" }
       span.glyphicon.glyphicon-remove.text-danger data={ my_delete_playoff_match: "", my_authorized: "" }
-    | {{ match.id }} - {{ match.nextId }}
-    a href="" data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
-      | {{ match.hostTeam.name }}
-    p data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
-      | {{ match.hostScore || '-'}}
-    p data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
-      | {{ match.guestScore || '-' }}
-    a href="" data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
-      | {{ match.guestTeam.name }}
+
+    div data={ ng_hide: "match.$edited" }
+      a data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}",
+               ng_if: "match.hostTeam",
+               ng_bind: "match.hostTeam.name",
+               ui_sref: "team({id: match.hostTeam.id})" }
+      p data={ ng_if: "!match.hostTeam" } not selected
+      p data={ ng_class: "{'text-success': match.hostScore > match.guestScore, 'text-muted': match.hostScore < match.guestScore}" }
+        strong data={ ng_bind: "match.hostScore || '-'" }
+      p data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}" }
+        strong data={ ng_bind: "match.guestScore || '-'" }
+      a data={ ng_class: "{'text-success': match.hostScore < match.guestScore, 'text-muted': match.hostScore > match.guestScore}",
+               ng_if: "match.guestTeam",
+               ng_bind: "match.guestTeam.name",
+               ui_sref: "team({id: match.guestTeam.id})" }
+      p data={ ng_if: "!match.guestTeam" } not selected
+
+    div data={ ng_include: "'matches/editPlayoffMatchForm.html'", ng_show: "match.$edited" }
+
   .spacer.text-center
     span.hiden
       span.glyphicon.glyphicon-plus.glyphicon-lg.text-success { data={ my_add_playoff_match: "",
