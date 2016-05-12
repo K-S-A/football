@@ -8,14 +8,14 @@ table.table.table-hover
   tbody
     tr.item data={ ng_repeat: "match in vm.matches" }
       td.col-md-4
-        a ui-sref="team({ id: hostTeam.id })"
+        a data={ ui_sref: "team({ id: match.hostTeam.id })" }
           strong data={ ng_bind: "match.hostTeam.name" }
       td.col-md-1
         p data={ ng_bind: "match.hostScore == null ? '-' : match.hostScore" }
       td.col-md-1
         p data={ ng_bind: "match.guestScore == null ? '-' : match.guestScore" }
       td.col-md-4
-        a ui-sref="team({ id: guestTeam.id })"
+        a data={ ui_sref: "team({ id: match.guestTeam.id })" }
           strong data={ ng_bind: "match.guestTeam.name" }
       td.col-md-2
         ul.list-inline.list-unstyled.hiden

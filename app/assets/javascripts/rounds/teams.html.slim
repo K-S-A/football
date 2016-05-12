@@ -17,7 +17,8 @@ table#rankings.table.table-hover
     tr.item data={ ng_repeat: "team in vm.round.teams" }
       td data={ ng_bind: "$index + 1" }
       td
-        strong data={ ng_bind: "team.name" }
+        a data={ ui_sref: "team({id: team.id})" }
+          strong data={ ng_bind: "team.name" }
       td data={ ng_bind: "team.gamesTotal" }
       td data={ ng_bind: "team.gamesWon" }
       td data={ ng_bind: "team.gamesTotal - team.gamesWon - team.gamesDraw" }
