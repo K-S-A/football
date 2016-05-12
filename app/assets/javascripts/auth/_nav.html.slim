@@ -18,7 +18,17 @@ nav.navbar.navbar-default role="navigation"
       li
         a data={ ui_sref: "tournaments" } Home
       li data={ my_if_state: "tournament." }
-        a data={ my_current_tournament_link: "" }
+        a data={ my_current_tournament_link: "/participants", set_name: "true" }
+      li data={ uib_dropdown: "", my_if_state: "tournament." }
+        a href="" data={ uib_dropdown_toggle: "", my_child_state_link: "" }
+          span.caret
+        ul.dropdown-menu aria-labelledby="simple-dropdown" data={ uib_dropdown_menu: "" }
+          li
+            a data={ my_current_tournament_link: "/participants", set_name: "" } Participants
+          li
+            a data={ my_current_tournament_link: "/teams", set_name: "" } Teams
+          li
+            a data={ my_current_tournament_link: "/rounds", set_name: "" } Rounds
     ul.nav.navbar-nav.navbar-right
       / li data={ ng_hide: "vm.signedIn()" }
       /   a#vk-login-button onclick="VK.Auth.login()" scope="email"

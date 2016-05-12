@@ -47,7 +47,7 @@ angular.module('mainApp', [
       .state 'tournament',
         abstract: true
         url: '/tournaments/{id:[0-9]+}'
-        templateUrl: 'tournaments/show.html'
+        template: '<ui-view></ui-view>'
         controller: 'TournamentsCtrl as vm'
         resolve: getTournament: ['$stateParams', 'Tournament', 'Auth', ($stateParams, Tournament, Auth) ->
           Tournament.get($stateParams.id).then (data) ->
