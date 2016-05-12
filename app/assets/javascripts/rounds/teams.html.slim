@@ -12,31 +12,22 @@ table#rankings.table.table-hover
     th
   tbody
     tr data={ ng_if: "!vm.round.teams.length" }
-      td colspan="9"
+      td colspan="10"
         p No teams added yet.
     tr.item data={ ng_repeat: "team in vm.round.teams" }
+      td data={ ng_bind: "$index + 1" }
       td
-        | {{ $index + 1 }}
-      td
-        strong
-          | {{ team.name }}
-      td
-        | {{ team.gamesTotal }}
-      td
-        | {{ team.gamesWon }}
-      td
-        | {{ team.gamesTotal - team.gamesWon - team.gamesDraw }}
-      td
-        | {{ team.gamesDraw }}
-      td
-        | {{ team.goalsScored + '/' + team.goalsAgainst }}
-      td
-        | {{ team.goalsDiff }}
-      td
-        | {{ team.points }}
+        strong data={ ng_bind: "team.name" }
+      td data={ ng_bind: "team.gamesTotal" }
+      td data={ ng_bind: "team.gamesWon" }
+      td data={ ng_bind: "team.gamesTotal - team.gamesWon - team.gamesDraw" }
+      td data={ ng_bind: "team.gamesDraw" }
+      td data={ ng_bind: "team.goalsScored + '/' + team.goalsAgainst" }
+      td data={ ng_bind: "team.goalsDiff" }
+      td data={ ng_bind: "team.points" }
       td
         .hiden
           span.glyphicon.glyphicon-remove data={ my_delete_round_team: "", my_authorized: "" }
     tr
-      td colspan="11"
+      td colspan="10"
         button.btn.btn-success.btn-block data={ my_add_round_teams: "", my_authorized: "" } Add team

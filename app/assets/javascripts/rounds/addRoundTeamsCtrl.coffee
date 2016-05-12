@@ -18,6 +18,7 @@ angular.module('mainApp').controller 'AddRoundTeamsCtrl', [
 
     vm.cancel = ->
       $uibModalInstance.dismiss('cancel')
+
     vm
 ]
 
