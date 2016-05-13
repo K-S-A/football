@@ -4,10 +4,11 @@
       label for="name" Name:
       .input-group
         span.form-control.form-control-static { e-placeholder="Enter name of the team..."
-                                             editable-text="vm.team.name"
-                                             e-name="name"
-                                             data={ ng_model: "vm.team.name", ng_hide: "updateTeam.$visible" } }
-          | {{ vm.team.name }}
+                                                editable-text="vm.team.name"
+                                                e-name="name"
+                                                data={ ng_model: "vm.team.name",
+                                                       ng_hide: "updateTeam.$visible",
+                                                       ng_bind: "vm.team.name" } }
         .input-group-btn
           button.btn.btn-default { type="button"
                                    my-allow-edit-team=""
@@ -22,34 +23,9 @@
 
   .item.media.col-lg-6 data={ ng_repeat: "member in vm.team.users" }
     .media-left
-      img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
+      a data={ ui_sref: "user({id: member.id})" }
+        img.img-responsive.img-thumbnail width="50" heigth="50" data={ ng_src: "{{ member.imgLink }}" }
     .media-body
       strong
-        p
-          | {{ member.firstName }}
-        p
-          | {{ member.lastName }}
-
-
-
-
-
-  / form.form-horizontal editable-form="" name="teamName" onbeforesave="vm.update($data)"
-  /   .form-group
-  /     label.control-label.col-sm-2 for="first_name" Team name:
-  /     .col-sm-9
-  /       p.form-control-static editable-text="vm.user.first_name" e-name="first_name"
-  /         | {{ vm.user.first_name || 'empty' }}
-  /   .form-group
-  /     label.control-label.col-sm-2 for="last_name" Last name:
-  /     .col-sm-9
-  /       p.form-control-static editable-text="vm.user.last_name" e-name="last_name"
-  /         | {{ vm.user.last_name || 'empty' }}
-
-  /   button.btn.btn-default.btn-block type="button" ng-click="userProfile.$show()" ng-show="!userProfile.$visible" Edit
-  /   span ng-show="userProfile.$visible"
-  /     .btn-group.btn-group-justified
-  /       .btn-group
-  /         button.btn.btn-primary type="submit" ng-disabled="userProfile.$waiting" Save
-  /       .btn-group
-  /         button.btn.btn-default type="button" ng-disabled="userProfile.$waiting" ng-click="userProfile.$cancel()" Cancel
+        p data={ ng_bind: "member.firstName" }
+        p data={ ng_bind: "member.lastName" }

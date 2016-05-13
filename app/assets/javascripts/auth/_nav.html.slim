@@ -1,18 +1,16 @@
 nav.navbar.navbar-default role="navigation"
   .auth-msg
-    .alert.alert-danger role="alert" data-ng-if='vm.user.alert'
-      p.text-center
-        | {{ vm.user.alert }}
-    .alert.alert-info role="alert" data-ng-if='vm.user.notice'
-      p.text-center
-        | {{ vm.user.notice }}
+    .alert.alert-danger role="alert" data={ ng_show: "vm.user.alert" }
+      p.text-center data={ ng_bind: "vm.user.alert" }
+    .alert.alert-info role="alert" data={ ng_show: "vm.user.notice" }
+      p.text-center data={ ng_bind: "vm.user.notice" }
 
   .navbar-header
     button.navbar-toggle type="button" data={ ng_click: "collapsed = !collapsed" }
       span.icon-bar
       span.icon-bar
       span.icon-bar
-    a.navbar-brand data={ ui_sref: "tournaments" } App Name
+    a.navbar-brand data={ ui_sref: "tournaments" } Tournaments
   .collapse.navbar-collapse data={ ng_class: "{ in: collapsed }" }
     ul.nav.navbar-nav
       li
