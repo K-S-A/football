@@ -13,7 +13,7 @@
                               danger: tournament.status == 'completed',
                               info: tournament.status == 'not started'}" } }
         td
-          a data={ ui-sref="tournament.participants({ id: tournament.id })" }
+          a data={ ui_sref: "tournament.participants({ id: tournament.id })" }
             strong data={ ng_bind: "tournament.toTitle()" }
           span.label.label-info.pull-right
             | Participants: {{ tournament.users.length }}
