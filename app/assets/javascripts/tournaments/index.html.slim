@@ -8,21 +8,22 @@
       th
     tbody
       tr { data={ ng_repeat: "tournament in vm.tournaments",
-                ng_class: "{success: tournament.status == 'in progress',
-                            default: tournament.status == 'closed',
-                            danger: tournament.status == 'completed',
-                            info: tournament.status == 'not started'}" } }
+                  ng_class: "{success: tournament.status == 'in progress',
+                              default: tournament.status == 'closed',
+                              danger: tournament.status == 'completed',
+                              info: tournament.status == 'not started'}" } }
         td
-          a ui-sref="tournament.participants({ id: tournament.id })"
-            strong
-              | {{ tournament.toTitle() }}
+          a data={ ui-sref="tournament.participants({ id: tournament.id })" }
+            strong data={ ng_bind: "tournament.toTitle()" }
           span.label.label-info.pull-right
             | Participants: {{ tournament.users.length }}
         td
           form data={ my_authorized: ""}
-            select data={ ng_model: "tournament.status", ng_options: "status for status in vm.statuses", my_tournament_status_change: "" }
-          span data={ ng_if: "!vm.user || !vm.user.admin || tournament.status == 'closed'" }
-            | {{ tournament.status }}
+            select { data={ ng_model: "tournament.status",
+                            ng_options: "status for status in vm.statuses",
+                            my_tournament_status_change: "" } }
+          span { data={ ng_if: "!vm.user || !vm.user.admin || tournament.status == 'closed'",
+                        ng_bind: "tournament.status" } }
         td
           span data={ my_authorized: ""}
             button.btn.btn-danger.col-xs-3 data={ my_delete_tournament: "" } Remove
