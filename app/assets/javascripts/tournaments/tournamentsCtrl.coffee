@@ -36,5 +36,8 @@ angular.module('mainApp').controller 'TournamentsCtrl', [
       vm.tournaments[index].delete().then ->
         vm.tournaments.splice(index, 1)
 
+    vm.nextPage = ->
+      Tournament.nextPage()
+
     vm
 ]

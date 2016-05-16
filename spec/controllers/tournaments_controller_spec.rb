@@ -5,7 +5,7 @@ RSpec.describe TournamentsController, type: :controller do
 
   before(:all) do
     @tournament = FactoryGirl.create(:tournament)
-    @tournaments = Tournament.all
+    @tournaments = Tournament.all[0..10] # fix pagination issue
     @valid_attrs = FactoryGirl.attributes_for(:tournament)
     @invalid_attrs = FactoryGirl.attributes_for(:invalid_tournament)
   end

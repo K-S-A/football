@@ -1,7 +1,9 @@
 .container-fluid
   div data={ ng_include: "'tournaments/_create.html'", my_authorized: "" }
 
-  table.table.table-hover
+  table.table.table-hover data={ infinite_scroll: "vm.nextPage()",
+                                 infinite_scroll_distance: "1",
+                                 infinite_scroll_immediate_check: "" }
     thead
       th Name
       th Status
@@ -29,3 +31,4 @@
             button.btn.btn-danger.col-xs-3 data={ my_delete_tournament: "" } Remove
             button.btn.btn-warning.col-xs-3 data={ my_finish_voting: "" } Finish voting
           button.btn.btn-success.col-xs-3 data={ my_participate: "" } Join
+  uib-progressbar.progress-striped.active data={ my_loading: "loading", animate: "false", type: "success" }

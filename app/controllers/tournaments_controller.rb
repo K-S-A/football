@@ -7,7 +7,7 @@ class TournamentsController < ApplicationController
     @tournaments = if params[:status] == 'completed'
                      Tournament.unrated_by(current_user)
                    else
-                     Tournament.includes(:users, :rounds).all
+                     Tournament.includes(:users, :rounds).all.page(params[:page])
                    end
   end
 

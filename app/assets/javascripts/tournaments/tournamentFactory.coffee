@@ -11,6 +11,9 @@ angular.module('mainApp').factory 'Tournament', [
         @only 'id', 'name', 'status', 'sportsKind', 'teamSize', 'users', 'userIds'
         @resource 'teams', 'Team')
 
+    Tournament.perPage = 20
+    Tournament.loading = false
+
     Tournament.beforeRequest (data) ->
       if data && data['users']
         data['user_ids'] = data['users'].map (u) ->
@@ -36,6 +39,17 @@ angular.module('mainApp').factory 'Tournament', [
       path = '/tournaments/' + Tournament.current.id + '/users/' + user_id
 
       Tournament.$delete(path)
+
+    Tournament.nextPage = ->
+      Tournament.loading = true
+      page_num = Math.floor(Tournament.all.length / Tournament.perPage) + 1
+
+      Tournament.query(page: page_num).then (data) ->
+        indexes = Tournament.all.map (t) ->
+          t.id
+
+        data.forEach (t) ->
+          Tournament.all.push(t) unless indexes.includes(t.id)
 
     Tournament
 ]

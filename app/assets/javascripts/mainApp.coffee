@@ -7,6 +7,7 @@ angular.module('mainApp', [
   'templates'
   'Devise'
   'xeditable'
+  'infinite-scroll'
   'rails'
 ]).config([
   '$stateProvider'
@@ -224,3 +225,5 @@ angular.module('mainApp', [
 
     return
 ])
+
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000)

@@ -20,5 +20,6 @@
 //= require angularjs-rails-resource
 //= require angular-bootstrap
 //= require angular-xeditable
+//= require ngInfiniteScroll
 //= require mainApp
 //= require_tree .

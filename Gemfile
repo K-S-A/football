@@ -19,6 +19,7 @@ gem 'faker', '~> 1.6'
 gem 'figaro', '~> 1.1'
 gem 'cancancan', '~> 1.13'
 gem 'ranked-model', '~> 0.4.0'
+gem 'kaminari', '~> 0.16.3'
 
 group :development, :test do
   gem 'byebug'

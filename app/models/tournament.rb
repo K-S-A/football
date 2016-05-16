@@ -6,6 +6,7 @@ class Tournament < ActiveRecord::Base
   has_many :assessments, dependent: :destroy
   has_and_belongs_to_many :users, after_remove: :destroy_teams
 
+  paginates_per 20
   default_scope { order(id: :desc) }
 
   validates :name, presence: true,
